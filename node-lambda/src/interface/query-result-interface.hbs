@@ -1,0 +1,8 @@
+export default interface I{{pascalCase name}}QueryResultRow {
+    ID: number;
+    NAME: string;
+    CREATED_AT: Date;
+    {{#each rowProperties}}
+    {{name}}: {{type}};
+    {{/each}}
+}

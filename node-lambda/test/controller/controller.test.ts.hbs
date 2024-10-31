@@ -1,0 +1,56 @@
+import {{pascalCase name}}Controller from '../../../src/{{kebabCase moduleName}}/controller/{{kebabCase name}}.controller';
+import {{pascalCase name}}ParamsDTO from '../../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}-params.dto';
+import {{pascalCase name}}DTO from '../../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}.dto';
+import {{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/model/{{kebabCase name}}.model';
+import I{{pascalCase name}}Service from '../../../src/{{kebabCase moduleName}}/service/{{kebabCase name}}.service.interface';
+
+describe('{{pascalCase name}}Controller', () => {
+    let {{camelCase name}}Controller: {{pascalCase name}}Controller;
+    let {{camelCase name}}Service: jest.Mocked<I{{pascalCase name}}Service>;
+
+    beforeEach(() => {
+        {{camelCase name}}Service = {
+            findAllByParams: jest.fn()
+        };
+        {{camelCase name}}Controller = new {{pascalCase name}}Controller({{camelCase name}}Service);
+    });
+
+    it('should be defined', () => {
+        expect({{camelCase name}}Controller).toBeDefined();
+    });
+
+    it('should return a list of {{pascalCase name}}DTOs', async () => {
+        const params = new {{pascalCase name}}ParamsDTO();
+        const {{camelCase name}}Data: {{pascalCase name}}[] = [
+            new {{pascalCase name}}(
+                1,
+                'test',
+                new Date(),
+            ),
+        ];
+        {{camelCase name}}Service.findAllByParams.mockResolvedValue({{camelCase name}}Data);
+
+        const result = await {{camelCase name}}Controller.findAllByParams(params);
+
+        expect({{camelCase name}}Service.findAllByParams).toHaveBeenCalledWith(params);
+        expect(result).toEqual({{camelCase name}}Data.map(item => {{pascalCase name}}DTO.from(item)));
+    });
+
+    it('should handle empty {{camelCase name}} list', async () => {
+        const params = new {{pascalCase name}}ParamsDTO();
+        {{camelCase name}}Service.findAllByParams.mockResolvedValue([]);
+
+        const result = await {{camelCase name}}Controller.findAllByParams(params);
+
+        expect({{camelCase name}}Service.findAllByParams).toHaveBeenCalledWith(params);
+        expect(result).toEqual([]);
+    });
+
+    it('should handle errors thrown by the service', async () => {
+        const params = new {{pascalCase name}}ParamsDTO();
+        const errorMessage = 'Service error';
+        {{camelCase name}}Service.findAllByParams.mockRejectedValue(new Error(errorMessage));
+
+        await expect({{camelCase name}}Controller.findAllByParams(params)).rejects.toThrow(errorMessage);
+    });
+});

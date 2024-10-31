@@ -1,0 +1,78 @@
+import { Client, QueryConfigValues, QueryResult, QueryResultRow } from 'pg';
+import { ISecretsManagerConfig } from './secret-manager.config';
+
+export interface IDatabaseConfig {
+    username: string;
+    password: string;
+    engine: string;
+    host: string;
+    port: number;
+    dbname: string;
+    dbClusterIdentifier: string;
+}
+
+export interface IPostgresConfig {
+    query<T extends QueryResultRow, I = any[]>(
+        query: string,
+        values: QueryConfigValues<I>,
+    ): Promise<QueryResult<T>>;
+    query<T extends QueryResultRow>(
+        query: string,
+    ): Promise<QueryResult<T>>;
+}
+
+export default class PostgresConfig implements IPostgresConfig {
+    public static readonly APPLICATION_NAME = '{{folder}}';
+
+    currentConfig?: IDatabaseConfig;
+    constructor(private readonly secretsManagerConfig: ISecretsManagerConfig) { }
+
+    async fetchDatabaseConfig(): Promise<IDatabaseConfig> {
+        const NAME_SECRET_DB = process.env.{{nameSecretDb}};
+        if (!NAME_SECRET_DB) {
+            throw new Error('Secret name not found');
+        }
+        return this.secretsManagerConfig.getSecretValue<IDatabaseConfig>(
+            NAME_SECRET_DB,
+        );
+    }
+
+    async getDatabaseConfig(): Promise<IDatabaseConfig> {
+        if (!this.currentConfig) {
+            this.currentConfig = await this.fetchDatabaseConfig();
+        }
+        return this.currentConfig;
+    }
+
+    async createClient(): Promise<Client> {
+        const config = await this.getDatabaseConfig();
+        return new Client({
+            user: config.username,
+            password: config.password,
+            host: config.host,
+            port: config.port,
+            database: config.dbname,
+            application_name: PostgresConfig.APPLICATION_NAME,
+        });
+    }
+
+    async query<T extends QueryResultRow, I = any[]>(
+        query: string,
+        values: QueryConfigValues<I>,
+    ): Promise<QueryResult<T>>;
+    async query<T extends QueryResultRow>(
+        query: string,
+    ): Promise<QueryResult<T>>;
+    async query<T extends QueryResultRow, I = any[]>(
+        query: string,
+        values?: QueryConfigValues<I>,
+    ): Promise<QueryResult<T>> {
+        const client = await this.createClient();
+        try {
+            await client.connect();
+            return await client.query<T>(query, values);
+        } finally {
+            await client.end();
+        }
+    }
+}

@@ -1,0 +1,8 @@
+export default interface I{{pascalCase name}} {
+    id: number;
+    name: string;
+    createdAt: Date;
+    {{#each modelProperties}}
+    {{name}}: {{type}};
+    {{/each}}
+}

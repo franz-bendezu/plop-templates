@@ -1,0 +1,30 @@
+import { APIGatewayProxyHandler } from 'aws-lambda';
+import { {{camelCase name}}Controller } from './controller/{{kebabCase name}}.provider';
+import { isRuntimeError } from './common/error/runtime-error';
+import { ApiGatewayResponse } from './common/response/api-gateway';
+import { StatusCodes } from './common/response/status-code';
+import { StatusMessages } from './common/response/status-message';
+import {{pascalCase name}}ParamsDTO from './dto/{{kebabCase name}}-params.dto';
+
+export const index: APIGatewayProxyHandler = async (event) => {
+    try {
+        const data = await {{camelCase name}}Controller.findAllByParams(
+            {{pascalCase name}}ParamsDTO.fromQueryParams(event.queryStringParameters),
+        );
+        return new ApiGatewayResponse(
+            'Cátalogos encontrados',
+            StatusCodes.OK,
+            data,
+        );
+    } catch (error) {
+        console.error('Error:', error);
+        if (isRuntimeError(error)) {
+            return error.toAPIGatewayResponse();
+        } else {
+            return new ApiGatewayResponse(
+                StatusMessages.INTERNAL_SERVER_ERROR,
+                StatusCodes.INTERNAL_SERVER_ERROR,
+            );
+        }
+    }
+};

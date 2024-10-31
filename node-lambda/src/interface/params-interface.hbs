@@ -1,0 +1,8 @@
+export default interface I{{pascalCase name}}Params {
+    id?: number;
+    date?: string;
+    name?: string;
+    {{#each paramsProperties}}
+    {{name}}: {{type}};
+    {{/each}}
+}

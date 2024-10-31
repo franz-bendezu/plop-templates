@@ -1,0 +1,25 @@
+import  I{{pascalCase name}} from '../interface/{{kebabCase name}}.interface';
+
+export default class {{pascalCase name}}DTO {
+
+    constructor(
+        public id: number,
+        public name: string,
+        public createdAt: Date,
+        {{#each modelProperties}}
+        public {{name}}: {{type}},
+        {{/each}}
+    ) {}
+
+    static from(params: I{{pascalCase name}}): {{pascalCase name}}DTO {
+        // Transform data into DTO
+        return new {{pascalCase name}}DTO(
+            params.id,
+            params.name,
+            params.createdAt,
+            {{#each modelProperties}}
+            params.{{name}},
+            {{/each}}
+        );
+    }
+}

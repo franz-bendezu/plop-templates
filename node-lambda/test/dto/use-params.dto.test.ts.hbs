@@ -1,0 +1,47 @@
+import {{pascalCase name}}ParamsDTO,  { IHandler{{pascalCase name}}QueryParams } from '../../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}-params.dto';
+import { RuntimeError } from '../../../src/{{kebabCase moduleName}}/common/error/runtime-error';
+
+describe('{{pascalCase name}}ParamsDTO', () => {
+
+    it('should create an instance from valid query params', () => {
+        const params: IHandler{{pascalCase name}}QueryParams = {
+            id: '123',
+            date: '2023-10-01',
+            name: 'Test Name',
+            {{#each paramsProperties}}
+            {{this.name}}: '{{this.value}}',
+            {{/each}}
+        };
+        const dto = {{pascalCase name}}ParamsDTO.fromQueryParams(params);
+
+        expect(dto.id).toBe(123);
+        expect(dto.date).toBe(params.date);
+        expect(dto.name).toBe(params.name);
+    });
+
+    it('should throw a RuntimeError for invalid query params', () => {
+        const params: IHandler{{pascalCase name}}QueryParams = {
+            id: 'invalid-id',
+            date: '2023-10-01',
+            name: 'Test Name'
+        };
+
+        expect(() => {{pascalCase name}}ParamsDTO.fromQueryParams(params)).toThrow(RuntimeError);
+    });
+
+    it('should create an instance with missing optional query params', () => {
+        const params: IHandler{{pascalCase name}}QueryParams = {
+            id: '123',
+        };
+        const dto = {{pascalCase name}}ParamsDTO.fromQueryParams(params);
+
+        expect(dto.id).toBe(123);
+        expect(dto.date).toBeUndefined();
+        expect(dto.name).toBeUndefined();
+    });
+
+    it('should not create an instance with null query params', () => {
+        expect(() => {{pascalCase name}}ParamsDTO.fromQueryParams(null)).toThrow(RuntimeError);
+    });
+
+});

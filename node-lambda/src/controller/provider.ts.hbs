@@ -1,0 +1,14 @@
+import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
+import PostgresConfig from '../config/postgres.config';
+import SecretsManagerConfig from '../config/secret-manager.config';
+import {{pascalCase name}}Repository from '../repository/{{kebabCase name}}.repository';
+import {{pascalCase name}}Service from '../service/{{kebabCase name}}.service';
+import {{pascalCase name}}Controller from './{{kebabCase name}}.controller';
+
+
+const secretsManagerClient = new SecretsManagerClient();
+const secretsManagerConfig = new SecretsManagerConfig(secretsManagerClient);
+const postgresClient = new PostgresConfig(secretsManagerConfig);
+const {{camelCase name}}Repository = new {{pascalCase name}}Repository(postgresClient);
+const {{camelCase name}}Service = new {{pascalCase name}}Service({{camelCase name}}Repository);
+export const {{camelCase name}}Controller = new {{pascalCase name}}Controller({{camelCase name}}Service);

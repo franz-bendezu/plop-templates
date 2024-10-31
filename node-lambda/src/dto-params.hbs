@@ -1,0 +1,53 @@
+import { APIGatewayProxyEventQueryStringParameters } from 'aws-lambda';
+import  I{{pascalCase name}}Params from '../interface/{{kebabCase name}}-params.interface';
+import { RuntimeError } from '../common/error/runtime-error';
+import { StatusCodes } from '../common/response/status-code';
+import { {{camelCase name}}ParamsSchema } from '../common/schema/{{kebabCase name}}-params.schema';
+
+export const enum {{pascalCase name}}QueryParams {
+    ID = 'id',
+    DATE = 'date',
+    NAME = 'name',
+    {{#each paramsProperties}}
+    {{constantCase name}} = '{{name}}',
+    {{/each}}
+}
+
+export interface IHandler{{pascalCase name}}QueryParams
+    extends APIGatewayProxyEventQueryStringParameters {
+    [{{pascalCase name}}QueryParams.ID]?: string;
+    [{{pascalCase name}}QueryParams.DATE]?: string;
+    [{{pascalCase name}}QueryParams.NAME]?: string;
+    {{#each paramsProperties}}
+    [{{pascalCase name}}QueryParams.{{constantCase name}}]: string;
+    {{/each}}
+}
+
+export default class {{pascalCase name}}ParamsDTO implements I{{pascalCase name}}Params {
+    constructor(
+        public id?: number,
+        public date?: string,
+        public name?: string,
+        {{#each paramsProperties}}
+        public {{camelCase name}}?: string,
+        {{/each}}
+    ) {}
+
+    static fromQueryParams(
+        params?: IHandler{{pascalCase name}}QueryParams | null,
+    ): {{pascalCase name}}ParamsDTO {
+        const { error, value } = {{camelCase name}}ParamsSchema.validate(params);
+        if (error) {
+            throw new RuntimeError({
+                statusMessage: error.message,
+                statusCode: StatusCodes.BAD_REQUEST,
+            });
+        }
+        // Transform data into DTO
+        return new {{pascalCase name}}ParamsDTO(
+            value[{{pascalCase name}}QueryParams.ID],
+            params?.[{{pascalCase name}}QueryParams.DATE],
+            value[{{pascalCase name}}QueryParams.NAME]
+        );
+    }
+}

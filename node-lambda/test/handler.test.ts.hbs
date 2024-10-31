@@ -1,0 +1,145 @@
+
+import { APIGatewayProxyEvent } from 'aws-lambda';
+import { IHandler{{pascalCase name}}QueryParams } from '../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}-params.dto';
+import { index } from '../../src/{{kebabCase moduleName}}/handler';
+import {{pascalCase name}}DTO from '../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}.dto';
+import { RuntimeError } from '../../src/{{kebabCase moduleName}}/common/error/runtime-error';
+import { ApiGatewayResponse, ValidationMessage } from '../../src/{{kebabCase moduleName}}/common/response/api-gateway';
+import { StatusMessages } from '../../src/{{kebabCase moduleName}}/common/response/status-message';
+import { {{camelCase name}}Controller } from '../../src/{{kebabCase moduleName}}/controller/{{kebabCase name}}.provider';
+
+const invokeHandler = async (queryParams?: IHandler{{pascalCase name}}QueryParams) => {
+    const event: APIGatewayProxyEvent = {
+        body: null,
+        headers: {},
+        queryStringParameters: queryParams || {},
+        stageVariables: null,
+        multiValueHeaders: {},
+        httpMethod: '',
+        isBase64Encoded: false,
+        path: '',
+        pathParameters: null,
+        multiValueQueryStringParameters: null,
+        requestContext: {
+            accountId: '',
+            apiId: '',
+            authorizer: {},
+            protocol: '',
+            httpMethod: '',
+            identity: {
+                accessKey: null,
+                accountId: null,
+                apiKey: null,
+                apiKeyId: null,
+                caller: null,
+                clientCert: null,
+                cognitoAuthenticationProvider: null,
+                cognitoAuthenticationType: null,
+                cognitoIdentityId: null,
+                cognitoIdentityPoolId: null,
+                principalOrgId: null,
+                sourceIp: '',
+                user: null,
+                userAgent: null,
+                userArn: null
+            },
+            path: '',
+            stage: '',
+            requestId: '',
+            requestTimeEpoch: 0,
+            resourceId: '',
+            resourcePath: ''
+        },
+        resource: ''
+    };
+    return index(event, {} as any, {} as any);
+};
+
+jest.mock('../../src/{{kebabCase moduleName}}/controller/{{kebabCase name}}.provider');
+
+describe('index handler', () => {
+    it('should return correct response when {{camelCase name}}es are found', async () => {
+        const mockData: {{pascalCase name}}DTO[] = [{
+            id: 1,
+            name: 'test',
+            createdAt: new Date('2021-01-01'),
+            {{#each paramsProperties}}
+            {{name}}: '{{value}}',
+            {{/each}}
+        }];
+        const mockGet = jest.spyOn({{camelCase name}}Controller, 'findAllByParams').mockResolvedValue(mockData);
+
+        const result = await invokeHandler({
+            id: '1',
+            name: 'test',
+            date: '2021-01-01',
+            {{#each paramsProperties}}
+            {{name}}: '{{value}}',
+            {{/each}}
+        });
+
+        expect(result).toBeInstanceOf(ApiGatewayResponse);
+        expect(result).toEqual({
+            statusCode: 200,
+            body: JSON.stringify({
+                mensaje: 'Cátalogos encontrados',
+                data: mockData,
+                estado: ValidationMessage.SUCCESS,
+            }),
+        });
+
+        expect(mockGet).toHaveBeenCalledWith({
+            id: 1,
+            name: 'test',
+            date: '2021-01-01',
+        });
+    });
+
+    it('should throw RuntimeError when an error occurs', async () => {
+        const mockError = new RuntimeError({ statusMessage: 'Test error' });
+
+        const mockGet = jest
+            .spyOn({{camelCase name}}Controller, 'findAllByParams')
+            .mockRejectedValue(mockError);
+
+        const result = await invokeHandler({
+            id: '1',
+        });
+
+        expect(mockGet).toHaveBeenCalled();
+
+        expect(result).toBeInstanceOf(ApiGatewayResponse);
+
+        expect(result).toEqual({
+            statusCode: 500,
+            body: JSON.stringify({
+                mensaje: 'Test error',
+                estado: ValidationMessage.BAD,
+            }),
+        });
+
+    });
+
+    it('should throw internal server error for unknown errors', async () => {
+        const mockError = new Error('Unknown error');
+
+        const mockGet = jest
+            .spyOn({{camelCase name}}Controller, 'findAllByParams')
+            .mockRejectedValue(mockError);
+
+        const result = await invokeHandler({
+            id: '1',
+        });
+
+        expect(mockGet).toHaveBeenCalled();
+        expect(result).toBeInstanceOf(ApiGatewayResponse);
+
+        expect(result).toEqual({
+            body: JSON.stringify({
+                mensaje: StatusMessages.INTERNAL_SERVER_ERROR,
+                estado: ValidationMessage.BAD,
+            }),
+            statusCode: 500,
+        });
+    });
+});
