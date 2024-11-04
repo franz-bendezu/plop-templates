@@ -1,6 +1,6 @@
 
 import { APIGatewayProxyEvent } from 'aws-lambda';
-import { IHandler{{pascalCase name}}QueryParams } from '../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}-params.dto';
+import { IHandler{{pascalCase name}}QueryParams, {{pascalCase name}}QueryParams } from '../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}-params.dto';
 import { index } from '../../src/{{kebabCase moduleName}}/handler';
 import {{pascalCase name}}DTO from '../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}.dto';
 import { RuntimeError } from '../../src/{{kebabCase moduleName}}/common/error/runtime-error';
@@ -68,15 +68,17 @@ describe('index handler', () => {
             {{/each}}
         }];
         const mockGet = jest.spyOn({{camelCase name}}Controller, 'findAllByParams').mockResolvedValue(mockData);
-
-        const result = await invokeHandler({
-            id: '1',
+        
+        const params: IHandler{{pascalCase name}}QueryParams = {
+            id: 1,
             name: 'test',
-            date: '2021-01-01',
+            date: new Date('2021-01-01'),
             {{#each paramsProperties}}
             {{name}}: '{{value}}',
             {{/each}}
-        });
+        };
+
+        const result = await invokeHandler(params);
 
         expect(result).toBeInstanceOf(ApiGatewayResponse);
         expect(result).toEqual({
@@ -88,11 +90,14 @@ describe('index handler', () => {
             }),
         });
 
-        expect(mockGet).toHaveBeenCalledWith({
-            id: 1,
+        const params: {{pascalCase name}}QueryParams = {
+            id: '1',
             name: 'test',
             date: '2021-01-01',
-        });
+        };
+
+
+        expect(mockGet).toHaveBeenCalledWith(params);
     });
 
     it('should throw RuntimeError when an error occurs', async () => {
