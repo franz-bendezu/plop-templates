@@ -118,9 +118,9 @@ export const GENERATOR_CONFIG = {
     // copy common folder with subfolfers and files inside
     {
       type: "addMany",
-      destination: SRC_PATH + "/common/schema",
-      base: TEMPLATE_PATH + "/src/common/schema",
-      templateFiles: TEMPLATE_PATH + "/src/common/schema/**/*.hbs",
+      destination: SRC_PATH + "/common",
+      base: TEMPLATE_PATH + "/src/common",
+      templateFiles: TEMPLATE_PATH + "/src/common/**/*.hbs",
     },
     {
       type: "addMany",
@@ -133,18 +133,6 @@ export const GENERATOR_CONFIG = {
       destination: TEST_PATH + "/config",
       base: TEMPLATE_PATH + "/test/config/",
       templateFiles: TEMPLATE_PATH + "/test/config/**/*",
-    },
-    {
-      type: "addMany",
-      destination: SRC_PATH + "/common/error",
-      base: TEMPLATE_PATH + "/src/common/error",
-      templateFiles: TEMPLATE_PATH + "/src/common/error/**/*",
-    },
-    {
-      type: "addMany",
-      destination: SRC_PATH + "/common/response",
-      base: TEMPLATE_PATH + "/src/common/response",
-      templateFiles: TEMPLATE_PATH + "/src/common/response/**/*",
     },
     {
       type: "addMany",
