@@ -138,7 +138,7 @@ export const GENERATOR_CONFIG = {
       type: "addMany",
       destination: TEST_PATH + "/common",
       base: TEMPLATE_PATH + "/test/common/",
-      templateFiles: TEMPLATE_PATH + "/test/common/**/*",
+      templateFiles: TEMPLATE_PATH + "/test/common/**/*.hbs",
     },
     {
       type: "add",
