@@ -1,5 +1,5 @@
 import { upgradeDevDependencies } from "./config/actions.js";
-import { GENERATOR_CONFIG } from "./config/generator.ja";
+import { GENERATOR_CONFIG } from "./config/generator.js";
 
 // plopfile.js
 export default function NodeLambdaConfig(
