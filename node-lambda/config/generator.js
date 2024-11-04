@@ -4,7 +4,7 @@ import {
   SRC_PATH,
   TEST_PATH,
   TEMPLATE_PATH,
-} from "./constants";
+} from "./constants.js";
 
 export const GENERATOR_CONFIG = {
   description: "Generate a handler for a new resource",
