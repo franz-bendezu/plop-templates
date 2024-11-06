@@ -2,14 +2,14 @@ import I{{pascalCase name}} from '../interface/{{kebabCase name}}.interface';
 
 export default class {{pascalCase name}} implements I{{pascalCase name}} {
   constructor(
-    public id: number;
-    public name: string;
-    public createdAt: Date;
-    public modifiedAt: Date;
-    public createdBy: string;
-    public modifiedBy: string;
+    public id: number,
+    public name: string,
+    public createdAt: Date,
+    public modifiedAt: Date,
+    public createdBy: string,
+    public modifiedBy: string,
     {{#each modelProperties}}
-    public {{name}}: {{type}};
+    public {{name}}: {{type}},
     {{/each}}
   ) {}
 }
