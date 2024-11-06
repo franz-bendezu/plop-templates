@@ -1,5 +1,5 @@
 $1
-        const data = await {{camelCase name}}Controller.create(
+        const data = await {{camelCase name}}Controller.save(
             {{pascalCase name}}DTO.fromBody(event.body),
         );
         return new ApiGatewayResponse(
