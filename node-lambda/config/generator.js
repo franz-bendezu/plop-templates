@@ -36,6 +36,11 @@ export const GENERATOR_CONFIG = {
       destination: SRC_PATH + "/interface",
       base: TEMPLATE_PATH + "/src/interface/",
       templateFiles: TEMPLATE_PATH + "/src/interface/**/*.hbs",
+    },    {
+      type: "addMany",
+      destination: SRC_PATH + "/dto",
+      base: TEMPLATE_PATH + "/src/dto/",
+      templateFiles: TEMPLATE_PATH + "/src/dto/**/*.hbs",
     },
     {
       type: "add",
