@@ -1,0 +1,50 @@
+import { RuntimeError } from '../common/error/runtime-error';
+import { TimeFormatter } from '../common/formatter/time.formatter';
+import { StatusCodes } from '../common/response/status-code';
+import  I{{pascalCase name}} from '../interface/{{kebabCase name}}.interface';
+import { AuditDTO } from './audit.dto';
+import { {{cammelCase name}} } from '../common/schema/{{kebabCase name}}.schema';
+
+export interface IBase{{pascalCase name}}DTO extends AuditDTO {
+    name: string;
+    createdAt: string | null;
+    modifiedAt: string | null;
+    createdBy: string;
+    modifiedBy: string;
+    {{#each modelProperties}}
+    {{name}}: {{type}};
+    {{/each}}
+}
+
+export default class Base{{pascalCase name}}DTO extends AuditDTO implements I{{pascalCase name}}DTO {
+
+    constructor(
+        public name: string,
+        public createdAt: string | null,
+        public modifiedAt: string | null,
+        public createdBy: string,
+        public modifiedBy: string,
+        {{#each modelProperties}}
+        public {{name}}: {{type}},
+        {{/each}}
+    ) {
+        super(createdAt, modifiedAt, createdBy, modifiedBy);
+    }
+
+    static from(data: I{{pascalCase name}}): {{pascalCase name}}DTO {
+        // Transform data into DTO
+        return new {{pascalCase name}}DTO(
+            data.id,
+            data.name,
+            TimeFormatter.dateToLocaleString(data.createdAt),
+            TimeFormatter.dateToLocaleString(data.modifiedAt),
+            data.createdBy,
+            data.modifiedBy,
+            {{#each modelProperties}}
+            data.{{name}},
+            {{/each}}
+        );
+    }
+
+    // Methods
+}

@@ -1,0 +1,42 @@
+import Base{{pascalCase name}}DTO, { IBase{{pascalCase name}}DTO } from './base-{{kebabCase name}}.dto';
+
+export interface I{{pascalCase name}}DTO extends IBase{{pascalCase name}}DTO {
+    id: number;
+    {{#each modelProperties}}
+    {{name}}: {{type}};
+    {{/each}} 
+}
+
+export default class {{pascalCase name}}DTO extends Base{{pascalCase name}}DTO implements I{{pascalCase name}}DTO {
+
+    constructor(
+        public id: number,
+        public name: string,
+        public createdAt: string | null,
+        public modifiedAt: string | null,
+        public createdBy: string,
+        public modifiedBy: string,
+        {{#each modelProperties}}
+        public {{name}}: {{type}},
+        {{/each}}
+    ) {
+        super(name, createdAt, modifiedAt, createdBy, modifiedBy);
+    }
+
+    static from(data: I{{pascalCase name}}): {{pascalCase name}}DTO {
+        // Transform data into DTO
+        return new {{pascalCase name}}DTO(
+            data.id,
+            data.name,
+            TimeFormatter.dateToLocaleString(data.createdAt),
+            TimeFormatter.dateToLocaleString(data.modifiedAt),
+            data.createdBy,
+            data.modifiedBy,
+            {{#each modelProperties}}
+            data.{{name}},
+            {{/each}}
+        );
+    }
+
+    // Methods
+}

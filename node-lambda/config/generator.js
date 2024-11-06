@@ -123,6 +123,13 @@ export const GENERATOR_CONFIG = {
       type: "add",
       path: SRC_PATH + "/dto/{{kebabCase name}}.dto.ts",
       templateFile: TEMPLATE_PATH + "/src/dto.hbs",
+      skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    },
+    {
+      type: "add",
+      path: SRC_PATH + "/dto/{{kebabCase name}}.dto.ts",
+      templateFile: TEMPLATE_PATH + "/src/dto-saved.hbs",
+      skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
     {
       type: "modify",

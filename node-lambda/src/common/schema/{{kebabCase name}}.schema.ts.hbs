@@ -1,0 +1,19 @@
+import type { ObjectSchema, Root } from 'joi';
+import joiCore from 'joi';
+import joiDate from '@joi/date';
+import { I{{pascalCase name}}DTO } from '../../dto/{{kebabCase name}}.dto';
+
+export const joi: Root = joiCore.extend(joiDate);
+
+export const DATE_FORMAT = 'YYYY-MM-DD';
+
+export const {{camelCase name}}Schema: ObjectSchema<I{{pascalCase name}}DTO> = joi.object(
+    {
+        name: joi.string().required(),
+    }
+).messages({
+    'date.format': `El campo {#label} debe tener el formato ${DATE_FORMAT}`,
+    'number.base': 'El campo {#label} debe ser un número',
+    'array.base': 'El campo {#label} debe ser un arreglo',
+    'date.base': 'El campo {#label} debe ser una fecha',
+});
