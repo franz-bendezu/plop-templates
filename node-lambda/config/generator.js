@@ -81,6 +81,7 @@ export const GENERATOR_CONFIG = {
       templateFile:
         TEMPLATE_PATH +
         "/src/controller/controller-interface-find-by-params.hbs",
+      when: (answers) => answers.operation === "read",
     },
     {
       type: "add",
@@ -93,6 +94,7 @@ export const GENERATOR_CONFIG = {
       pattern: BLOCK_METHOD_PATTERN,
       templateFile:
         TEMPLATE_PATH + "/src/controller/controller-find-by-params.hbs",
+      when: (answers) => answers.operation === "read",
     },
     {
       type: "add",
@@ -116,6 +118,7 @@ export const GENERATOR_CONFIG = {
       pattern: BLOCK_RETURN_RESPONSE_PATTERN,
       templateFile:
         TEMPLATE_PATH + "/src/handler-return-response.hbs",
+      when: (answers) => answers.operation === "read",
     },
 
     {
