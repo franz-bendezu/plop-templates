@@ -4,7 +4,7 @@ import {
   SRC_PATH,
   TEST_PATH,
   TEMPLATE_PATH,
-  BLOCK_RETURN_RESPONSE_PATTERN,
+  BLOCK_RESPONSE_PATTERN,
 } from "./constants.js";
 
 export const GENERATOR_CONFIG = {
@@ -131,7 +131,7 @@ export const GENERATOR_CONFIG = {
     {
       type: "modify",
       path: SRC_PATH + "/handler.ts",
-      pattern: BLOCK_RETURN_RESPONSE_PATTERN,
+      pattern: BLOCK_RESPONSE_PATTERN,
       templateFile:
         TEMPLATE_PATH + "/src/handler-return-find-by-params.hbs",
       when: (answers) => answers.operation === "read",
@@ -140,7 +140,7 @@ export const GENERATOR_CONFIG = {
     {
       type: "modify",
       path: SRC_PATH + "/handler.ts",
-      pattern: BLOCK_RETURN_RESPONSE_PATTERN,
+      pattern: BLOCK_RESPONSE_PATTERN,
       templateFile:
         TEMPLATE_PATH + "/src/handler-return-create.hbs",
       when: (answers) => answers.operation === "create",
