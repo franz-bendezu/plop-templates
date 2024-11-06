@@ -30,7 +30,7 @@ export const GENERATOR_CONFIG = {
       name: "operation",
       message: "Resource operation",
       choices: ["create", "read", "update", "delete"],
-    }
+    },
   ],
   actions: [
     {
@@ -43,7 +43,8 @@ export const GENERATOR_CONFIG = {
       destination: SRC_PATH + "/interface",
       base: TEMPLATE_PATH + "/src/interface/",
       templateFiles: TEMPLATE_PATH + "/src/interface/**/*.hbs",
-    },    {
+    },
+    {
       type: "addMany",
       destination: SRC_PATH + "/dto",
       base: TEMPLATE_PATH + "/src/dto/",
@@ -81,15 +82,16 @@ export const GENERATOR_CONFIG = {
       templateFile:
         TEMPLATE_PATH +
         "/src/controller/controller-interface-find-by-params.hbs",
-      when: (answers) => answers.operation === "read",
+      skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
     },
     {
       type: "modify",
       path: SRC_PATH + "/controller/{{kebabCase name}}.controller.interface.ts",
       pattern: BLOCK_METHOD_PATTERN,
       templateFile:
-        TEMPLATE_PATH + "/src/controller/controller-method-create-interface.hbs",
-      when: (answers) => answers.operation === "create",
+        TEMPLATE_PATH +
+        "/src/controller/controller-method-create-interface.hbs",
+      skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
     {
       type: "add",
@@ -102,7 +104,7 @@ export const GENERATOR_CONFIG = {
       pattern: BLOCK_METHOD_PATTERN,
       templateFile:
         TEMPLATE_PATH + "/src/controller/controller-find-by-params.hbs",
-      when: (answers) => answers.operation === "read",
+      skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
     },
     {
       type: "modify",
@@ -110,7 +112,7 @@ export const GENERATOR_CONFIG = {
       pattern: BLOCK_METHOD_PATTERN,
       templateFile:
         TEMPLATE_PATH + "/src/controller/controller-method-create.hbs",
-      when: (answers) => answers.operation === "create",
+      skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
     {
       type: "add",
@@ -132,18 +134,16 @@ export const GENERATOR_CONFIG = {
       type: "modify",
       path: SRC_PATH + "/handler.ts",
       pattern: BLOCK_RESPONSE_PATTERN,
-      templateFile:
-        TEMPLATE_PATH + "/src/handler-return-find-by-params.hbs",
-      when: (answers) => answers.operation === "read",
+      templateFile: TEMPLATE_PATH + "/src/handler-return-find-by-params.hbs",
+      skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
     },
 
     {
       type: "modify",
       path: SRC_PATH + "/handler.ts",
       pattern: BLOCK_RESPONSE_PATTERN,
-      templateFile:
-        TEMPLATE_PATH + "/src/handler-return-create.hbs",
-      when: (answers) => answers.operation === "create",
+      templateFile: TEMPLATE_PATH + "/src/handler-return-create.hbs",
+      skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
 
     {
