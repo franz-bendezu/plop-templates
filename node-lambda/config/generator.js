@@ -25,6 +25,12 @@ export const GENERATOR_CONFIG = {
       name: "folder",
       message: "Resource folder",
     },
+    {
+      type: "list",
+      name: "operation",
+      message: "Resource operation",
+      choices: ["create", "read", "update", "delete"],
+    }
   ],
   actions: [
     {
