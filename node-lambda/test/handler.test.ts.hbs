@@ -7,6 +7,7 @@ import { RuntimeError } from '../../src/{{kebabCase moduleName}}/common/error/ru
 import { ApiGatewayResponse, ValidationMessage } from '../../src/{{kebabCase moduleName}}/common/response/api-gateway';
 import { StatusMessages } from '../../src/{{kebabCase moduleName}}/common/response/status-message';
 import { {{camelCase name}}Controller } from '../../src/{{kebabCase moduleName}}/controller/{{kebabCase name}}.provider';
+import I{{pascalCase name}}Params from '../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}-params.interface';
 
 const invokeHandler = async (queryParams?: IHandler{{pascalCase name}}QueryParams) => {
     const event: APIGatewayProxyEvent = {
@@ -72,10 +73,10 @@ describe('index handler', () => {
         }];
         const mockGet = jest.spyOn({{camelCase name}}Controller, 'findAllByParams').mockResolvedValue(mockData);
         
-        const params: IHandler{{pascalCase name}}QueryParams = {
-            id: 1,
-            name: 'test',
-            date: new Date('2021-01-01'),
+        const params: Required<IHandler{{pascalCase name}}QueryParams> = {
+            [{{pascalCase name}}QueryParams.ID]: '1',
+            [{{pascalCase name}}QueryParams.DATE]: '2023-01-01',
+            [{{pascalCase name}}QueryParams.NAME]: '2',
             {{#each paramsProperties}}
             {{name}}: '{{value}}',
             {{/each}}
@@ -93,14 +94,14 @@ describe('index handler', () => {
             }),
         });
 
-        const params: {{pascalCase name}}QueryParams = {
+        const expectedParams: Required<{{pascalCase name}}QueryParams> = {
             id: '1',
             name: 'test',
             date: '2021-01-01',
         };
 
 
-        expect(mockGet).toHaveBeenCalledWith(params);
+        expect(mockGet).toHaveBeenCalledWith(expectedParams);
     });
 
     it('should throw RuntimeError when an error occurs', async () => {
