@@ -1,0 +1,9 @@
+$1
+        const data = await {{camelCase name}}Controller.create(
+            {{pascalCase name}}DTO.fromBody(event.body),
+        );
+        return new ApiGatewayResponse(
+            '{{pascalCase name}} creado',
+            StatusCodes.OK,
+            data,
+        );

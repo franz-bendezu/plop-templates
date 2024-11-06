@@ -117,8 +117,17 @@ export const GENERATOR_CONFIG = {
       path: SRC_PATH + "/handler.ts",
       pattern: BLOCK_RETURN_RESPONSE_PATTERN,
       templateFile:
-        TEMPLATE_PATH + "/src/handler-return-response.hbs",
+        TEMPLATE_PATH + "/src/handler-return-find-by-params.hbs",
       when: (answers) => answers.operation === "read",
+    },
+
+    {
+      type: "modify",
+      path: SRC_PATH + "/handler.ts",
+      pattern: BLOCK_RETURN_RESPONSE_PATTERN,
+      templateFile:
+        TEMPLATE_PATH + "/src/handler-return-create.hbs",
+      when: (answers) => answers.operation === "create",
     },
 
     {
