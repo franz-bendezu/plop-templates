@@ -28,24 +28,14 @@ export const GENERATOR_CONFIG = {
   actions: [
     {
       type: "add",
-      path: SRC_PATH + "/interface/{{kebabCase name}}.interface.ts",
-      templateFile: TEMPLATE_PATH + "/src/interface/model-interface.hbs",
-    },
-    {
-      type: "add",
       path: SRC_PATH + "/model/{{kebabCase name}}.model.ts",
       templateFile: TEMPLATE_PATH + "/src/model.hbs",
     },
     {
-      type: "add",
-      path: SRC_PATH + "/interface/{{kebabCase name}}-params.interface.ts",
-      templateFile: TEMPLATE_PATH + "/src/interface/params-interface.hbs",
-    },
-    {
-      type: "add",
-      path:
-        SRC_PATH + "/interface/{{kebabCase name}}-query-result.interface.ts",
-      templateFile: TEMPLATE_PATH + "/src/interface/query-result-interface.hbs",
+      type: "addMany",
+      destination: SRC_PATH + "/interface",
+      base: TEMPLATE_PATH + "/src/interface/",
+      templateFiles: TEMPLATE_PATH + "/src/interface/**/*.hbs",
     },
     {
       type: "add",
