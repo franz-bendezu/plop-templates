@@ -1,13 +1,17 @@
+import { RuntimeError } from '../common/error/runtime-error';
+import { TimeFormatter } from '../common/formatter/time.formatter';
+import { StatusCodes } from '../common/response/status-code';
 import  I{{pascalCase name}} from '../interface/{{kebabCase name}}.interface';
 import { AuditDTO } from './audit.dto';
+import { {{cammelCase name}} } from '../common/schema/{{kebabCase name}}.schema';
 
 export default class {{pascalCase name}}DTO extends AuditDTO {
 
     constructor(
         public id: number,
         public name: string,
-        public createdAt: Date,
-        public modifiedAt: Date,
+        public createdAt: string | null,
+        public modifiedAt: string | null,
         public createdBy: string,
         public modifiedBy: string,
         {{#each modelProperties}}
@@ -22,8 +26,8 @@ export default class {{pascalCase name}}DTO extends AuditDTO {
         return new {{pascalCase name}}DTO(
             data.id,
             data.name,
-            data.createdAt,
-            data.modifiedAt,
+            TimeFormatter.dateToLocaleString(data.createdAt),
+            TimeFormatter.dateToLocaleString(data.modifiedAt),
             data.createdBy,
             data.modifiedBy,
             {{#each modelProperties}}
