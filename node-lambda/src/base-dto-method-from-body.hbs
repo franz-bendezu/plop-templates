@@ -17,5 +17,7 @@ $1
             });
         }
 
-        return Base{{pascalCase name}}DTO.from(value);
+        return new Base{{pascalCase name}}DTO(
+            value.name,
+        );
     }
