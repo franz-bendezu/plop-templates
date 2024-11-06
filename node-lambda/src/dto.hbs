@@ -31,34 +31,5 @@ export default class {{pascalCase name}}DTO extends AuditDTO {
         );
     }
 
-    static fromBody(body: string | null): {{pascalCase name}}DTO {
-        if (!body) {
-            throw new RuntimeError({
-                statusMessage: 'Body is required',
-                statusCode: StatusCodes.BAD_REQUEST,
-            });
-        }
-
-        const data = JSON.parse(body);
-
-        const { error, value } = {{camelCase name}}Schema.validate(data);
-        if (error) {
-            throw new RuntimeError({
-                statusMessage: error.message,
-                statusCode: StatusCodes.BAD_REQUEST,
-            });
-        }
-
-        return new {{pascalCase name}}DTO(
-            value.id,
-            value.name,
-            value.createdAt,
-            value.modifiedAt,
-            value.createdBy,
-            value.modifiedBy,
-            {{#each modelProperties}}
-            value.{{name}},
-            {{/each}}
-        );
-    }
+    // Methods
 }
