@@ -8,14 +8,7 @@ import {{pascalCase name}}ParamsDTO from './dto/{{kebabCase name}}-params.dto';
 
 export const index: APIGatewayProxyHandler = async (event) => {
     try {
-        const data = await {{camelCase name}}Controller.findAllByParams(
-            {{pascalCase name}}ParamsDTO.fromQueryParams(event.queryStringParameters),
-        );
-        return new ApiGatewayResponse(
-            'Cátalogos encontrados',
-            StatusCodes.OK,
-            data,
-        );
+// Return the response
     } catch (error) {
         console.error('Error:', error);
         if (isRuntimeError(error)) {

@@ -4,6 +4,7 @@ import {
   SRC_PATH,
   TEST_PATH,
   TEMPLATE_PATH,
+  BLOCK_RETURN_RESPONSE_PATTERN,
 } from "./constants.js";
 
 export const GENERATOR_CONFIG = {
@@ -102,6 +103,13 @@ export const GENERATOR_CONFIG = {
       type: "add",
       path: SRC_PATH + "/handler.ts",
       templateFile: TEMPLATE_PATH + "/src/handler.hbs",
+    },
+    {
+      type: "modify",
+      path: SRC_PATH + "/handler.ts",
+      pattern: BLOCK_RETURN_RESPONSE_PATTERN,
+      templateFile:
+        TEMPLATE_PATH + "/src/handler-return-response.hbs",
     },
 
     {

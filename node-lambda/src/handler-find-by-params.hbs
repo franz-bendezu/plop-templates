@@ -1,0 +1,9 @@
+$1
+        const data = await {{camelCase name}}Controller.findAllByParams(
+            {{pascalCase name}}ParamsDTO.fromQueryParams(event.queryStringParameters),
+        );
+        return new ApiGatewayResponse(
+            'Cátalogos encontrados',
+            StatusCodes.OK,
+            data,
+        );
