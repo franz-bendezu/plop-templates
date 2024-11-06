@@ -84,6 +84,14 @@ export const GENERATOR_CONFIG = {
       when: (answers) => answers.operation === "read",
     },
     {
+      type: "modify",
+      path: SRC_PATH + "/controller/{{kebabCase name}}.controller.interface.ts",
+      pattern: BLOCK_METHOD_PATTERN,
+      templateFile:
+        TEMPLATE_PATH + "/src/controller/controller-method-create-interface.hbs",
+      when: (answers) => answers.operation === "create",
+    },
+    {
       type: "add",
       path: SRC_PATH + "/controller/{{kebabCase name}}.controller.ts",
       templateFile: TEMPLATE_PATH + "/src/controller/controller-impl.hbs",
@@ -95,6 +103,14 @@ export const GENERATOR_CONFIG = {
       templateFile:
         TEMPLATE_PATH + "/src/controller/controller-find-by-params.hbs",
       when: (answers) => answers.operation === "read",
+    },
+    {
+      type: "modify",
+      path: SRC_PATH + "/controller/{{kebabCase name}}.controller.ts",
+      pattern: BLOCK_METHOD_PATTERN,
+      templateFile:
+        TEMPLATE_PATH + "/src/controller/controller-method-create.hbs",
+      when: (answers) => answers.operation === "create",
     },
     {
       type: "add",
