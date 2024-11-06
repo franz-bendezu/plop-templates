@@ -1,5 +1,5 @@
 $1
-    async save(data:  {{pascalCase name}}DTO): Promise<{{pascalCase name}}DTO> {
+    async save(data:  Base{{pascalCase name}}DTO): Promise<{{pascalCase name}}DTO> {
         const result = await this.{{camelCase name}}Service.save(data);
         return {{pascalCase name}}DTO.from(result);
     }
