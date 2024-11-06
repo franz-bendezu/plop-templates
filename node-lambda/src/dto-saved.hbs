@@ -1,7 +1,13 @@
+import { TimeFormatter } from '../common/formatter/time.formatter';
+import I{{pascalCase name}} from '../interface/{{kebabCase name}}.interface';
 import Base{{pascalCase name}}DTO, { IBase{{pascalCase name}}DTO } from './base-{{kebabCase name}}.dto';
 
 export interface I{{pascalCase name}}DTO extends IBase{{pascalCase name}}DTO {
     id: number;
+    createdAt: string | null;
+    modifiedAt: string | null;
+    createdBy: string;
+    modifiedBy: string;
     {{#each modelProperties}}
     {{name}}: {{type}};
     {{/each}} 
@@ -20,7 +26,7 @@ export default class {{pascalCase name}}DTO extends Base{{pascalCase name}}DTO i
         public {{name}}: {{type}},
         {{/each}}
     ) {
-        super(name, createdAt, modifiedAt, createdBy, modifiedBy);
+        super(name);
     }
 
     static from(data: I{{pascalCase name}}): {{pascalCase name}}DTO {
