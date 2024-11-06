@@ -2,6 +2,9 @@ export default interface I{{pascalCase name}}QueryResultRow {
     ID: number;
     NAME: string;
     CREATED_AT: Date;
+    MODIFIED_AT: Date;
+    CREATED_BY: string;
+    MODIFIED_BY: string;
     {{#each rowProperties}}
     {{name}}: {{type}};
     {{/each}}

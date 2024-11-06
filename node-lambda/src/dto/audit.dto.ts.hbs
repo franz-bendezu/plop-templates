@@ -1,0 +1,20 @@
+import { TimeFormatter } from '../common/formatter/time.formatter';
+import IAudit from '../interface/audit.interface';
+
+export class AuditDTO {
+    constructor(
+        public createdAt: string | null,
+        public modifiedAt: string | null,
+        public createdBy: string,
+        public modifiedBy: string,
+    ) { }
+
+    static from(params: IAudit): AuditDTO {
+        return new AuditDTO(
+            TimeFormatter.dateToLocaleString(params.createdAt),
+            TimeFormatter.dateToLocaleString(params.modifiedAt),
+            params.createdBy,
+            params.modifiedBy,
+        );
+    }
+}

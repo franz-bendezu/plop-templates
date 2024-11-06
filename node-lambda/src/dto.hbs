@@ -1,15 +1,20 @@
 import  I{{pascalCase name}} from '../interface/{{kebabCase name}}.interface';
 
-export default class {{pascalCase name}}DTO {
+export default class {{pascalCase name}}DTO extends AuditDTO {
 
     constructor(
         public id: number,
         public name: string,
         public createdAt: Date,
+        public modifiedAt: Date,
+        public createdBy: string,
+        public modifiedBy: string,
         {{#each modelProperties}}
         public {{name}}: {{type}},
         {{/each}}
-    ) {}
+    ) {
+        super(createdAt, modifiedAt, createdBy, modifiedBy);
+    }
 
     static from(params: I{{pascalCase name}}): {{pascalCase name}}DTO {
         // Transform data into DTO
@@ -17,6 +22,9 @@ export default class {{pascalCase name}}DTO {
             params.id,
             params.name,
             params.createdAt,
+            params.modifiedAt,
+            params.createdBy,
+            params.modifiedBy,
             {{#each modelProperties}}
             params.{{name}},
             {{/each}}

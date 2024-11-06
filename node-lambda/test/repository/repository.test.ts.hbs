@@ -31,7 +31,10 @@ describe('{{pascalCase name}}Repository', () => {
                 {
                     ID: 1,
                     NAME: 'test',
-                    CREATED_AT: new Date(),
+                    CREATED_AT: new Date('2021-01-01T05:00:00.000Z'),
+                    MODIFIED_AT: null,
+                    CREATED_BY: null,
+                    MODIFIED_BY: null,
                 },
             ],
             command: '',
@@ -49,7 +52,10 @@ describe('{{pascalCase name}}Repository', () => {
         expect(result[0]).toEqual({
             id: 1,
             name: 'test',
-            createdAt: queryResult.rows[0].CREATED_AT,
+            createdAt: '2021-01-01T05:00:00.000Z',
+            modifiedAt: null,
+            createdBy: null,
+            modifiedBy: null,
         } satisfies I{{pascalCase name}},
         );
     });

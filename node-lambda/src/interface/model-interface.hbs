@@ -1,7 +1,8 @@
-export default interface I{{pascalCase name}} {
+import IAudit from './audit.interface';
+
+export default interface I{{pascalCase name}} extends IAudit {
     id: number;
     name: string;
-    createdAt: Date;
     {{#each modelProperties}}
     {{name}}: {{type}};
     {{/each}}
