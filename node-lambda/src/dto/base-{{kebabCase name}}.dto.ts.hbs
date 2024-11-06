@@ -2,33 +2,21 @@ import { RuntimeError } from '../common/error/runtime-error';
 import { StatusCodes } from '../common/response/status-code';
 import { {{camelCase name}}Schema } from '../common/schema/{{kebabCase name}}.schema';
 
-export interface IBase{{pascalCase name}}DTO extends AuditDTO {
+export interface IBase{{pascalCase name}}DTO {
     name: string;
     {{#each modelProperties}}
     {{name}}: {{type}};
     {{/each}}
 }
 
-export default class Base{{pascalCase name}}DTO extends AuditDTO implements IBase{{pascalCase name}}DTO {
+export default class Base{{pascalCase name}}DTO implements IBase{{pascalCase name}}DTO {
 
     constructor(
         public name: string,
         {{#each modelProperties}}
         public {{name}}: {{type}},
         {{/each}}
-    ) {
-        super(createdAt, modifiedAt, createdBy, modifiedBy);
-    }
-
-    static from(data: I{{pascalCase name}}): Base{{pascalCase name}}DTO {
-        // Transform data into DTO
-        return new {{pascalCase name}}DTO(
-            data.name,
-            {{#each modelProperties}}
-            data.{{name}},
-            {{/each}}
-        );
-    }
+    ) {}
 
     // Methods
 }
