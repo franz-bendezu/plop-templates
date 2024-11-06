@@ -5,7 +5,19 @@ import  I{{pascalCase name}} from '../interface/{{kebabCase name}}.interface';
 import { AuditDTO } from './audit.dto';
 import { {{cammelCase name}} } from '../common/schema/{{kebabCase name}}.schema';
 
-export default class {{pascalCase name}}DTO extends AuditDTO {
+export interface I{{pascalCase name}}DTO extends AuditDTO {
+    id: number;
+    name: string;
+    createdAt: string | null;
+    modifiedAt: string | null;
+    createdBy: string;
+    modifiedBy: string;
+    {{#each modelProperties}}
+    {{name}}: {{type}};
+    {{/each}}
+}
+
+export default class {{pascalCase name}}DTO extends AuditDTO implements I{{pascalCase name}}DTO {
 
     constructor(
         public id: number,
