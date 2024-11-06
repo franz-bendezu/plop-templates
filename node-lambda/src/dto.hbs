@@ -16,17 +16,17 @@ export default class {{pascalCase name}}DTO extends AuditDTO {
         super(createdAt, modifiedAt, createdBy, modifiedBy);
     }
 
-    static from(params: I{{pascalCase name}}): {{pascalCase name}}DTO {
+    static from(data: I{{pascalCase name}}): {{pascalCase name}}DTO {
         // Transform data into DTO
         return new {{pascalCase name}}DTO(
-            params.id,
-            params.name,
-            params.createdAt,
-            params.modifiedAt,
-            params.createdBy,
-            params.modifiedBy,
+            data.id,
+            data.name,
+            data.createdAt,
+            data.modifiedAt,
+            data.createdBy,
+            data.modifiedBy,
             {{#each modelProperties}}
-            params.{{name}},
+            data.{{name}},
             {{/each}}
         );
     }
