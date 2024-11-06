@@ -133,9 +133,9 @@ export const GENERATOR_CONFIG = {
     },
     {
       type: "modify",
-      path: SRC_PATH + "/dto/{{kebabCase name}}.dto.ts",
+      path: SRC_PATH + "/dto/base-{{kebabCase name}}.dto.ts",
       pattern: BLOCK_METHOD_PATTERN,
-      templateFile: TEMPLATE_PATH + "/src/dto-method-from-body.hbs",
+      templateFile: TEMPLATE_PATH + "/src/base-dto-method-from-body.hbs",
       skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
     {

@@ -1,5 +1,5 @@
 $1
-    static fromBody(body: string | null): {{pascalCase name}}DTO {
+    static fromBody(body: string | null): Base{{pascalCase name}}DTO {
         if (!body) {
             throw new RuntimeError({
                 statusMessage: 'Body is required',
@@ -17,15 +17,5 @@ $1
             });
         }
 
-        return new {{pascalCase name}}DTO(
-            value.id,
-            value.name,
-            value.createdAt,
-            value.modifiedAt,
-            value.createdBy,
-            value.modifiedBy,
-            {{#each modelProperties}}
-            value.{{name}},
-            {{/each}}
-        );
+        return {{pascalCase name}}DTO.from(value);
     }

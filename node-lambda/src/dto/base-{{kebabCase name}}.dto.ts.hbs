@@ -3,7 +3,7 @@ import { TimeFormatter } from '../common/formatter/time.formatter';
 import { StatusCodes } from '../common/response/status-code';
 import  I{{pascalCase name}} from '../interface/{{kebabCase name}}.interface';
 import { AuditDTO } from './audit.dto';
-import { {{camelCase name}} } from '../common/schema/{{kebabCase name}}.schema';
+import { {{camelCase name}}Schema } from '../common/schema/{{kebabCase name}}.schema';
 
 export interface IBase{{pascalCase name}}DTO extends AuditDTO {
     name: string;
@@ -16,7 +16,7 @@ export interface IBase{{pascalCase name}}DTO extends AuditDTO {
     {{/each}}
 }
 
-export default class Base{{pascalCase name}}DTO extends AuditDTO implements I{{pascalCase name}}DTO {
+export default class Base{{pascalCase name}}DTO extends AuditDTO implements IBase{{pascalCase name}}DTO {
 
     constructor(
         public name: string,
@@ -31,7 +31,7 @@ export default class Base{{pascalCase name}}DTO extends AuditDTO implements I{{p
         super(createdAt, modifiedAt, createdBy, modifiedBy);
     }
 
-    static from(data: I{{pascalCase name}}): {{pascalCase name}}DTO {
+    static from(data: I{{pascalCase name}}): Base{{pascalCase name}}DTO {
         // Transform data into DTO
         return new {{pascalCase name}}DTO(
             data.id,
