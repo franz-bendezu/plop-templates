@@ -274,7 +274,7 @@ export const GENERATOR_CONFIG = {
       type: "addMany",
       destination: TEST_PATH,
       base: TEMPLATE_PATH + "/test/",
-      templateFiles: TEMPLATE_PATH + "/test//**/*.ts.hbs",
+      templateFiles: TEMPLATE_PATH + "/test/**/*.ts.hbs",
     },
     {
       type: "add",
