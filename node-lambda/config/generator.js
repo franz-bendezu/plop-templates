@@ -42,7 +42,19 @@ export const GENERATOR_CONFIG = {
       type: "addMany",
       destination: SRC_PATH + "/interface",
       base: TEMPLATE_PATH + "/src/interface/",
-      templateFiles: TEMPLATE_PATH + "/src/interface/**/*.hbs",
+      templateFiles: TEMPLATE_PATH + "/src/interface/**/*.ts.hbs",
+    },
+    {
+      type: "add",
+      path: SRC_PATH + "/interface/{{kebabCase name}}.interface.ts",
+      templateFile: TEMPLATE_PATH + "/src/interface/model.interface.hbs",
+      skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    },
+    {
+      type: "add",
+      path: SRC_PATH + "/interface/{{kebabCase name}}.interface.ts",
+      templateFile: TEMPLATE_PATH + "/src/interface/model-saved.interface.hbs",
+      skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
     {
       type: "addMany",
@@ -72,14 +84,14 @@ export const GENERATOR_CONFIG = {
       templateFile:
         TEMPLATE_PATH +
         "/src/service/service-method-find-by-params-interface.hbs",
+      skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
     },
     {
       type: "modify",
       path: SRC_PATH + "/service/{{kebabCase name}}.service.interface.ts",
       pattern: BLOCK_METHOD_PATTERN,
       templateFile:
-        TEMPLATE_PATH +
-        "/src/service/service-method-create-interface.hbs",
+        TEMPLATE_PATH + "/src/service/service-method-create-interface.hbs",
       skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
     {
@@ -91,16 +103,14 @@ export const GENERATOR_CONFIG = {
       type: "modify",
       path: SRC_PATH + "/service/{{kebabCase name}}.service.ts",
       pattern: BLOCK_METHOD_PATTERN,
-      templateFile:
-        TEMPLATE_PATH + "/src/service/service-find-by-params.hbs",
+      templateFile: TEMPLATE_PATH + "/src/service/service-find-by-params.hbs",
       skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
     },
     {
       type: "modify",
       path: SRC_PATH + "/service/{{kebabCase name}}.service.ts",
       pattern: BLOCK_METHOD_PATTERN,
-      templateFile:
-        TEMPLATE_PATH + "/src/service/service-method-create.hbs",
+      templateFile: TEMPLATE_PATH + "/src/service/service-method-create.hbs",
       skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
     {
