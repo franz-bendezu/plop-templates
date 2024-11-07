@@ -71,14 +71,18 @@ export const GENERATOR_CONFIG = {
       type: "modify",
       path: SRC_PATH + "/repository/{{kebabCase name}}.repository.interface.ts",
       pattern: BLOCK_METHOD_PATTERN,
-      templateFile: TEMPLATE_PATH + "/src/repository/repository-find-by-params-interface.hbs",
+      templateFile:
+        TEMPLATE_PATH +
+        "/src/repository/repository-find-by-params-interface.hbs",
       skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
     },
     {
       type: "modify",
       path: SRC_PATH + "/repository/{{kebabCase name}}.repository.interface.ts",
       pattern: BLOCK_METHOD_PATTERN,
-      templateFile: TEMPLATE_PATH + "/src/repository/repository-method-create-interface.hbs",
+      templateFile:
+        TEMPLATE_PATH +
+        "/src/repository/repository-method-create-interface.hbs",
       skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
     {
@@ -89,27 +93,31 @@ export const GENERATOR_CONFIG = {
     {
       type: "add",
       path: SRC_PATH + "/repository/query/{{kebabCase name}}.query.ts",
-      templateFile: TEMPLATE_PATH + "/src/repository/query/model-query-find-by-params.hbs",
+      templateFile:
+        TEMPLATE_PATH + "/src/repository/query/model-query-find-by-params.hbs",
       skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
     },
     {
       type: "add",
       path: SRC_PATH + "/repository/query/{{kebabCase name}}.query.ts",
-      templateFile: TEMPLATE_PATH + "/src/repository/query/model-query-create.hbs",
+      templateFile:
+        TEMPLATE_PATH + "/src/repository/query/model-query-create.hbs",
       skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
     {
       type: "modify",
       path: SRC_PATH + "/repository/{{kebabCase name}}.repository.ts",
       pattern: BLOCK_METHOD_PATTERN,
-      templateFile: TEMPLATE_PATH + "/src/repository/repository-find-by-params.hbs",
+      templateFile:
+        TEMPLATE_PATH + "/src/repository/repository-find-by-params.hbs",
       skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
     },
     {
       type: "modify",
       path: SRC_PATH + "/repository/{{kebabCase name}}.repository.ts",
       pattern: BLOCK_METHOD_PATTERN,
-      templateFile: TEMPLATE_PATH + "/src/repository/repository-method-create.hbs",
+      templateFile:
+        TEMPLATE_PATH + "/src/repository/repository-method-create.hbs",
       skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
     {
@@ -263,15 +271,9 @@ export const GENERATOR_CONFIG = {
     },
     {
       type: "addMany",
-      destination: TEST_PATH + "/config",
-      base: TEMPLATE_PATH + "/test/config/",
-      templateFiles: TEMPLATE_PATH + "/test/config/**/*",
-    },
-    {
-      type: "addMany",
-      destination: TEST_PATH + "/common",
-      base: TEMPLATE_PATH + "/test/common/",
-      templateFiles: TEMPLATE_PATH + "/test/common/**/*.hbs",
+      destination: TEST_PATH,
+      base: TEMPLATE_PATH + "/test/",
+      templateFiles: TEMPLATE_PATH + "/test//**/*.ts.hbs",
     },
     {
       type: "add",
@@ -287,11 +289,6 @@ export const GENERATOR_CONFIG = {
       type: "add",
       path: TEST_PATH + "/service/{{kebabCase name}}.service.test.ts",
       templateFile: TEMPLATE_PATH + "/test/service/service.test.hbs",
-    },
-    {
-      type: "add",
-      path: TEST_PATH + "/handler.test.ts",
-      templateFile: TEMPLATE_PATH + "/test/handler.test.ts.hbs",
     },
     {
       type: "append",
