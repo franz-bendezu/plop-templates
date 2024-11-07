@@ -1,14 +1,11 @@
 $<imports>
+import { CREATE_QUERY } from '../query/{{kebabCase name}}.query';
 import I{{pascalCase name}}ResultRow from '../interface/{{kebabCase name}}-query-result.interface';
 import IBase{{pascalCase name}} from '../interface/base-{{dashCase name}}.interface';$<code>$<methods>
     async save(data: IBase{{pascalCase name}}): Promise<{{pascalCase name}}> {
         try {
             const queryResult = await this.pgClient.query<I{{pascalCase name}}ResultRow>(
-                `INSERT INTO {{snakeCase name}}
-                 (NAME{{#each rowProperties}}, {{snakeCase name}}{{/each}})
-                  VALUES ($$1{{#each rowProperties}}, ${{add @index 2}}{{/each}}) 
-                  RETURNING ID, NAME, CREATED_AT, MODIFIED_AT, CREATED_BY, MODIFIED_BY
-                  {{#each rowProperties}}, {{snakeCase name}}{{/each}}`,
+                CREATE_QUERY,
                 [
                     data.name,
                     {{#each properties}}

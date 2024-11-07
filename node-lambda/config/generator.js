@@ -87,6 +87,18 @@ export const GENERATOR_CONFIG = {
       templateFile: TEMPLATE_PATH + "/src/repository/repository-impl.hbs",
     },
     {
+      type: "add",
+      path: SRC_PATH + "/repository/query/{{kebabCase name}}.query.ts",
+      templateFile: TEMPLATE_PATH + "/src/repository/query/model-query-find-by-params.hbs",
+      skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    },
+    {
+      type: "add",
+      path: SRC_PATH + "/repository/query/{{kebabCase name}}.query.ts",
+      templateFile: TEMPLATE_PATH + "/src/repository/query/model-query-create.hbs",
+      skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    },
+    {
       type: "modify",
       path: SRC_PATH + "/repository/{{kebabCase name}}.repository.ts",
       pattern: BLOCK_METHOD_PATTERN,

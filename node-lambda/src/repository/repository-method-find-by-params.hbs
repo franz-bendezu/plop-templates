@@ -1,13 +1,12 @@
 $<imports>
+import { FIND_BY_PARAMS } from '../query/{{kebabCase name}}.query';
 import I{{pascalCase name}}Params from '../interface/{{kebabCase name}}-params.interface';
 import I{{pascalCase name}}ResultRow from '../interface/{{kebabCase name}}-query-result.interface';$<code>$<methods>
     async findAllByParams(params: I{{pascalCase name}}Params): Promise<{{pascalCase name}}[]> {
         try {
             // Implement data fetching logic here
             const queryResult = await this.pgClient.query<I{{pascalCase name}}ResultRow>(
-                `SELECT ID, NAME, CREATED_AT, MODIFIED_AT, CREATED_BY, MODIFIED_BY 
-                    FROM {{snakeCase name}} 
-                WHERE id = $1`,
+                FIND_BY_PARAMS,
                 [params.id]
             );
             return queryResult.rows.map((row) => new {{pascalCase name}}(

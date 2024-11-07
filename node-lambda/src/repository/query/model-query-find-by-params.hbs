@@ -1,0 +1,5 @@
+export const FIND_BY_PARAMS = `
+SELECT ID, NAME, CREATED_AT, MODIFIED_AT, CREATED_BY, MODIFIED_BY 
+                    FROM {{snakeCase name}} 
+                WHERE id = $1
+    `;
