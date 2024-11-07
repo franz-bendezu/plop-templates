@@ -2,6 +2,6 @@
 
 command:
 ```sh
-plop -- --name use --moduleName search-uses --folder sv-prodsusc-lambda-search-usos
+plop -- --name product --moduleName product --folder product-api --operation read
 
 ```
