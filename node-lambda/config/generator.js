@@ -233,7 +233,7 @@ export const GENERATOR_CONFIG = {
     {
       type: "add",
       path: SRC_PATH + "/handler.ts",
-      templateFile: TEMPLATE_PATH + "/src/handler.hbs",
+      templateFile: TEMPLATE_PATH + "/src/handler.ts.hbs",
     },
     {
       type: "modify",
