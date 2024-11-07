@@ -261,16 +261,6 @@ export const GENERATOR_CONFIG = {
       templateFile: TEMPLATE_PATH + "/test/service/service.test.hbs",
     },
     {
-      type: "append",
-      path: FOLDER_PATH + "/package.json",
-      pattern: /"dependencies": {(?<insertion>)/g,
-      template: `    "@joi/date": "^2.1.1",
-    "joi": "^17.13.3",`,
-    },
-    // upgrade devDependencies to latest version, first remove the old version
-    // "serverless-offline": "^13.6.0",
-    // "serverless": "^3.31.0",
-    {
       type: "upgradeDevDependencies",
     },
   ],
