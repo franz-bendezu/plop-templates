@@ -5,9 +5,10 @@ import IBase{{pascalCase name}} from '../interface/base-{{dashCase name}}.interf
         try {
             const queryResult = await this.pgClient.query<I{{pascalCase name}}ResultRow>(
                 `INSERT INTO {{snakeCase name}}
-                 (NAME{{#each properties}}, {{snakeCase name}}{{/each}})
-                  VALUES ($1{{#each properties}}, ${{add @index 2}}{{/each}}) 
-                  RETURNING ID, NAME, CREATED_AT{{#each properties}}, {{snakeCase name}}{{/each}}`,
+                 (NAME{{#each rowProperties}}, {{snakeCase name}}{{/each}})
+                  VALUES ($$1{{#each rowProperties}}, ${{add @index 2}}{{/each}}) 
+                  RETURNING ID, NAME, CREATED_AT, MODIFIED_AT, CREATED_BY, MODIFIED_BY
+                  {{#each rowProperties}}, {{snakeCase name}}{{/each}}`,
                 [
                     data.name,
                     {{#each properties}}
@@ -21,6 +22,9 @@ import IBase{{pascalCase name}} from '../interface/base-{{dashCase name}}.interf
                 row.ID,
                 row.NAME,
                 row.CREATED_AT,
+                row.MODIFIED_AT,
+                row.CREATED_BY,
+                row.MODIFIED_BY,
                 {{#each rowProperties}}
                 row.{{name}},
                 {{/each}}
