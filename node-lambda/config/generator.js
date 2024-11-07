@@ -60,7 +60,32 @@ export const GENERATOR_CONFIG = {
       type: "addMany",
       destination: SRC_PATH + "/dto",
       base: TEMPLATE_PATH + "/src/dto/",
-      templateFiles: TEMPLATE_PATH + "/src/dto/**/*.hbs",
+      templateFiles: TEMPLATE_PATH + "/src/dto/**/*.ts.hbs",
+    },
+    {
+      type: "add",
+      path: SRC_PATH + "/dto/{{kebabCase name}}.dto.ts",
+      templateFile: TEMPLATE_PATH + "/src/dto/model-dto.hbs",
+      skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    },
+    {
+      type: "add",
+      path: SRC_PATH + "/dto/{{kebabCase name}}.dto.ts",
+      templateFile: TEMPLATE_PATH + "/src/dto/model-dto-saved.hbs",
+      skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    },
+    {
+      type: "add",
+      path: SRC_PATH + "/dto/{{kebabCase name}}-params.dto.ts",
+      templateFile: TEMPLATE_PATH + "/src/dto/model-dto-params.hbs",
+      skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    },
+    {
+      type: "modify",
+      path: SRC_PATH + "/dto/base-{{kebabCase name}}.dto.ts",
+      pattern: BLOCK_METHOD_PATTERN,
+      templateFile: TEMPLATE_PATH + "/src/dto/base-dto-method-from-body.hbs",
+      skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
     {
       type: "add",
@@ -203,30 +228,6 @@ export const GENERATOR_CONFIG = {
       pattern: BLOCK_METHOD_PATTERN,
       templateFile:
         TEMPLATE_PATH + "/src/controller/controller-method-create.hbs",
-      skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
-    },
-    {
-      type: "add",
-      path: SRC_PATH + "/dto/{{kebabCase name}}-params.dto.ts",
-      templateFile: TEMPLATE_PATH + "/src/dto-params.hbs",
-    },
-    {
-      type: "add",
-      path: SRC_PATH + "/dto/{{kebabCase name}}.dto.ts",
-      templateFile: TEMPLATE_PATH + "/src/dto.hbs",
-      skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
-    },
-    {
-      type: "add",
-      path: SRC_PATH + "/dto/{{kebabCase name}}.dto.ts",
-      templateFile: TEMPLATE_PATH + "/src/dto-saved.hbs",
-      skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
-    },
-    {
-      type: "modify",
-      path: SRC_PATH + "/dto/base-{{kebabCase name}}.dto.ts",
-      pattern: BLOCK_METHOD_PATTERN,
-      templateFile: TEMPLATE_PATH + "/src/base-dto-method-from-body.hbs",
       skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
     {
