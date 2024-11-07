@@ -3,3 +3,5 @@ $1
         const result = await this.{{camelCase name}}Service.save(data);
         return {{pascalCase name}}DTO.from(result);
     }
+$2
+import Base{{pascalCase name}}DTO from '../dto/base-{{kebabCase name}}.dto';

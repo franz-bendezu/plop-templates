@@ -1,4 +1,6 @@
 $1
-    async findAllByParams(params:  {{pascalCase name}}ParamsDTO): Promise<{{pascalCase name}}DTO[]> {
+    async findAllByParams(params: {{pascalCase name}}ParamsDTO): Promise<{{pascalCase name}}DTO[]> {
         return await this.{{camelCase name}}Service.findAllByParams(params);
     }
+$2
+import {{pascalCase name}}ParamsDTO from '../dto/{{kebabCase name}}-params.dto';
