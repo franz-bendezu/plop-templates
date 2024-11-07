@@ -10,10 +10,31 @@ export function upgradeDevDependencies(answers, config, plop) {
   });
 
   // Install specific versions
+  const devDeps = {
+    serverless: "^3.39.0",
+    "serverless-offline": "^13.8.2",
+    "@aws-sdk/client-secrets-manager": "^3.668.0",
+    "@types/aws-lambda": "^8.10.145",
+    "aws-sdk-client-mock": "^4.0.2",
+    jest: "^29.7.0",
+  };
   execSync(
-    "npm install --save-dev serverless-offline@^13.8.2 ^serverless@^3.39.0",
+    `npm install --save-dev ${Object.keys(devDeps)
+      .map((dep) => `${dep}@${devDeps[dep]}`)
+      .join(" ")}`,
     { stdio: "inherit", cwd: projectPath }
   );
+  const deps = {
+    "@joi/date": "^2.1.1",
+    joi: "^17.13.3",
+  };
 
-  return "DevDependencies upgraded to specific versions";
+  execSync(
+    `npm install --save ${Object.keys(deps)
+      .map((dep) => `${dep}@${deps[dep]}`)
+      .join(" ")}`,
+    { stdio: "inherit", cwd: projectPath } 
+  );
+
+  return "Dev dependencies and dependencies upgraded";
 }

@@ -263,15 +263,6 @@ export const GENERATOR_CONFIG = {
     {
       type: "append",
       path: FOLDER_PATH + "/package.json",
-      pattern: /"devDependencies": {(?<insertion>)/g,
-      template: `    "@aws-sdk/client-secrets-manager": "^3.668.0",
-    "@types/aws-lambda": "^8.10.145",
-    "aws-sdk-client-mock": "^4.0.2",
-    "jest": "^29.7.0",`,
-    },
-    {
-      type: "append",
-      path: FOLDER_PATH + "/package.json",
       pattern: /"dependencies": {(?<insertion>)/g,
       template: `    "@joi/date": "^2.1.1",
     "joi": "^17.13.3",`,
