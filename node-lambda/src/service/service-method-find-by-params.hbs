@@ -1,4 +1,5 @@
-$1
+$<imports>
+import I{{pascalCase name}}Params from '../interface/{{kebabCase name}}-params.interface';$<code>$<methods>
     async findAllByParams(params: I{{pascalCase name}}Params): Promise<{{pascalCase name}}[]> {
         // Implement business logic here
         return await this.repository.findAllByParams(params);

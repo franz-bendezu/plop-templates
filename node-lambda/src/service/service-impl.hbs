@@ -1,9 +1,10 @@
+// Imports
 import I{{pascalCase name}}Service from './{{kebabCase name}}.service.interface';
 import I{{pascalCase name}}Repository from '../repository/{{kebabCase name}}.repository.interface';
 import {{pascalCase name}} from '../model/{{kebabCase name}}.model';
-import I{{pascalCase name}}Params from '../interface/{{kebabCase name}}-params.interface';
 
 export default class {{pascalCase name}}Service implements I{{pascalCase name}}Service {
+
     constructor(private readonly repository: I{{pascalCase name}}Repository) {}
 
     // Methods

@@ -1,2 +1,5 @@
-$1
+$<imports>
+import {{pascalCase name}}ParamsDTO from '../dto/{{kebabCase name}}-params.dto';
+$<code>
+$<methods>
     findAllByParams(params: {{pascalCase name}}ParamsDTO): Promise<{{pascalCase name}}DTO[]>;

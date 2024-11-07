@@ -1,4 +1,5 @@
-export const BLOCK_METHOD_PATTERN = /(?<methods>\/\/\s*Methods)(?:[\s\S]*?)(?<imports>\/\/\s*imports)?/g;
+export const BLOCK_METHOD_PATTERN =
+  /(?<imports>\/\/\s*Imports)(?<code>[\s\S]*?)(?<methods>\/\/\s*Methods)/gi;
 export const BLOCK_RESPONSE_PATTERN = /(?<return>\/\/\s*Return)/g;
 export const FOLDER_PATH = "{{kebabCase folder}}";
 export const SRC_PATH = "{{kebabCase folder}}/src/{{kebabCase moduleName}}";
