@@ -276,17 +276,17 @@ export const GENERATOR_CONFIG = {
     {
       type: "add",
       path: TEST_PATH + "/controller/{{kebabCase name}}.controller.test.ts",
-      templateFile: TEMPLATE_PATH + "/test/controller/controller.test.ts.hbs",
+      templateFile: TEMPLATE_PATH + "/test/controller/controller.test.hbs",
     },
     {
       type: "add",
       path: TEST_PATH + "/repository/{{kebabCase name}}.repository.test.ts",
-      templateFile: TEMPLATE_PATH + "/test/repository/repository.test.ts.hbs",
+      templateFile: TEMPLATE_PATH + "/test/repository/repository.test.hbs",
     },
     {
       type: "add",
       path: TEST_PATH + "/service/{{kebabCase name}}.service.test.ts",
-      templateFile: TEMPLATE_PATH + "/test/service/service.test.ts.hbs",
+      templateFile: TEMPLATE_PATH + "/test/service/service.test.hbs",
     },
     {
       type: "add",
