@@ -14,6 +14,7 @@ describe('{{pascalCase name}}Repository', () => {
     beforeEach(() => {
         pgClient = {
             query: jest.fn(),
+            transaction: jest.fn(),
         };
         {{camelCase name}}Repository = new {{pascalCase name}}Repository(pgClient);
     });
@@ -49,15 +50,15 @@ describe('{{pascalCase name}}Repository', () => {
 
         expect(result).toHaveLength(1);
         expect(result[0]).toBeInstanceOf({{pascalCase name}});
-        expect(result[0]).toEqual({
-            id: 1,
-            name: 'test',
-            createdAt: new Date('2021-01-01T05:00:00.000Z'),
-            modifiedAt: new Date('2021-01-01T05:00:00.000Z'),
-            createdBy: 'test',
-            modifiedBy: 'test',
-        } satisfies I{{pascalCase name}},
+        const expected = new {{pascalCase name}}(
+            1,
+            'test',
+            new Date('2021-01-01T05:00:00.000Z'),
+            new Date('2021-01-01T05:00:00.000Z'),
+            'test',
+            'test',
         );
+        expect(result[0]).toEqual(expected);
     });
 
     it('should throw a RuntimeError when query fails', async () => {
