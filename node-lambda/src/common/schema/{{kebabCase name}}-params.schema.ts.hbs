@@ -12,7 +12,7 @@ export const {{camelCase name}}ParamsSchema: ObjectSchema<{
     [{{pascalCase name}}QueryParams.DATE]?: Date;
     [{{pascalCase name}}QueryParams.NAME]?: string;
 }> = joi.object({
-    [{{pascalCase name}}QueryParams.ID]: joi.number().integer().min(1)optional(),
+    [{{pascalCase name}}QueryParams.ID]: joi.number().integer().min(1).optional(),
     [{{pascalCase name}}QueryParams.DATE]: joi.date().format(DATE_FORMAT).optional(),
     [{{pascalCase name}}QueryParams.NAME]: joi.string().optional(),
 }).messages({
