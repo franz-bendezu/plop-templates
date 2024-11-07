@@ -6,8 +6,5 @@ import I{{pascalCase name}}Params from '../interface/{{kebabCase name}}-params.i
 export default class {{pascalCase name}}Service implements I{{pascalCase name}}Service {
     constructor(private readonly repository: I{{pascalCase name}}Repository) {}
 
-    async findAllByParams(params: I{{pascalCase name}}Params): Promise<{{pascalCase name}}[]> {
-        // Implement business logic here
-        return await this.repository.findAllByParams(params);
-  }
+    // Methods
 }
