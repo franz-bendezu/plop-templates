@@ -68,9 +68,37 @@ export const GENERATOR_CONFIG = {
       templateFile: TEMPLATE_PATH + "/src/repository/repository-interface.hbs",
     },
     {
+      type: "modify",
+      path: SRC_PATH + "/repository/{{kebabCase name}}.repository.interface.ts",
+      pattern: BLOCK_METHOD_PATTERN,
+      templateFile: TEMPLATE_PATH + "/src/repository/repository-find-by-params-interface.hbs",
+      skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    },
+    {
+      type: "modify",
+      path: SRC_PATH + "/repository/{{kebabCase name}}.repository.interface.ts",
+      pattern: BLOCK_METHOD_PATTERN,
+      templateFile: TEMPLATE_PATH + "/src/repository/repository-method-create-interface.hbs",
+      skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    },
+    {
       type: "add",
       path: SRC_PATH + "/repository/{{kebabCase name}}.repository.ts",
       templateFile: TEMPLATE_PATH + "/src/repository/repository-impl.hbs",
+    },
+    {
+      type: "modify",
+      path: SRC_PATH + "/repository/{{kebabCase name}}.repository.ts",
+      pattern: BLOCK_METHOD_PATTERN,
+      templateFile: TEMPLATE_PATH + "/src/repository/repository-find-by-params.hbs",
+      skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    },
+    {
+      type: "modify",
+      path: SRC_PATH + "/repository/{{kebabCase name}}.repository.ts",
+      pattern: BLOCK_METHOD_PATTERN,
+      templateFile: TEMPLATE_PATH + "/src/repository/repository-method-create.hbs",
+      skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
     {
       type: "add",

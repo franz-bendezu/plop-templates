@@ -1,0 +1,25 @@
+$<imports>
+import I{{pascalCase name}}Params from '../interface/{{kebabCase name}}-params.interface';
+import I{{pascalCase name}}ResultRow from '../interface/{{kebabCase name}}-query-result.interface';$<code>$<methods>
+    async findAllByParams(params: I{{pascalCase name}}Params): Promise<{{pascalCase name}}[]> {
+        try {
+            // Implement data fetching logic here
+            const queryResult = await this.pgClient.query<I{{pascalCase name}}ResultRow>(
+                'SELECT ID, NAME, CREATED_AT FROM {{snakeCase name}} WHERE id = $1',
+                [params.id]
+            );
+            return queryResult.rows.map((row) => new {{pascalCase name}}(
+                row.ID,
+                row.NAME,
+                row.CREATED_AT,
+                {{#each rowProperties}}
+                row.{{name}},
+                {{/each}}
+            ));
+        } catch (error) {
+            throw new RuntimeError({
+                statusMessage: 'Bennu Database error',
+                cause: error,
+            });
+        }
+    }

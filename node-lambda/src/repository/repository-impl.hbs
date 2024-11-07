@@ -1,7 +1,6 @@
+// Imports
 import  I{{pascalCase name}}Repository from './{{kebabCase name}}.repository.interface';
 import {{pascalCase name}} from '../model/{{kebabCase name}}.model';
-import I{{pascalCase name}}Params from '../interface/{{kebabCase name}}-params.interface';
-import I{{pascalCase name}}ResultRow from '../interface/{{kebabCase name}}-query-result.interface';
 import { IPostgresConfig } from '../config/postgres.config';
 import { RuntimeError } from '../common/error/runtime-error';
 
@@ -9,26 +8,5 @@ export default class {{pascalCase name}}Repository implements I{{pascalCase name
 
     constructor(private readonly pgClient: IPostgresConfig) { }
 
-    async findAllByParams(params: I{{pascalCase name}}Params): Promise<{{pascalCase name}}[]> {
-        try {
-            // Implement data fetching logic here
-            const queryResult = await this.pgClient.query<I{{pascalCase name}}ResultRow>(
-                'SELECT ID, NAME, CREATED_AT FROM {{snakeCase name}} WHERE id = $1',
-                [params.id]
-            );
-            return queryResult.rows.map((row) => new {{pascalCase name}}(
-                row.ID,
-                row.NAME,
-                row.CREATED_AT,
-                {{#each rowProperties}}
-                row.{{name}},
-                {{/each}}
-            ));
-        } catch (error) {
-            throw new RuntimeError({
-                statusMessage: 'Bennu Database error',
-                cause: error,
-            });
-        }
-    }
+    // Methods
 }
