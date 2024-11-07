@@ -34,15 +34,15 @@ export const GENERATOR_CONFIG = {
   ],
   actions: [
     {
+      type: "addMany",
+      destination: SRC_PATH,
+      base: TEMPLATE_PATH + "/src",
+      templateFiles: TEMPLATE_PATH + "/src/**/*.ts.hbs",
+    },
+    {
       type: "add",
       path: SRC_PATH + "/model/{{kebabCase name}}.model.ts",
       templateFile: TEMPLATE_PATH + "/src/model.hbs",
-    },
-    {
-      type: "addMany",
-      destination: SRC_PATH + "/interface",
-      base: TEMPLATE_PATH + "/src/interface/",
-      templateFiles: TEMPLATE_PATH + "/src/interface/**/*.ts.hbs",
     },
     {
       type: "add",
@@ -55,12 +55,6 @@ export const GENERATOR_CONFIG = {
       path: SRC_PATH + "/interface/{{kebabCase name}}.interface.ts",
       templateFile: TEMPLATE_PATH + "/src/interface/model-saved.interface.hbs",
       skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
-    },
-    {
-      type: "addMany",
-      destination: SRC_PATH + "/dto",
-      base: TEMPLATE_PATH + "/src/dto/",
-      templateFiles: TEMPLATE_PATH + "/src/dto/**/*.ts.hbs",
     },
     {
       type: "add",
@@ -231,11 +225,6 @@ export const GENERATOR_CONFIG = {
       skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
     {
-      type: "add",
-      path: SRC_PATH + "/handler.ts",
-      templateFile: TEMPLATE_PATH + "/src/handler.ts.hbs",
-    },
-    {
       type: "modify",
       path: SRC_PATH + "/handler.ts",
       pattern: BLOCK_RESPONSE_PATTERN,
@@ -255,26 +244,6 @@ export const GENERATOR_CONFIG = {
       type: "add",
       path: SRC_PATH + "/controller/{{kebabCase name}}.provider.ts",
       templateFile: TEMPLATE_PATH + "/src/controller/provider.ts.hbs",
-    },
-
-    // copy common folder with subfolfers and files inside
-    {
-      type: "addMany",
-      destination: SRC_PATH + "/common",
-      base: TEMPLATE_PATH + "/src/common",
-      templateFiles: TEMPLATE_PATH + "/src/common/**/*.hbs",
-    },
-    {
-      type: "addMany",
-      destination: SRC_PATH + "/config",
-      base: TEMPLATE_PATH + "/src/config/",
-      templateFiles: TEMPLATE_PATH + "/src/config/**/*.hbs",
-    },
-    {
-      type: "addMany",
-      destination: TEST_PATH,
-      base: TEMPLATE_PATH + "/test/",
-      templateFiles: TEMPLATE_PATH + "/test/**/*.ts.hbs",
     },
     {
       type: "add",
