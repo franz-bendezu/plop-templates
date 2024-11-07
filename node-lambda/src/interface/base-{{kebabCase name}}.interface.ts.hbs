@@ -1,0 +1,6 @@
+export default interface IBase{{pascalCase name}} {
+    name: string;
+    {{#each paramsProperties}}
+    {{name}}: {{type}};
+    {{/each}}
+}
