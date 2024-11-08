@@ -3,7 +3,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyEventQuery
 export default function createInvokeHandler(handler: APIGatewayProxyHandler) {
     return async (body: string | null, queryParams: APIGatewayProxyEventQueryStringParameters | null = null) => {
         const event: APIGatewayProxyEvent = {
-            body: body,
+            body,
             headers: {},
             queryStringParameters: queryParams || {},
             stageVariables: null,
