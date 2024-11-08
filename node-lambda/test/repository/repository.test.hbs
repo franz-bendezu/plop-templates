@@ -1,11 +1,8 @@
+// Imports
 import { QueryResult } from 'pg';
 import { RuntimeError } from '../../../src/{{kebabCase moduleName}}/common/error/runtime-error';
 import { IPostgresConfig } from '../../../src/{{kebabCase moduleName}}/config/postgres.config';
 import {{pascalCase name}}Repository from '../../../src/{{kebabCase moduleName}}/repository/{{kebabCase name}}.repository';
-import I{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}.interface';
-import I{{pascalCase name}}ResultRow from '../../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}-query-result.interface';
-import {{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/model/{{kebabCase name}}.model';
-import I{{pascalCase name}}Params from '../../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}-params.interface';
 
 describe('{{pascalCase name}}Repository', () => {
     let {{camelCase name}}Repository: {{pascalCase name}}Repository;
@@ -23,52 +20,5 @@ describe('{{pascalCase name}}Repository', () => {
         expect({{camelCase name}}Repository).toBeDefined();
     });
 
-    it('should return an array of {{pascalCase name}} instances when query is successful', async () => {
-        const params: I{{pascalCase name}}Params = {
-        };
-
-        const queryResult: QueryResult<I{{pascalCase name}}ResultRow> = {
-            rows: [
-                {
-                    ID: 1,
-                    NAME: 'test',
-                    CREATED_AT: new Date('2021-01-01T05:00:00.000Z'),
-                    MODIFIED_AT: new Date('2021-01-01T05:00:00.000Z'),
-                    CREATED_BY: 'test',
-                    MODIFIED_BY: 'test',
-                },
-            ],
-            command: '',
-            rowCount: null,
-            oid: 0,
-            fields: [],
-        };
-
-        pgClient.query.mockResolvedValue(queryResult);
-
-        const result = await {{camelCase name}}Repository.findAllByParams(params);
-
-        expect(result).toHaveLength(1);
-        expect(result[0]).toBeInstanceOf({{pascalCase name}});
-        const expected = new {{pascalCase name}}(
-            1,
-            'test',
-            new Date('2021-01-01T05:00:00.000Z'),
-            new Date('2021-01-01T05:00:00.000Z'),
-            'test',
-            'test',
-        );
-        expect(result[0]).toEqual(expected);
-    });
-
-    it('should throw a RuntimeError when query fails', async () => {
-        const params: I{{pascalCase name}}Params = {
-        };
-
-        const error = new Error('Database error');
-        pgClient.query.mockRejectedValue(error);
-
-        await expect({{camelCase name}}Repository.findAllByParams(params)).rejects.toThrow(RuntimeError);
-        await expect({{camelCase name}}Repository.findAllByParams(params)).rejects.toThrow('Bennu Database error');
-    });
+    // Tests
 });

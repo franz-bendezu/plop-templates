@@ -1,3 +1,4 @@
+import { type } from "os";
 import {
   BLOCK_METHOD_PATTERN,
   FOLDER_PATH,
@@ -5,6 +6,7 @@ import {
   TEST_PATH,
   TEMPLATE_PATH,
   BLOCK_RESPONSE_PATTERN,
+  BLOCK_TEST_PATTERN,
 } from "./constants.js";
 
 export const GENERATOR_CONFIG = {
@@ -248,6 +250,12 @@ export const GENERATOR_CONFIG = {
       type: "add",
       path: TEST_PATH + "/repository/{{kebabCase name}}.repository.test.ts",
       templateFile: TEMPLATE_PATH + "/test/repository/repository.test.hbs",
+    },
+    {
+      type: "modify",
+      path: TEST_PATH + "/service/{{kebabCase name}}.repository.test.ts",
+      pattern: BLOCK_TEST_PATTERN,
+      templateFile: TEMPLATE_PATH + "/test/service/repository-method-find-by-params.test.hbs",
     },
     {
       type: "add",
