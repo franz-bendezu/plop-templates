@@ -1,0 +1,72 @@
+$<imports>
+import { IHandler{{pascalCase name}}SaveParams } from '../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}-save-params.dto';
+import I{{pascalCase name}}SaveParams from '../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}-save-params.interface';$<code>$<tests>
+it('should successfully save a new {{camelCase name}}', async () => {
+    const mockData: {{pascalCase name}}DTO = {
+        id: 1,
+        name: 'test',
+        savedAt: new Date('2023-01-01'),
+        modifiedAt: new Date('2023-01-01'),
+        savedBy: 'user',
+        modifiedBy: 'user-mod',
+        {{#each paramsProperties}}
+        {{name}}: '{{value}}',
+        {{/each}}
+    };
+    const mockSave = jest.spyOn({{camelCase name}}Controller, 'save').mockResolvedValue(mockData);
+    
+    const params: Required<IHandler{{pascalCase name}}SaveParams> = {
+        name: 'test',
+        {{#each paramsProperties}}
+        {{name}}: '{{value}}',
+        {{/each}}
+    };
+
+    const result = await invokeHandler({ body: JSON.stringify(params) });
+
+    expect(result).toBeInstanceOf(ApiGatewayResponse);
+    expect(result).toEqual({
+        statusCode: 201,
+        body: JSON.stringify({
+        mensaje: 'Cátalogo creado exitosamente',
+        data: mockData,
+        estado: ValidationMessage.SUCCESS,
+        }),
+    });
+
+    expect(mockSave).toHaveBeenCalledWith(params);
+    });
+
+    it('should throw ValidationError when required fields are missing', async () => {
+    const result = await invokeHandler({ 
+        body: JSON.stringify({})
+    });
+
+    expect(result).toBeInstanceOf(ApiGatewayResponse);
+    expect(result).toEqual({
+        statusCode: 400,
+        body: JSON.stringify({
+        mensaje: 'Campos requeridos faltantes',
+        estado: ValidationMessage.BAD,
+        }),
+    });
+    });
+
+    it('should throw RuntimeError when save operation fails', async () => {
+    const mockError = new RuntimeError({ statusMessage: 'Save failed' });
+    const mockSave = jest.spyOn({{camelCase name}}Controller, 'save')
+        .mockRejectedValue(mockError);
+
+    const result = await invokeHandler({
+        body: JSON.stringify({ name: 'test' })
+    });
+
+    expect(mockSave).toHaveBeenCalled();
+    expect(result).toEqual({
+        statusCode: 500,
+        body: JSON.stringify({
+        mensaje: 'Save failed',
+        estado: ValidationMessage.BAD,
+        }),
+    });
+    });

@@ -7,6 +7,7 @@ import {
   BLOCK_RESPONSE_PATTERN,
   BLOCK_TEST_PATTERN,
 } from "../constants.js";
+import path from "path";
 
 export const GENERATOR_ACTIONS = [
   {
@@ -293,6 +294,25 @@ export const GENERATOR_ACTIONS = [
     pattern: BLOCK_TEST_PATTERN,
     templateFile:
       TEMPLATE_PATH + "/test/service/service-method-create.test.hbs",
+    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+  },
+  {
+    type: "add",
+    path: TEST_PATH + "/handler.test.ts",
+    templateFile: TEMPLATE_PATH + "/test/handler.test.hbs",
+  },
+  {
+    type: "modify", 
+    path: TEST_PATH + "/handler.test.ts",
+    pattern: BLOCK_TEST_PATTERN,
+    templateFile: TEMPLATE_PATH + "/test/handler-return-find-by-params.test.hbs",
+    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+  },
+  {
+    type: "modify",
+    path: TEST_PATH + "/handler.test.ts",
+    pattern: BLOCK_TEST_PATTERN,
+    templateFile: TEMPLATE_PATH + "/test/handler-return-create.test.hbs",
     skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
   },
   {
