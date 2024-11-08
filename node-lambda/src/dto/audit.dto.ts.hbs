@@ -12,8 +12,8 @@ export class AuditDTO {
 
     static from(params: IAudit): AuditDTO {
         return new AuditDTO(
-            TimeFormatter.dateToLocaleString(params.createdAt),
-            TimeFormatter.dateToLocaleString(params.modifiedAt),
+            TimeFormatter.dateTimeToLocaleString(params.createdAt),
+            TimeFormatter.dateTimeToLocaleString(params.modifiedAt),
             params.createdBy,
             params.modifiedBy,
         );
