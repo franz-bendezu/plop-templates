@@ -6,56 +6,10 @@ import { RuntimeError } from '../../src/{{kebabCase moduleName}}/common/error/ru
 import { ApiGatewayResponse, ValidationMessage } from '../../src/{{kebabCase moduleName}}/common/response/api-gateway';
 import { StatusMessages } from '../../src/{{kebabCase moduleName}}/common/response/status-message';
 import { {{camelCase name}}Controller } from '../../src/{{kebabCase moduleName}}/controller/{{kebabCase name}}.provider';
-
-const invokeHandler = async (queryParams?: IHandler{{pascalCase name}}QueryParams) => {
-    const event: APIGatewayProxyEvent = {
-        body: null,
-        headers: {},
-        queryStringParameters: queryParams || {},
-        stageVariables: null,
-        multiValueHeaders: {},
-        httpMethod: '',
-        isBase64Encoded: false,
-        path: '',
-        pathParameters: null,
-        multiValueQueryStringParameters: null,
-        requestContext: {
-            accountId: '',
-            apiId: '',
-            authorizer: {},
-            protocol: '',
-            httpMethod: '',
-            identity: {
-                accessKey: null,
-                accountId: null,
-                apiKey: null,
-                apiKeyId: null,
-                caller: null,
-                clientCert: null,
-                cognitoAuthenticationProvider: null,
-                cognitoAuthenticationType: null,
-                cognitoIdentityId: null,
-                cognitoIdentityPoolId: null,
-                principalOrgId: null,
-                sourceIp: '',
-                user: null,
-                userAgent: null,
-                userArn: null
-            },
-            path: '',
-            stage: '',
-            requestId: '',
-            requestTimeEpoch: 0,
-            resourceId: '',
-            resourcePath: ''
-        },
-        resource: ''
-    };
-    return index(event, {} as any, {} as any);
-};
+import invokeHandler from './handler-invoker';
 
 jest.mock('../../src/{{kebabCase moduleName}}/controller/{{kebabCase name}}.provider');
 
 describe('index handler', () => {
-    // Test
+    // Tests
 });

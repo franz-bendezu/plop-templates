@@ -1,0 +1,50 @@
+import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda';
+
+export default function createInvokeHandler(handler: APIGatewayProxyHandler) {
+   return async (queryParams?: IHandler{{ pascalCase name }}QueryParams) => {
+        const event: APIGatewayProxyEvent = {
+            body: null,
+            headers: {},
+            queryStringParameters: queryParams || {},
+            stageVariables: null,
+            multiValueHeaders: {},
+            httpMethod: '',
+            isBase64Encoded: false,
+            path: '',
+            pathParameters: null,
+            multiValueQueryStringParameters: null,
+            requestContext: {
+                accountId: '',
+                apiId: '',
+                authorizer: {},
+                protocol: '',
+                httpMethod: '',
+                identity: {
+                    accessKey: null,
+                    accountId: null,
+                    apiKey: null,
+                    apiKeyId: null,
+                    caller: null,
+                    clientCert: null,
+                    cognitoAuthenticationProvider: null,
+                    cognitoAuthenticationType: null,
+                    cognitoIdentityId: null,
+                    cognitoIdentityPoolId: null,
+                    principalOrgId: null,
+                    sourceIp: '',
+                    user: null,
+                    userAgent: null,
+                    userArn: null
+                },
+                path: '',
+                stage: '',
+                requestId: '',
+                requestTimeEpoch: 0,
+                resourceId: '',
+                resourcePath: ''
+            },
+            resource: ''
+        };
+        return handler(event, {} as any, {} as any);
+    };
+}

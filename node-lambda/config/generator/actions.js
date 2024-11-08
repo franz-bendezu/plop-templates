@@ -1,4 +1,4 @@
-import { skip } from "node:test";
+import test, { skip } from "node:test";
 import {
   BLOCK_METHOD_PATTERN,
   SRC_PATH,
@@ -302,10 +302,11 @@ export const GENERATOR_ACTIONS = [
     templateFile: TEMPLATE_PATH + "/test/handler.test.hbs",
   },
   {
-    type: "modify", 
+    type: "modify",
     path: TEST_PATH + "/handler.test.ts",
     pattern: BLOCK_TEST_PATTERN,
-    templateFile: TEMPLATE_PATH + "/test/handler-return-find-by-params.test.hbs",
+    templateFile:
+      TEMPLATE_PATH + "/test/handler-return-find-by-params.test.hbs",
     skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
   },
   {
@@ -313,6 +314,20 @@ export const GENERATOR_ACTIONS = [
     path: TEST_PATH + "/handler.test.ts",
     pattern: BLOCK_TEST_PATTERN,
     templateFile: TEMPLATE_PATH + "/test/handler-return-create.test.hbs",
+    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+  },
+  {
+    type: "add",
+    path: TEST_PATH + "/handler-invoker.ts",
+    templateFile: TEMPLATE_PATH + "/test/handler-invoker-find-by-params.hbs",
+    pattern: BLOCK_TEST_PATTERN,
+    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+  },
+  {
+    type: "add",
+    path: TEST_PATH + "/handler-invoker.ts",
+    templateFile: TEMPLATE_PATH + "/test/handler-invoker-create.hbs",
+    pattern: BLOCK_TEST_PATTERN,
     skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
   },
   {
