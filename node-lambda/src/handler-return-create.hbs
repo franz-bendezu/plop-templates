@@ -1,6 +1,5 @@
 $<imports> 
-import {{pascalCase name}}DTO from './dto/{{kebabCase name}}.dto';
-$<return> 
+import {{pascalCase name}}DTO from './dto/{{kebabCase name}}.dto';$<code>$<return> 
         const data = await {{camelCase name}}Controller.save(
             {{pascalCase name}}DTO.fromBody(event.body),
         );
