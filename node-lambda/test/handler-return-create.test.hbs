@@ -1,20 +1,23 @@
 $<imports>
-import IBase{{pascalCase name}} from '../../src/{{kebabCase moduleName}}/interface/base-{{kebabCase name}}.interface';$<code>$<tests>
+import { IBase{{pascalCase name}}DTO } from '../../src/{{kebabCase moduleName}}/dto/base-{{kebabCase name}}.dto';$<code>$<tests>
     it('should successfully save a new {{camelCase name}}', async () => {
         const responseData: {{pascalCase name}}DTO = {
             id: 1,
             name: 'test',
-            createdAt: '2023-01-01',
-            modifiedAt: '2023-01-01',
+            createdAt: '2023-01-01 12:00:00',
+            modifiedAt: '2023-01-01 12:00:00',
             createdBy: 'user',
             modifiedBy: 'user-mod',
+            description: 'test',
+            validFrom: '2023-01-01',
+            validTo: '2023-01-31',
             {{#each paramsProperties}}
             {{name}}: '{{value}}',
             {{/each}}
         };
         const mockSave = jest.spyOn({{camelCase name}}Controller, 'save').mockResolvedValue(responseData);
         
-        const data: Required<IBase{{pascalCase name}}> = {
+        const data: Required<IBase{{pascalCase name}}DTO> = {
             name: 'test',
             description: 'test',
             validFrom: '2023-01-01',

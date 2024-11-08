@@ -1,5 +1,4 @@
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyEventQueryStringParameters } from 'aws-lambda';
-import { IBaseProductTempDTO } from '../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}.dto';
 
 export default function createInvokeHandler(handler: APIGatewayProxyHandler) {
     return async (body: string | null, queryParams: APIGatewayProxyEventQueryStringParameters | null = null) => {
