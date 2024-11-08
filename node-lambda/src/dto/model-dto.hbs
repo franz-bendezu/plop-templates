@@ -11,10 +11,6 @@ export interface I{{pascalCase name}}DTO extends AuditDTO {
     description: string;
     validFrom: string;
     validTo: string;
-    createdAt: string | null;
-    modifiedAt: string | null;
-    createdBy: string;
-    modifiedBy: string;
     {{#each modelProperties}}
     {{name}}: {{type}};
     {{/each}}
@@ -31,7 +27,7 @@ export default class {{pascalCase name}}DTO extends AuditDTO implements I{{pasca
         public createdAt: string | null,
         public modifiedAt: string | null,
         public createdBy: string,
-        public modifiedBy: string,
+        public modifiedBy: string | null,
         {{#each modelProperties}}
         public {{name}}: {{type}},
         {{/each}}
@@ -44,8 +40,11 @@ export default class {{pascalCase name}}DTO extends AuditDTO implements I{{pasca
         return new {{pascalCase name}}DTO(
             data.id,
             data.name,
-            TimeFormatter.dateToLocaleString(data.createdAt),
-            TimeFormatter.dateToLocaleString(data.modifiedAt),
+            data.description,
+            TimeFormatter.dateToLocaleString(data.validFrom),
+            TimeFormatter.dateToLocaleString(data.validTo),
+            TimeFormatter.dateTimeToLocaleString(data.createdAt),
+            TimeFormatter.dateTimeToLocaleString(data.modifiedAt),
             data.createdBy,
             data.modifiedBy,
             {{#each modelProperties}}
