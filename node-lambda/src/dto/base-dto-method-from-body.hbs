@@ -7,10 +7,7 @@ $<code>$<methods>
                 statusCode: StatusCodes.BAD_REQUEST,
             });
         }
-
-        const data = JSON.parse(body);
-
-        const { error, value } = {{camelCase name}}Schema.validate(data);
+        const { error, value } = {{camelCase name}}Schema.validate(JSON.parse(body));
         if (error) {
             throw new RuntimeError({
                 statusMessage: error.message,
