@@ -1,3 +1,4 @@
+// Imports
 import {{pascalCase name}}Service from '../../../src/{{kebabCase moduleName}}/service/{{kebabCase name}}.service';
 import I{{pascalCase name}}Repository from '../../../src/{{kebabCase moduleName}}/repository/{{kebabCase name}}.repository.interface';
 import {{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/model/{{kebabCase name}}.model';
@@ -9,7 +10,7 @@ describe('{{pascalCase name}}Service', () => {
 
     beforeEach(() => {
         {{camelCase name}}Repository = {
-            findAllByParams: jest.fn(),
+           // Mock Repository methods
         };
         {{camelCase name}}Service = new {{pascalCase name}}Service({{camelCase name}}Repository);
     });
@@ -18,24 +19,5 @@ describe('{{pascalCase name}}Service', () => {
         expect({{camelCase name}}Service).toBeDefined();
     });
 
-    it('should return the result of {{camelCase name}}Repository.findAllByParams', async () => {
-        const params: I{{pascalCase name}}Params = {
-        };
-        const expected: {{pascalCase name}}[] = [
-            {
-                id: 1,
-                name: 'test',
-                createdAt: new Date('2021-01-01T05:00:00.000Z'),
-                modifiedAt: new Date('2021-01-01T05:00:00.000Z'),
-                createdBy: 'user',
-                modifiedBy: 'user-mod',
-            },
-        ];
-        {{camelCase name}}Repository.findAllByParams.mockResolvedValue(expected);
-
-        const result = await {{camelCase name}}Service.findAllByParams(params);
-
-        expect(result).toBe(expected);
-        expect({{camelCase name}}Repository.findAllByParams).toHaveBeenCalledWith(params);
-    });
+    // Tests
 });

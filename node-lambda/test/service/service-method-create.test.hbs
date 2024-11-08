@@ -1,0 +1,25 @@
+$<imports>
+import I{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}.interface';
+import I{{pascalCase name}}ResultRow from '../../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}-query-result.interface';
+import {{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/model/{{kebabCase name}}.model';
+import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/interface/base-{{kebabCase name}}.interface';$<code>$<tests>
+    it('should return the result of {{camelCase name}}Repository.findAllByParams', async () => {
+        const params: I{{pascalCase name}}Params = {
+        };
+        const expected: {{pascalCase name}}[] = [
+            {
+                id: 1,
+                name: 'test',
+                createdAt: new Date('2021-01-01T05:00:00.000Z'),
+                modifiedAt: new Date('2021-01-01T05:00:00.000Z'),
+                createdBy: 'user',
+                modifiedBy: 'user-mod',
+            },
+        ];
+        {{camelCase name}}Repository.findAllByParams.mockResolvedValue(expected);
+
+        const result = await {{camelCase name}}Service.findAllByParams(params);
+
+        expect(result).toBe(expected);
+        expect({{camelCase name}}Repository.findAllByParams).toHaveBeenCalledWith(params);
+    });
