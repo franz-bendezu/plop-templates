@@ -1,8 +1,7 @@
 $<imports>
-import { IHandler{{pascalCase name}}SaveParams } from '../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}-save-params.dto';
-import I{{pascalCase name}}SaveParams from '../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}-save-params.interface';$<code>$<tests>
+import IBase{{pascalCase name}} from '../../src/{{kebabCase moduleName}}/interface/base-{{kebabCase name}}.interface';$<code>$<tests>
 it('should successfully save a new {{camelCase name}}', async () => {
-    const mockData: {{pascalCase name}}DTO = {
+    const responseData: {{pascalCase name}}DTO = {
         id: 1,
         name: 'test',
         savedAt: new Date('2023-01-01'),
@@ -13,9 +12,9 @@ it('should successfully save a new {{camelCase name}}', async () => {
         {{name}}: '{{value}}',
         {{/each}}
     };
-    const mockSave = jest.spyOn({{camelCase name}}Controller, 'save').mockResolvedValue(mockData);
+    const mockSave = jest.spyOn({{camelCase name}}Controller, 'save').mockResolvedValue(responseData);
     
-    const data: Required<IHandler{{pascalCase name}}SaveParams> = {
+    const data: Required<IBase{{pascalCase name}}> = {
         name: 'test',
         {{#each paramsProperties}}
         {{name}}: '{{value}}',
@@ -63,7 +62,7 @@ it('should successfully save a new {{camelCase name}}', async () => {
 
     expect(mockSave).toHaveBeenCalled();
     expect(result).toEqual({
-        statusCode: 500,
+        statusCode: StatusMessages.INTERNAL_SERVER_ERROR,
         body: JSON.stringify({
         mensaje: 'Save failed',
         estado: ValidationMessage.BAD,
