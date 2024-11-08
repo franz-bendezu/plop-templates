@@ -1,5 +1,5 @@
 $<imports>
-import { FIND_BY_PARAMS } from '../query/{{kebabCase name}}.query';
+import { FIND_BY_PARAMS } from './query/{{kebabCase name}}.query';
 import I{{pascalCase name}}Params from '../interface/{{kebabCase name}}-params.interface';
 import I{{pascalCase name}}ResultRow from '../interface/{{kebabCase name}}-query-result.interface';$<code>$<methods>
     async findAllByParams(params: I{{pascalCase name}}Params): Promise<{{pascalCase name}}[]> {

@@ -1,5 +1,5 @@
 $<imports>
-import { CREATE_QUERY } from '../query/{{kebabCase name}}.query';
+import { CREATE_QUERY } from './query/{{kebabCase name}}.query';
 import I{{pascalCase name}}ResultRow from '../interface/{{kebabCase name}}-query-result.interface';
 import IBase{{pascalCase name}} from '../interface/base-{{dashCase name}}.interface';$<code>$<methods>
     async save(data: IBase{{pascalCase name}}): Promise<{{pascalCase name}}> {
