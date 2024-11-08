@@ -1,6 +1,9 @@
 $<imports>
+import Base{{pascalCase name}} from '../model/base-{{dashCase name}}.model';
 import Base{{pascalCase name}}DTO from '../dto/base-{{dashCase name}}.dto';$<code>$<methods>
     async save(data:  Base{{pascalCase name}}DTO): Promise<{{pascalCase name}}DTO> {
-        const result = await this.{{camelCase name}}Service.save(data);
+        const result = await this.{{camelCase name}}Service.save(
+            Base{{pascalCase name}}.fromDTO(data)
+        );
         return {{pascalCase name}}DTO.from(result);
     }
