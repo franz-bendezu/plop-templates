@@ -5,6 +5,9 @@ import { {{camelCase name}}Schema } from '../common/schema/{{kebabCase name}}.sc
 
 export interface IBase{{pascalCase name}}DTO {
     name: string;
+    description: string;
+    validFrom: string;
+    validTo: string;
     {{#each modelProperties}}
     {{name}}: {{type}};
     {{/each}}
@@ -14,6 +17,9 @@ export default class Base{{pascalCase name}}DTO implements IBase{{pascalCase nam
 
     constructor(
         public name: string,
+        public description: string,
+        public validFrom: string,
+        public validTo: string,
         {{#each modelProperties}}
         public {{name}}: {{type}},
         {{/each}}
