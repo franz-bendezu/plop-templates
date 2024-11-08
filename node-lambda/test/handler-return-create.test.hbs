@@ -28,12 +28,12 @@ import IBase{{pascalCase name}} from '../../src/{{kebabCase moduleName}}/interfa
             statusCode: 201,
             body: JSON.stringify({
                 mensaje: '{{pascalCase name}} creado',
-                data: mockData,
+                data: responseData,
                 estado: ValidationMessage.SUCCESS,
             }),
         });
 
-        expect(mockSave).toHaveBeenCalledWith(params);
+        expect(mockSave).toHaveBeenCalledWith(data);
         });
 
     it('should throw ValidationError when required fields are missing', async () => {
