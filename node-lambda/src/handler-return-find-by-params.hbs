@@ -1,4 +1,5 @@
-$<return>
+$<import>
+import {{pascalCase name}}ParamsDTO from './dto/{{kebabCase name}}-params.dto';$<code>$<return>
         const data = await {{camelCase name}}Controller.findAllByParams(
             {{pascalCase name}}ParamsDTO.fromQueryParams(event.queryStringParameters),
         );

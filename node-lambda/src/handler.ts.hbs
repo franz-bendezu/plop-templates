@@ -1,11 +1,10 @@
+// Imports
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import { {{camelCase name}}Controller } from './controller/{{kebabCase name}}.provider';
 import { isRuntimeError } from './common/error/runtime-error';
 import { ApiGatewayResponse } from './common/response/api-gateway';
 import { StatusCodes } from './common/response/status-code';
 import { StatusMessages } from './common/response/status-message';
-import {{pascalCase name}}ParamsDTO from './dto/{{kebabCase name}}-params.dto';
-import {{pascalCase name}}DTO from './dto/{{kebabCase name}}.dto';
 
 export const index: APIGatewayProxyHandler = async (event) => {
     try {
