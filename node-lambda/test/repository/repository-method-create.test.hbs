@@ -19,6 +19,9 @@ import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/inte
                 MODIFIED_AT: new Date('2021-01-01T05:00:00.000Z'),
                 CREATED_BY: 'test',
                 MODIFIED_BY: 'test',
+                DESCRIPTION: '',
+                VALID_FROM: new Date('2021-01-01T05:00:00.000Z'),
+                VALID_TO: new Date('2021-01-01T05:00:00.000Z'),
                 {{#each rowProperties}}
                 {{name}}: 'test-value',
                 {{/each}}
@@ -37,6 +40,9 @@ import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/inte
         const expected = new {{pascalCase name}}(
             1,
             'test',
+            'description',
+            new Date('2021-01-01T05:00:00.000Z'),
+            new Date('2021-01-01T05:00:00.000Z'),
             new Date('2021-01-01T05:00:00.000Z'),
             new Date('2021-01-01T05:00:00.000Z'),
             'test',
@@ -51,6 +57,9 @@ import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/inte
     it('should throw a RuntimeError when save fails', async () => {
         const inputData: IBase{{pascalCase name}} = {
             name: 'test',
+            description: 'description',
+            validFrom: new Date('2021-01-01T05:00:00.000Z'),
+            validTo: new Date('2021-01-01T05:00:00.000Z'),
             {{#each properties}}
             {{camelCase name}}: 'test-value',
             {{/each}}
