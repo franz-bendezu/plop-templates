@@ -1,4 +1,4 @@
-import { GENERATOR_ACTIONS } from "./actions";
+import { GENERATOR_ACTIONS } from "./actions.js";
 
 export const GENERATOR_CONFIG = {
   description: "Generate a handler for a new resource",

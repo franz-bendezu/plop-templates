@@ -22,13 +22,13 @@ export const GENERATOR_ACTIONS = [
   {
     type: "add",
     path: SRC_PATH + "/common/schema/{{kebabCase name}}.schema.ts",
-    templateFile: TEMPLATE_PATH + "/src/common/schema/model-schema.hbs",
+    templateFile: TEMPLATE_PATH + "/src/common/schema/model.schema.hbs",
     skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
   },
   {
     type: "add",
     path: SRC_PATH + "/common/schema/{{kebabCase name}}-params.schema.ts",
-    templateFile: TEMPLATE_PATH + "/src/common/schema/model-schema-params.hbs",
+    templateFile: TEMPLATE_PATH + "/src/common/schema/model-params.schema.hbs",
     skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
   },
   {
