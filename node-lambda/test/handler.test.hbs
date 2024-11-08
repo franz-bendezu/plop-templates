@@ -6,10 +6,11 @@ import { RuntimeError } from '../../src/{{kebabCase moduleName}}/common/error/ru
 import { ApiGatewayResponse, ValidationMessage } from '../../src/{{kebabCase moduleName}}/common/response/api-gateway';
 import { StatusMessages } from '../../src/{{kebabCase moduleName}}/common/response/status-message';
 import { {{camelCase name}}Controller } from '../../src/{{kebabCase moduleName}}/controller/{{kebabCase name}}.provider';
-import invokeHandler from './handler-invoker';
+import createInvokeHandler from './handler-invoker';
 
 jest.mock('../../src/{{kebabCase moduleName}}/controller/{{kebabCase name}}.provider');
 
 describe('index handler', () => {
+    const invokeHandler = createInvokeHandler(index);
     // Tests
 });
