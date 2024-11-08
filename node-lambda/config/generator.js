@@ -48,6 +48,18 @@ export const GENERATOR_CONFIG = {
     },
     {
       type: "add",
+      path: SRC_PATH + "/common/schema/{{kebabCase name}}.schema.ts",
+      templateFile: TEMPLATE_PATH + "/src/common/schema/model-schema.hbs",
+      skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    },
+    {
+      type: "add",
+      path: SRC_PATH + "/common/schema/{{kebabCase name}}-params.schema.ts",
+      templateFile: TEMPLATE_PATH + "/src/common/schema/model-schema-params.hbs",
+      skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    },
+    {
+      type: "add",
       path: SRC_PATH + "/interface/{{kebabCase name}}.interface.ts",
       templateFile: TEMPLATE_PATH + "/src/interface/model.interface.hbs",
       skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
@@ -94,7 +106,7 @@ export const GENERATOR_CONFIG = {
       pattern: BLOCK_METHOD_PATTERN,
       templateFile:
         TEMPLATE_PATH +
-        "/src/repository/repository-find-by-params-interface.hbs",
+        "/src/repository/repository-method-find-by-params-interface.hbs",
       skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
     },
     {
