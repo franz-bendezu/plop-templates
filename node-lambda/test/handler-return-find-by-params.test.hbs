@@ -1,7 +1,7 @@
 $<imports>
 import { IHandler{{pascalCase name}}QueryParams, {{pascalCase name}}QueryParams } from '../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}-params.dto';
 import I{{pascalCase name}}Params from '../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}-params.interface';$<code>$<tests>
-it('should return correct response when {{camelCase name}}es are found', async () => {
+    it('should return correct response when {{camelCase name}}es are found', async () => {
         const mockData: {{pascalCase name}}DTO[] = [{
             id: 1,
             name: 'test',
