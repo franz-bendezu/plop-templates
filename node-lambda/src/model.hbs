@@ -4,10 +4,10 @@ export default class {{pascalCase name}} implements I{{pascalCase name}} {
   constructor(
     public id: number,
     public name: string,
-    public createdAt: Date,
-    public modifiedAt: Date,
+    public createdAt: Date | null,
+    public modifiedAt: Date | null,
     public createdBy: string,
-    public modifiedBy: string,
+    public modifiedBy: string | null,
     {{#each modelProperties}}
     public {{name}}: {{type}},
     {{/each}}
