@@ -10,8 +10,8 @@ export const ALPHANUMERIC_HYPHEN_SPACE_REGEX = /^[-\w\s]+$/;
 
 export const {{camelCase name}}Schema: ObjectSchema<IBase{{pascalCase name}}DTO> = joi
     .object({
-        name: joi.string().format(ALPHANUMERIC_HYPHEN_SPACE_REGEX).required(),
-        description: joi.string().format(ALPHANUMERIC_HYPHEN_SPACE_REGEX).required(),
+        name: joi.string().regex(ALPHANUMERIC_HYPHEN_SPACE_REGEX).required(),
+        description: joi.string().regex(ALPHANUMERIC_HYPHEN_SPACE_REGEX).required(),
         validFrom: joi.date().format(DATE_FORMAT).required(),
         validTo: joi.date().format(DATE_FORMAT).required(),
     })
