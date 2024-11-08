@@ -262,6 +262,22 @@ export const GENERATOR_ACTIONS = [
     templateFile: TEMPLATE_PATH + "/test/service/service.test.hbs",
   },
   {
+    type: "modify",
+    path: TEST_PATH + "/service/{{kebabCase name}}.service.test.ts",
+    pattern: BLOCK_TEST_PATTERN,
+    templateFile:
+      TEMPLATE_PATH + "/test/service/service-method-find-by-params.test.hbs",
+    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+  },
+  {
+    type: "modify",
+    path: TEST_PATH + "/service/{{kebabCase name}}.service.test.ts",
+    pattern: BLOCK_TEST_PATTERN,
+    templateFile:
+      TEMPLATE_PATH + "/test/service/service-method-create.test.hbs",
+    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+  },
+  {
     type: "upgradeDevDependencies",
   },
 ];
