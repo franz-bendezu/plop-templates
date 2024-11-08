@@ -7,7 +7,7 @@ export class AuditDTO {
         public createdAt: string | null,
         public modifiedAt: string | null,
         public createdBy: string,
-        public modifiedBy: string,
+        public modifiedBy: string | null,
     ) { }
 
     static from(params: IAudit): AuditDTO {

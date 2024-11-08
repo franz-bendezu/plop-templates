@@ -16,7 +16,7 @@ import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/inte
         };
         {{camelCase name}}Repository.save.mockResolvedValue(expected);
 
-        const result = await {{camelCase name}}Service.create(params);
+        const result = await {{camelCase name}}Service.save(params);
 
         expect(result).toBe(expected);
         expect({{camelCase name}}Repository.save).toHaveBeenCalledWith(params);
