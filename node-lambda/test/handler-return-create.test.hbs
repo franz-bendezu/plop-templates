@@ -15,14 +15,14 @@ it('should successfully save a new {{camelCase name}}', async () => {
     };
     const mockSave = jest.spyOn({{camelCase name}}Controller, 'save').mockResolvedValue(mockData);
     
-    const params: Required<IHandler{{pascalCase name}}SaveParams> = {
+    const data: Required<IHandler{{pascalCase name}}SaveParams> = {
         name: 'test',
         {{#each paramsProperties}}
         {{name}}: '{{value}}',
         {{/each}}
     };
 
-    const result = await invokeHandler({ body: JSON.stringify(params) });
+    const result = await invokeHandler({ body: JSON.stringify(data) });
 
     expect(result).toBeInstanceOf(ApiGatewayResponse);
     expect(result).toEqual({
