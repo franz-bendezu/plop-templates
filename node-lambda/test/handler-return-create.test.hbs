@@ -21,7 +21,7 @@ import IBase{{pascalCase name}} from '../../src/{{kebabCase moduleName}}/interfa
             {{/each}}
         };
 
-        const result = await invokeHandler({ body: JSON.stringify(data) });
+        const result = await invokeHandler(JSON.stringify(data));
 
         expect(result).toBeInstanceOf(ApiGatewayResponse);
         expect(result).toEqual({
@@ -37,9 +37,7 @@ import IBase{{pascalCase name}} from '../../src/{{kebabCase moduleName}}/interfa
         });
 
     it('should throw ValidationError when required fields are missing', async () => {
-        const result = await invokeHandler({ 
-            body: JSON.stringify({})
-        });
+        const result = await invokeHandler(JSON.stringify({}));
 
         expect(result).toBeInstanceOf(ApiGatewayResponse);
         expect(result).toEqual({
@@ -56,9 +54,7 @@ import IBase{{pascalCase name}} from '../../src/{{kebabCase moduleName}}/interfa
         const mockSave = jest.spyOn({{camelCase name}}Controller, 'save')
             .mockRejectedValue(mockError);
 
-        const result = await invokeHandler({
-            body: JSON.stringify({ name: 'test' })
-        });
+        const result = await invokeHandler(JSON.stringify({ name: 'test' }));
 
         expect(mockSave).toHaveBeenCalled();
         expect(result).toEqual({
