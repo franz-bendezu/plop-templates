@@ -253,9 +253,9 @@ export const GENERATOR_CONFIG = {
     },
     {
       type: "modify",
-      path: TEST_PATH + "/service/{{kebabCase name}}.repository.test.ts",
+      path: TEST_PATH + "/repository/{{kebabCase name}}.repository.test.ts",
       pattern: BLOCK_TEST_PATTERN,
-      templateFile: TEMPLATE_PATH + "/test/service/repository-method-find-by-params.test.hbs",
+      templateFile: TEMPLATE_PATH + "/test/repository/repository-method-find-by-params.test.hbs",
     },
     {
       type: "add",
