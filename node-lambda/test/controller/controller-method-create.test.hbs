@@ -15,11 +15,11 @@ import {{pascalCase name}}DTO from '../../../src/{{kebabCase moduleName}}/dto/{{
             'test-user',
             'test-user'
         );
-        
+
         {{camelCase name}}Service.save.mockResolvedValue(created{{pascalCase name}});
-        
+
         const result = await {{camelCase name}}Controller.save(inputData);
-        
+
         expect({{camelCase name}}Service.save).toHaveBeenCalledWith(inputData);
         expect(result).toBeInstanceOf({{pascalCase name}}DTO);
         expect(result).toEqual({{pascalCase name}}DTO.from(created{{pascalCase name}}));
