@@ -239,12 +239,6 @@ export const GENERATOR_CONFIG = {
       templateFile: TEMPLATE_PATH + "/src/handler-return-create.hbs",
       skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
-
-    {
-      type: "add",
-      path: SRC_PATH + "/controller/{{kebabCase name}}.provider.ts",
-      templateFile: TEMPLATE_PATH + "/src/controller/provider.ts.hbs",
-    },
     {
       type: "add",
       path: TEST_PATH + "/controller/{{kebabCase name}}.controller.test.ts",
