@@ -256,6 +256,14 @@ export const GENERATOR_CONFIG = {
       path: TEST_PATH + "/repository/{{kebabCase name}}.repository.test.ts",
       pattern: BLOCK_TEST_PATTERN,
       templateFile: TEMPLATE_PATH + "/test/repository/repository-method-find-by-params.test.hbs",
+      skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    },
+    {
+      type: "modify",
+      path: TEST_PATH + "/repository/{{kebabCase name}}.repository.test.ts",
+      pattern: BLOCK_TEST_PATTERN,
+      templateFile: TEMPLATE_PATH + "/test/repository/repository-method-create.test.hbs",
+      skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
     {
       type: "add",

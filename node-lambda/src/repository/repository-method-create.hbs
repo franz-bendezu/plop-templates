@@ -4,14 +4,13 @@ import I{{pascalCase name}}ResultRow from '../interface/{{kebabCase name}}-query
 import IBase{{pascalCase name}} from '../interface/base-{{dashCase name}}.interface';$<code>$<methods>
     async save(data: IBase{{pascalCase name}}): Promise<{{pascalCase name}}> {
         try {
-            const queryResult = await this.pgClient.query<I{{pascalCase name}}ResultRow>(
-                CREATE_QUERY,
-                [
+            const queryResult = await this.pgClient.transactional<I{{pascalCase name}}ResultRow>(
+                (client) => client.query<I{{pascalCase name}}ResultRow>(CREATE_QUERY, [
                     data.name,
                     {{#each properties}}
                     data.{{camelCase name}},
                     {{/each}}
-                ]
+                ]),
             );
 
             const row = queryResult.rows[0];
