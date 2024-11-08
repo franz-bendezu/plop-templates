@@ -1,3 +1,4 @@
+import { skip } from "node:test";
 import {
   BLOCK_METHOD_PATTERN,
   SRC_PATH,
@@ -233,6 +234,23 @@ export const GENERATOR_ACTIONS = [
     type: "add",
     path: TEST_PATH + "/controller/{{kebabCase name}}.controller.test.ts",
     templateFile: TEMPLATE_PATH + "/test/controller/controller.test.hbs",
+  },
+  {
+    type: "modify",
+    path: TEST_PATH + "/controller/{{kebabCase name}}.controller.test.ts",
+    pattern: BLOCK_TEST_PATTERN,
+    templateFile:
+      TEMPLATE_PATH +
+      "/test/controller/controller-method-find-by-params.test.hbs",
+    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+  },
+  {
+    type: "modify",
+    path: TEST_PATH + "/controller/{{kebabCase name}}.controller.test.ts",
+    pattern: BLOCK_TEST_PATTERN,
+    templateFile:
+      TEMPLATE_PATH + "/test/controller/controller-method-create.test.hbs",
+    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
   },
   {
     type: "add",
