@@ -8,14 +8,13 @@ export const joi: Root = joiCore.extend(joiDate);
 export const DATE_FORMAT = 'YYYY-MM-DD';
 export const ALPHANUMERIC_HYPHEN_SPACE_REGEX = /^[-\w\s]+$/;
 
-export const {{camelCase name}}Schema: ObjectSchema<IBase{{pascalCase name}}DTO> = joi.object(
-    {
+export const {{camelCase name}}Schema: ObjectSchema<IBase{{pascalCase name}}DTO> = joi
+    .object({
         name: joi.string().format(ALPHANUMERIC_HYPHEN_SPACE_REGEX).required(),
         description: joi.string().format(ALPHANUMERIC_HYPHEN_SPACE_REGEX).required(),
         validFrom: joi.date().format(DATE_FORMAT).required(),
         validTo: joi.date().format(DATE_FORMAT).required(),
-    },
-)
+    })
     .messages({
         'date.format': `El campo {#label} debe tener el formato ${DATE_FORMAT}`,
         'number.base': 'El campo {#label} debe ser un número',
