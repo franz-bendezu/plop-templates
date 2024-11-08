@@ -3,5 +3,5 @@ INSERT INTO {{snakeCase name}}
                  (NAME{{#each rowProperties}}, {{snakeCase name}}{{/each}})
                   VALUES ($1{{#each rowProperties}}, ${{add @index 2}}{{/each}}) 
                   RETURNING ID, NAME, CREATED_AT, MODIFIED_AT, CREATED_BY, MODIFIED_BY
-                  {{#each rowProperties}}, {{snakeCase name}}{{/each}}
+{{#each rowProperties}}                  , {{snakeCase name}}{{/each}}
     `;
