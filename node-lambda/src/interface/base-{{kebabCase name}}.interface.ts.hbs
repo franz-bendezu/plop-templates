@@ -1,5 +1,8 @@
 export default interface IBase{{pascalCase name}} {
     name: string;
+    description: string;
+    validFrom: Date;
+    validTo: Date;
     {{#each paramsProperties}}
     {{name}}: {{type}};
     {{/each}}

@@ -1,7 +1,8 @@
 export const CREATE_QUERY = `
 INSERT INTO {{snakeCase name}}
-                 (NAME{{#each rowProperties}}, {{snakeCase name}}{{/each}})
-                  VALUES ($1{{#each rowProperties}}, ${{add @index 2}}{{/each}})
-                  RETURNING ID, NAME, CREATED_AT, MODIFIED_AT, CREATED_BY, MODIFIED_BY
+                 (NAME, DESCRIPTION, VALID_FROM, VALID_TO{{#each rowProperties}}, {{snakeCase name}}{{/each}})
+                  VALUES (NAME, DESCRIPTION, VALID_FROM, VALID_TO{{#each rowProperties}}, ${{add @index 5}}{{/each}})
+                  RETURNING ID, NAME, DESCRIPTION, VALID_FROM, VALID_TO,
+                  CREATED_AT, MODIFIED_AT, CREATED_BY, MODIFIED_BY
 {{#each rowProperties}}                  , {{snakeCase name}}{{/each}}
     `;

@@ -18,6 +18,9 @@ export default class {{pascalCase name}}DTO extends Base{{pascalCase name}}DTO i
     constructor(
         public id: number,
         public name: string,
+        public description: string,
+        public validFrom: string,
+        public validTo: string,
         public createdAt: string | null,
         public modifiedAt: string | null,
         public createdBy: string,
@@ -26,7 +29,7 @@ export default class {{pascalCase name}}DTO extends Base{{pascalCase name}}DTO i
         public {{name}}: {{type}},
         {{/each}}
     ) {
-        super(name);
+        super(name, description, validFrom, validTo);
     }
 
     static from(data: I{{pascalCase name}}): {{pascalCase name}}DTO {
@@ -34,6 +37,9 @@ export default class {{pascalCase name}}DTO extends Base{{pascalCase name}}DTO i
         return new {{pascalCase name}}DTO(
             data.id,
             data.name,
+            data.description,
+            data.validFrom,
+            data.validTo,
             TimeFormatter.dateToLocaleString(data.createdAt),
             TimeFormatter.dateToLocaleString(data.modifiedAt),
             data.createdBy,

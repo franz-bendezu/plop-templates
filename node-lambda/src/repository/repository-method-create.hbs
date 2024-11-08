@@ -7,6 +7,9 @@ import IBase{{pascalCase name}} from '../interface/base-{{dashCase name}}.interf
             const queryResult = await this.pgClient.transaction(
                 (client) => client.query<I{{pascalCase name}}ResultRow>(CREATE_QUERY, [
                     data.name,
+                    data.description,
+                    data.validFrom,
+                    data.validTo,
                     {{#each properties}}
                     data.{{camelCase name}},
                     {{/each}}
@@ -17,6 +20,9 @@ import IBase{{pascalCase name}} from '../interface/base-{{dashCase name}}.interf
             return new {{pascalCase name}}(
                 row.ID,
                 row.NAME,
+                row.DESCRIPTION,
+                row.VALID_FROM,
+                row.VALID_TO,
                 row.CREATED_AT,
                 row.MODIFIED_AT,
                 row.CREATED_BY,

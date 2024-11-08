@@ -20,5 +20,8 @@ $<code>$<methods>
 
         return new Base{{pascalCase name}}DTO(
             value.name,
+            value.description,
+            value.validFrom,
+            value.validTo,
         );
     }

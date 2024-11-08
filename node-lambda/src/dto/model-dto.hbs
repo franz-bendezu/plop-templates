@@ -8,6 +8,9 @@ import { {{camelCase name}} } from '../common/schema/{{kebabCase name}}.schema';
 export interface I{{pascalCase name}}DTO extends AuditDTO {
     id: number;
     name: string;
+    description: string;
+    validFrom: string;
+    validTo: string;
     createdAt: string | null;
     modifiedAt: string | null;
     createdBy: string;
@@ -22,6 +25,9 @@ export default class {{pascalCase name}}DTO extends AuditDTO implements I{{pasca
     constructor(
         public id: number,
         public name: string,
+        public description: string,
+        public validFrom: string,
+        public validTo: string,
         public createdAt: string | null,
         public modifiedAt: string | null,
         public createdBy: string,

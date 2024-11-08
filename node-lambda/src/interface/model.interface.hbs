@@ -3,6 +3,9 @@ import IAudit from './audit.interface';
 export default interface I{{pascalCase name}} extends IAudit {
     id: number;
     name: string;
+    description: string;
+    validFrom: string;
+    validTo: string;
     {{#each modelProperties}}
     {{name}}: {{type}};
     {{/each}}
