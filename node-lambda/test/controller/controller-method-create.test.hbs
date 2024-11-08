@@ -6,7 +6,7 @@ import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/inte
 import Base{{pascalCase name}}DTO from '../../../src/{{kebabCase moduleName}}/dto/base-{{kebabCase name}}.dto';
 import {{pascalCase name}}DTO from '../../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}.dto';$<code>$<tests>
     it('should create and return a {{pascalCase name}}DTO', async () => {
-        const inputData = new Base{{pascalCase name}}DTO();
+        const inputData = new Base{{pascalCase name}}DTO('test name');
         const created{{pascalCase name}} = new {{pascalCase name}}(
             1,
             'test name',
@@ -27,7 +27,7 @@ import {{pascalCase name}}DTO from '../../../src/{{kebabCase moduleName}}/dto/{{
 
 
     it('should handle service errors', async () => {
-        const inputData = new Base{{pascalCase name}}DTO();
+        const inputData = new Base{{pascalCase name}}DTO('test name');
         const errorMessage = 'Failed to create {{pascalCase name}}';
         {{camelCase name}}Service.save.mockRejectedValue(new Error(errorMessage));
 
