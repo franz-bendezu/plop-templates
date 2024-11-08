@@ -20,6 +20,8 @@ export class TimeFormatter {
      * Converts a given Date object to a string in the date format in Peru time zone.
      * e.g. "2020-12-31"
      */
+    static dateToLocaleString(date: Date): string;
+    static dateToLocaleString(date: Date | null): string | null;
     static dateToLocaleString(date: Date | null): string | null {
         return date ? this.formatDate.format(date) : null;
     }
@@ -28,7 +30,8 @@ export class TimeFormatter {
      * Converts a given Date object to a string in the date format in Peru time zone.
      * e.g. "2020-12-31 19:00:00"
      */
-
+    static dateTimeToLocaleString(date: Date): string;
+    static dateTimeToLocaleString(date: Date | null): string | null;
     static dateTimeToLocaleString(date: Date | null): string | null {
         return date ? `${this.formatDate.format(date)  } ${  this.formatTime.format(date)}` : null;
     }
