@@ -1,0 +1,45 @@
+import { TimeFormatter } from '../common/formatter/time.formatter';
+import I{{pascalCase name}} from '../interface/{{kebabCase name}}.interface';
+import { Audit } from './audit.model';
+import Base{{pascalCase name}} from './base-{{kebabCase name}}.model';
+import I{{pascalCase name}} from '../interface/{{kebabCase name}}.interface';
+
+export default class {{pascalCase name}} extends Base{{pascalCase name}} implements I{{pascalCase name}} {
+
+    constructor(
+        public id: number,
+        public name: string,
+        public description: string,
+        public validFrom: string,
+        public vali: string,
+        public createdAt: string | null,
+        public modifiedAt: string | null,
+        public createdBy: string,
+        public modifiedBy: string | null,
+        {{#each modelProperties}}
+        public {{name}}: {{type}},
+        {{/each}}
+    ) {
+        super(name, description, validFrom, vali);
+    }
+
+    static from(data: I{{pascalCase name}}): {{pascalCase name}} {
+        // Transform data into 
+        return new {{pascalCase name}}(
+            data.id,
+            data.name,
+            data.description,
+            TimeFormatter.dateToLocaleString(data.validFrom),
+            TimeFormatter.dateToLocaleString(data.vali),
+            TimeFormatter.dateTimeToLocaleString(data.createdAt),
+            TimeFormatter.dateTimeToLocaleString(data.modifiedAt),
+            data.createdBy,
+            data.modifiedBy,
+            {{#each modelProperties}}
+            data.{{name}},
+            {{/each}}
+        );
+    }
+
+    // Methods
+}

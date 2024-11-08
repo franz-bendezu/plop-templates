@@ -1,0 +1,28 @@
+// Imports
+import { IBase{{pascalCase name}}DTO } from '../dto/base-{{kebabCase name}}.dto';
+import IBase{{pascalCase name}} from '../interface/base-{{kebabCase name}}.interface';
+
+export default class Base{{pascalCase name}}DTO implements IBase{{pascalCase name}} {
+
+    constructor(
+        public name: string,
+        public description: string,
+        public validFrom: string,
+        public validTo: string,
+        {{#each modelProperties}}
+        public {{name}}: {{type}},
+        {{/each}}
+    ) {}
+
+    static fromDTO(dto: IBase{{pascalCase name}}DTO): Base{{pascalCase name}}DTO {
+        return new Base{{pascalCase name}}DTO(
+            dto.name,
+            dto.description,
+            dto.validFrom,
+            dto.validTo,
+            {{#each modelProperties}}
+            dto.{{name}},
+            {{/each}}
+        );
+    }
+}

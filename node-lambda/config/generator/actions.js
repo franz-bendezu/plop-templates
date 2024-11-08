@@ -19,7 +19,20 @@ export const GENERATOR_ACTIONS = [
   {
     type: "add",
     path: SRC_PATH + "/model/{{kebabCase name}}.model.ts",
-    templateFile: TEMPLATE_PATH + "/src/model.hbs",
+    templateFile: TEMPLATE_PATH + "/src/model/model.hbs",
+    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+  },
+  {
+    type: "add",
+    path: SRC_PATH + "/model/{{kebabCase name}}.model.ts",
+    templateFile: TEMPLATE_PATH + "/src/model/model-saved.hbs",
+    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+  },
+  {
+    type: "add",
+    path: SRC_PATH + "/model/base-{{kebabCase name}}.model.ts",
+    templateFile: TEMPLATE_PATH + "/src/model/base-model.hbs",
+    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
   },
   {
     type: "add",
