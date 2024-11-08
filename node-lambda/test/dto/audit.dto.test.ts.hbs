@@ -1,0 +1,52 @@
+import { AuditDTO } from '../../../src/{{kebabCase moduleName}}/dto/audit.dto';
+import IAudit from '../../../src/{{kebabCase moduleName}}/interface/audit.interface';
+
+describe('AuditDTO', () => {
+    it('should create an instance of AuditDTO', () => {
+        const auditDTO = new AuditDTO(
+            '2023-01-01 00:00:00',
+            '2023-01-02 00:00:00',
+            'user1',
+            'user2'
+        );
+        expect(auditDTO).toBeInstanceOf(AuditDTO);
+        expect(auditDTO.createdAt).toBe('2023-01-01 00:00:00');
+        expect(auditDTO.modifiedAt).toBe('2023-01-02 00:00:00');
+        expect(auditDTO.createdBy).toBe('user1');
+        expect(auditDTO.modifiedBy).toBe('user2');
+    });
+
+    it('should create an instance of AuditDTO from IAudit', () => {
+        const params: IAudit = {
+            createdAt: new Date('2023-01-01T05:00:00.000Z'),
+            modifiedAt: new Date('2023-01-02T05:00:00.000Z'),
+            createdBy: 'user1',
+            modifiedBy: 'user2',
+        };
+        const auditDTO = AuditDTO.from(params);
+
+        expect(auditDTO).toBeInstanceOf(AuditDTO);
+        expect(auditDTO.createdAt).toBe('2023-01-01 00:00:00');
+        expect(auditDTO.modifiedAt).toBe('2023-01-02 00:00:00');
+        expect(auditDTO.createdBy).toBe(params.createdBy);
+        expect(auditDTO.modifiedBy).toBe(params.modifiedBy);
+
+    });
+
+    it('should handle null modifiedAt and modifiedBy', () => {
+        const params: IAudit = {
+            createdAt: new Date('2023-01-01T05:00:00.000Z'),
+            modifiedAt: null,
+            createdBy: 'user1',
+            modifiedBy: null,
+        };
+
+        const auditDTO = AuditDTO.from(params);
+
+        expect(auditDTO).toBeInstanceOf(AuditDTO);
+        expect(auditDTO.createdAt).toBe('2023-01-01 00:00:00');
+        expect(auditDTO.modifiedAt).toBeNull();
+        expect(auditDTO.createdBy).toBe(params.createdBy);
+        expect(auditDTO.modifiedBy).toBeNull();
+    });
+});
