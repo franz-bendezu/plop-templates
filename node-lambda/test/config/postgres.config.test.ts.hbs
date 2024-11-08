@@ -86,7 +86,7 @@ describe('PostgresConfig', () => {
                 end: clientEnd,
                 connect: clientConnect,
             } as any
-        );
+            );
         const query = 'SELECT * FROM users WHERE id = $1';
         const values = [1];
         const result = await postgresConfig.query(query, values);
@@ -109,7 +109,7 @@ describe('PostgresConfig', () => {
                 end: clientEnd,
                 connect: clientConnect,
             } as any
-        );
+            );
 
 
         const query = 'SELECT * FROM users';
@@ -131,7 +131,7 @@ describe('PostgresConfig', () => {
                 end: clientEnd,
                 connect: clientConnect,
             } as any
-        );
+            );
 
         const query = 'SELECT * FROM users';
         await expect(postgresConfig.query(query)).rejects.toThrow('Query error');
@@ -144,8 +144,17 @@ describe('PostgresConfig', () => {
 
     it('should commit transaction on success', async () => {
         const callback = jest.fn().mockResolvedValue('result');
-        mockClient.query.mockResolvedValueOnce({}); // BEGIN
-        mockClient.query.mockResolvedValueOnce({}); // COMMIT
+        const clientQuery = jest.fn();
+        const clientEnd = jest.fn();
+        const clientConnect = jest.fn();
+        const mockClient: any = {
+            query: clientQuery,
+            end: clientEnd,
+            connect: clientConnect,
+        };
+
+        jest.spyOn(postgresConfig, 'createClient').mockResolvedValue(mockClient);
+
 
         const result = await postgresConfig.transaction(callback);
 
@@ -159,8 +168,16 @@ describe('PostgresConfig', () => {
 
     it('should rollback transaction on error', async () => {
         const callback = jest.fn().mockRejectedValue(new Error('test error'));
-        mockClient.query.mockResolvedValueOnce({}); // BEGIN
-        mockClient.query.mockResolvedValueOnce({}); // ROLLBACK
+        const clientQuery = jest.fn();
+        const clientEnd = jest.fn();
+        const clientConnect = jest.fn();
+        const mockClient: any = {
+            query: clientQuery,
+            end: clientEnd,
+            connect: clientConnect,
+        };
+
+        jest.spyOn(postgresConfig, 'createClient').mockResolvedValue(mockClient);
 
         await expect(postgresConfig.transaction(callback)).rejects.toThrow('test error');
 
