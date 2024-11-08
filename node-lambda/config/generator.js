@@ -242,6 +242,12 @@ export const GENERATOR_CONFIG = {
       skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
     },
     {
+      type: "addMany",
+      destination: TEST_PATH,
+      base: TEMPLATE_PATH + "/test",
+      templateFiles: TEMPLATE_PATH + "/test/**/*.ts.hbs",
+    },
+    {
       type: "add",
       path: TEST_PATH + "/controller/{{kebabCase name}}.controller.test.ts",
       templateFile: TEMPLATE_PATH + "/test/controller/controller.test.hbs",
