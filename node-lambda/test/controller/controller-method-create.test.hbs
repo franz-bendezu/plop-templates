@@ -6,7 +6,7 @@ import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/inte
 import Base{{pascalCase name}}DTO from '../../../src/{{kebabCase moduleName}}/dto/base-{{kebabCase name}}.dto';
 import {{pascalCase name}}DTO from '../../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}.dto';$<code>$<tests>
     it('should create and return a {{pascalCase name}}DTO', async () => {
-        const inputData = new BaseProductTempDTO(
+        const inputData = new Base{{pascalCase name}}DTO(
             'test name',
             'test description',
             '2023-01-01',
@@ -28,14 +28,33 @@ import {{pascalCase name}}DTO from '../../../src/{{kebabCase moduleName}}/dto/{{
 
         const result = await {{camelCase name}}Controller.save(inputData);
 
-        expect({{camelCase name}}Service.save).toHaveBeenCalledWith(inputData);
+        const expected{{pascalCase name}} = new Base{{pascalCase name}}(
+            'test name',
+            'test description',
+            new Date('2023-01-01'),
+            new Date('2023-01-31'),
+        );
+
+        expect({{camelCase name}}Service.save).toHaveBeenCalledWith(expected{{pascalCase name}});
+
         expect(result).toBeInstanceOf({{pascalCase name}}DTO);
-        expect(result).toEqual({{pascalCase name}}DTO.from(created{{pascalCase name}}));
+
+        const expected{{pascalCase name}}DTO = new {{pascalCase name}}DTO(
+            1,
+            'test name',
+            'test description',
+            '2023-01-01',
+            '2023-01-31',
+            'test-user',
+            'test-user',
+        );
+
+        expect(result).toEqual(expected{{pascalCase name}}DTO);
     });
 
 
     it('should handle service errors', async () => {
-        const inputData = new BaseProductTempDTO(
+        const inputData = new Base{{pascalCase name}}DTO(
             'test name',
             'test description',
             '2023-01-01',
