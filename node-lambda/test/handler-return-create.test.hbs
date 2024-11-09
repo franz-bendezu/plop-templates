@@ -1,5 +1,5 @@
 $<imports>
-import { IBase{{pascalCase name}}DTO, I{{pascalCase name}}Payload } from '../../src/{{kebabCase moduleName}}/dto/base-{{kebabCase name}}.dto';$<code>$<tests>
+import { I{{pascalCase name}}Payload } from '../../src/{{kebabCase moduleName}}/dto/base-{{kebabCase name}}.dto';$<code>$<tests>
     it('should successfully save a new {{camelCase name}}', async () => {
         const responseData: {{pascalCase name}}DTO = {
             id: 1,
@@ -48,11 +48,10 @@ import { IBase{{pascalCase name}}DTO, I{{pascalCase name}}Payload } from '../../
         const mockSave = jest.spyOn(productTempController, 'save')
             .mockRejectedValue(mockError);
 
-        const data: Required<ISchemaBase{{pascalCase name}}> = {
+        const data: I{{pascalCase name}}Payload = {
             name: 'test',
             description: 'test',
             validFromDate: '2023-01-01',
-            validToDate: '2023-01-31',
         };
 
         const result = await invokeHandler(JSON.stringify(data));
@@ -71,7 +70,13 @@ import { IBase{{pascalCase name}}DTO, I{{pascalCase name}}Payload } from '../../
         const mockSave = jest.spyOn(productTempController, 'save')
             .mockRejectedValue(mockError);
 
-        const result = await invokeHandler(JSON.stringify({ name: 'test' }));
+        const data: I{{pascalCase name}}Payload = {
+            name: 'test',
+            description: 'test',
+            validFromDate: '2023-01-01',
+        };
+
+        const result = await invokeHandler(JSON.stringify(data));
         expect(mockSave).toHaveBeenCalled();
         expect(result).toEqual({
             statusCode: 500,
