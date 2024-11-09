@@ -2,7 +2,7 @@ export default interface IBase{{pascalCase name}} {
     name: string;
     description: string;
     validFrom: Date;
-    validTo: Date;
+    validTo: Date | null;
     {{#each paramsProperties}}
     {{name}}: {{type}};
     {{/each}}

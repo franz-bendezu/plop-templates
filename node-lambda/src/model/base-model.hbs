@@ -7,8 +7,8 @@ export default class Base{{pascalCase name}}DTO implements IBase{{pascalCase nam
     constructor(
         public name: string,
         public description: string,
-        public validFrom: string,
-        public validTo: string,
+        public validFrom: Date,
+        public validTo: Date | null,
         {{#each modelProperties}}
         public {{name}}: {{type}},
         {{/each}}
@@ -18,8 +18,8 @@ export default class Base{{pascalCase name}}DTO implements IBase{{pascalCase nam
         return new Base{{pascalCase name}}DTO(
             dto.name,
             dto.description,
-            dto.validFrom,
-            dto.validTo,
+            new Date(dto.validFromDate),
+            dto.validToDate ? new Date(dto.validToDate) : null
             {{#each modelProperties}}
             dto.{{name}},
             {{/each}}

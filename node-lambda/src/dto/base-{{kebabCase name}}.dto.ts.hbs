@@ -7,7 +7,7 @@ export interface IBase{{pascalCase name}}DTO {
     name: string;
     description: string;
     validFrom: Date;
-    validTo: Date;
+    validTo: Date | null;
     {{#each modelProperties}}
     {{name}}: {{type}};
     {{/each}}
@@ -19,7 +19,7 @@ export default class Base{{pascalCase name}}DTO implements IBase{{pascalCase nam
         public name: string,
         public description: string,
         public validFrom: Date,
-        public validTo: Date,
+        public validTo: Date | null,
         {{#each modelProperties}}
         public {{name}}: {{type}},
         {{/each}}

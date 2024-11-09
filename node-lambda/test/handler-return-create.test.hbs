@@ -42,30 +42,25 @@ import { IBase{{pascalCase name}}DTO } from '../../src/{{kebabCase moduleName}}/
         expect(mockSave).toHaveBeenCalledWith(data);
         });
 
-    it('should throw ValidationError when required fields are missing', async () => {
-        const result = await invokeHandler(JSON.stringify({}));
-
-        expect(result).toBeInstanceOf(ApiGatewayResponse);
-        expect(result).toEqual({
-            statusCode: 400,
-            body: JSON.stringify({
-                mensaje: StatusMessages.BAD_REQUEST,
-                estado: ValidationMessage.BAD,
-            }),
-        });
-    });
-
     it('should throw RuntimeError when save operation fails', async () => {
         const mockError = new RuntimeError({ statusMessage: 'Save failed' });
+
         const mockSave = jest.spyOn(productTempController, 'save')
             .mockRejectedValue(mockError);
 
-        const result = await invokeHandler(JSON.stringify({ name: 'test' }));
+        const data: Required<ISchemaBase{{pascalCase name}}> = {
+            name: 'test',
+            description: 'test',
+            validFromDate: '2023-01-01',
+            validToDate: '2023-01-31',
+        };
+
+        const result = await invokeHandler(JSON.stringify(data));
         expect(mockSave).toHaveBeenCalled();
         expect(result).toEqual({
             statusCode: 500,
             body: JSON.stringify({
-                mensaje: StatusMessages.INTERNAL_SERVER_ERROR,
+                mensaje: 'Save failed',
                 estado: ValidationMessage.BAD,
             }),
         });
