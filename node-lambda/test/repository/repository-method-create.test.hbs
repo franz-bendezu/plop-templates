@@ -6,6 +6,9 @@ import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/inte
     it('should create a new {{pascalCase name}} instance when save is successful', async () => {
         const inputData: IBase{{pascalCase name}} = {
             name: 'test',
+            description: 'description',
+            validFrom: new Date('2021-01-01T05:00:00.000Z'),
+            validTo: new Date('2021-01-01T05:00:00.000Z'),
             {{#each properties}}
             {{camelCase name}}: 'test-value',
             {{/each}}
