@@ -17,8 +17,8 @@ export const {{camelCase name}}Schema = joi
     .object<I{{pascalCase name}}Schema>({
         name: joi.string().regex(ALPHANUMERIC_HYPHEN_SPACE_REGEX).required(),
         description: joi.string().regex(ALPHANUMERIC_HYPHEN_SPACE_REGEX).required(),
-        validFrom: joi.date().format(DATE_FORMAT).required(),
-        validTo: joi.date().format(DATE_FORMAT).optional().allow(null),
+        validFromDate: joi.date().format(DATE_FORMAT).required(),
+        validToDate: joi.date().format(DATE_FORMAT).optional().allow(null),
     })
     .messages({
         'date.format': `El campo {#label} debe tener el formato ${DATE_FORMAT}`,
