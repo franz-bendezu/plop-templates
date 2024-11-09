@@ -1,10 +1,12 @@
 $<imports>
 import I{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}.interface';
-import {{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/model/{{kebabCase name}}.model';
 import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/interface/base-{{kebabCase name}}.interface';$<code>$<tests>
     it('should return the result of {{camelCase name}}Repository.save', async () => {
         const params: IBase{{pascalCase name}} = {
             name: 'test',
+            description: '',
+            validFrom: new Date('2021-01-01T05:00:00.000Z'),
+            validTo: new Date('2021-01-01T05:00:00.000Z'),
         };
         const expected: I{{pascalCase name}} = {
             id: 1,
@@ -13,6 +15,9 @@ import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/inte
             modifiedAt: null,
             createdBy: 'user',
             modifiedBy: null,
+            description: '',
+            validFrom: new Date('2021-01-01T05:00:00.000Z'),
+            validTo: new Date('2021-01-01T05:00:00.000Z'),
         };
         {{camelCase name}}Repository.save.mockResolvedValue(expected);
 

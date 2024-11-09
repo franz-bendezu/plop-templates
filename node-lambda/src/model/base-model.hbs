@@ -1,8 +1,8 @@
 // Imports
-import { IBase{{pascalCase name}}DTO } from '../dto/base-{{kebabCase name}}.dto';
+import Base{{pascalCase name}}DTO from '../dto/base-{{kebabCase name}}.dto';
 import IBase{{pascalCase name}} from '../interface/base-{{kebabCase name}}.interface';
 
-export default class Base{{pascalCase name}}DTO implements IBase{{pascalCase name}} {
+export default class Base{{pascalCase name}} implements IBase{{pascalCase name}} {
 
     constructor(
         public name: string,
@@ -14,8 +14,8 @@ export default class Base{{pascalCase name}}DTO implements IBase{{pascalCase nam
         {{/each}}
     ) {}
 
-    static fromDTO(dto: IBase{{pascalCase name}}DTO): Base{{pascalCase name}}DTO {
-        return new Base{{pascalCase name}}DTO(
+    static fromDTO(dto: Base{{pascalCase name}}DTO): Base{{pascalCase name}} {
+        return new Base{{pascalCase name}}(
             dto.name,
             dto.description,
             new Date(dto.validFromDate),

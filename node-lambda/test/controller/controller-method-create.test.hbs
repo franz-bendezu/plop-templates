@@ -1,10 +1,8 @@
 $<imports>
-import I{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}.interface';
-import I{{pascalCase name}}ResultRow from '../../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}-query-result.interface';
 import {{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/model/{{kebabCase name}}.model';
-import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/interface/base-{{kebabCase name}}.interface';
 import Base{{pascalCase name}}DTO from '../../../src/{{kebabCase moduleName}}/dto/base-{{kebabCase name}}.dto';
-import {{pascalCase name}}DTO from '../../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}.dto';$<code>$<tests>
+import {{pascalCase name}}DTO from '../../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}.dto';
+import Base{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/model/base-{{kebabCase name}}.model';$<code>$<tests>
     it('should create and return a {{pascalCase name}}DTO', async () => {
         const inputData = new Base{{pascalCase name}}DTO(
             'test name',
@@ -47,6 +45,8 @@ import {{pascalCase name}}DTO from '../../../src/{{kebabCase moduleName}}/dto/{{
             '2023-01-31',
             'test-user',
             'test-user',
+            '2023-01-01',
+            '2023-01-01',
         );
 
         expect(result).toEqual(expected{{pascalCase name}}DTO);

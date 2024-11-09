@@ -3,14 +3,7 @@ import I{{pascalCase name}} from '../interface/{{kebabCase name}}.interface';
 import { AuditDTO } from './audit.dto';
 import Base{{pascalCase name}}DTO, { IBase{{pascalCase name}}DTO } from './base-{{kebabCase name}}.dto';
 
-export interface I{{pascalCase name}}DTO extends IBase{{pascalCase name}}DTO, AuditDTO {
-    id: number;
-    {{#each modelProperties}}
-    {{name}}: {{type}};
-    {{/each}} 
-}
-
-export default class {{pascalCase name}}DTO extends Base{{pascalCase name}}DTO implements I{{pascalCase name}}DTO {
+export default class {{pascalCase name}}DTO extends Base{{pascalCase name}}DTO {
 
     constructor(
         public id: number,
