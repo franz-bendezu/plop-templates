@@ -3,6 +3,17 @@ import {{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/model/{{k
 import Base{{pascalCase name}}DTO from '../../../src/{{kebabCase moduleName}}/dto/base-{{kebabCase name}}.dto';
 import {{pascalCase name}}DTO from '../../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}.dto';
 import Base{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/model/base-{{kebabCase name}}.model';$<code>$<tests>
+    beforeEach(() => {
+        {{camelCase name}}Service = {
+            save: jest.fn(),
+        };
+        {{camelCase name}}Controller = new {{pascalCase name}}Controller({{camelCase name}}Service);
+    });
+
+    it('should be defined', () => {
+        expect({{camelCase name}}Controller).toBeDefined();
+    });
+
     it('should create and return a {{pascalCase name}}DTO', async () => {
         const inputData = new Base{{pascalCase name}}DTO(
             'test name',

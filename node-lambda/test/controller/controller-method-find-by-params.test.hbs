@@ -3,7 +3,17 @@ import I{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/interfac
 import I{{pascalCase name}}ResultRow from '../../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}-query-result.interface';
 import {{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/model/{{kebabCase name}}.model';
 import I{{pascalCase name}}Params from '../../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}-params.interface';$<code>$<tests>
-    
+    beforeEach(() => {
+        {{camelCase name}}Service = {
+            findAllByParams: jest.fn(),
+        };
+        {{camelCase name}}Controller = new {{pascalCase name}}Controller({{camelCase name}}Service);
+    });
+
+    it('should be defined', () => {
+        expect({{camelCase name}}Controller).toBeDefined();
+    });
+
     it('should return a list of {{pascalCase name}}DTOs', async () => {
         const params = new {{pascalCase name}}ParamsDTO();
         const {{camelCase name}}Data: {{pascalCase name}}[] = [

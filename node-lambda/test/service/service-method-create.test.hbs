@@ -1,6 +1,17 @@
 $<imports>
 import I{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}.interface';
 import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/interface/base-{{kebabCase name}}.interface';$<code>$<tests>
+    beforeEach(() => {
+        {{camelCase name}}Repository = {
+            save: jest.fn(),
+        };
+        {{camelCase name}}Service = new {{pascalCase name}}Service({{camelCase name}}Repository);
+    });
+
+    it('should be defined', () => {
+        expect({{camelCase name}}Service).toBeDefined();
+    });
+
     it('should return the result of {{camelCase name}}Repository.save', async () => {
         const params: IBase{{pascalCase name}} = {
             name: 'test',
