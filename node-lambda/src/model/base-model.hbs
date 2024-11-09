@@ -18,8 +18,8 @@ export default class Base{{pascalCase name}} implements IBase{{pascalCase name}}
         return new Base{{pascalCase name}}(
             dto.name,
             dto.description,
-            new Date(dto.validFromDate),
-            dto.validToDate ? new Date(dto.validToDate) : null
+            new Date(dto.validFromDate + 'T05:00:00.000Z'),
+            dto.validToDate ? new Date(dto.validToDate + 'T05:00:00.000Z') : null,
             {{#each modelProperties}}
             dto.{{name}},
             {{/each}}
