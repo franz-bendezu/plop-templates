@@ -21,11 +21,11 @@ export default class Base{{pascalCase name}}DTO {
         public name: string,
         public description: string,
         public validFromDate: string,
-        public validToDate: string | null,
+        public validToDate?: string | null,
         {{#each modelProperties}}
         public {{name}}: {{type}},
         {{/each}}
-    ) {}
+    ) { }
 
     // Methods
 }
