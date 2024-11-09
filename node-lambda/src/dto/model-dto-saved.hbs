@@ -16,8 +16,8 @@ export default class {{pascalCase name}}DTO extends Base{{pascalCase name}}DTO i
         public id: number,
         public name: string,
         public description: string,
-        public validFrom: string,
-        public validTo: string,
+        public validFromDate: string,
+        public validToDate: string | null,
         public createdAt: string,
         public modifiedAt: string | null,
         public createdBy: string,
@@ -26,7 +26,7 @@ export default class {{pascalCase name}}DTO extends Base{{pascalCase name}}DTO i
         public {{name}}: {{type}},
         {{/each}}
     ) {
-        super(name, description, validFrom, validTo);
+        super(name, description, validFromDate, validToDate);
     }
 
     static from(data: I{{pascalCase name}}): {{pascalCase name}}DTO {
