@@ -6,20 +6,22 @@ import { {{camelCase name}}Schema } from '../common/schema/{{kebabCase name}}.sc
 export interface IBase{{pascalCase name}}DTO {
     name: string;
     description: string;
-    validFrom: Date;
-    validTo: Date | null;
-    {{#each modelProperties}}
-    {{name}}: {{type}};
-    {{/each}}
+    validFromDate: string | Date;
+    validToDate?: string | Date | null;
 }
 
-export default class Base{{pascalCase name}}DTO implements IBase{{pascalCase name}}DTO {
+export interface I{{pascalCase name}}Payload extends IBase{{pascalCase name}}DTO {
+    validFromDate: string;
+    validToDate?: string | null;
+}
+
+export default class Base{{pascalCase name}}DTO {
 
     constructor(
         public name: string,
         public description: string,
-        public validFrom: Date,
-        public validTo: Date | null,
+        public validFromDate: string,
+        public validToDate: string | null,
         {{#each modelProperties}}
         public {{name}}: {{type}},
         {{/each}}

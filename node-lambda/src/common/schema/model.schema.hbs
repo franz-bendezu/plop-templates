@@ -8,8 +8,13 @@ export const joi: Root = joiCore.extend(joiDate);
 export const DATE_FORMAT = 'YYYY-MM-DD';
 export const ALPHANUMERIC_HYPHEN_SPACE_REGEX = /^[-\w\s]+$/;
 
+export interface I{{pascalCase name}}Schema extends IBase{{pascalCase name}}DTO {
+    validFromDate: Date;
+    validToDate?: Date | null;
+}
+
 export const {{camelCase name}}Schema = joi
-    .object<IProductTempSchema>({
+    .object<I{{pascalCase name}}Schema>({
         name: joi.string().regex(ALPHANUMERIC_HYPHEN_SPACE_REGEX).required(),
         description: joi.string().regex(ALPHANUMERIC_HYPHEN_SPACE_REGEX).required(),
         validFrom: joi.date().format(DATE_FORMAT).required(),

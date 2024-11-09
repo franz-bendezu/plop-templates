@@ -7,7 +7,9 @@ $<code>$<methods>
                 statusCode: StatusCodes.BAD_REQUEST,
             });
         }
-        const { error, value } = {{camelCase name}}Schema.validate(JSON.parse(body));
+        const payload = JSON.parse(body);
+        const { error, value } = {{camelCase name}}Schema.validate(payload);
+        const payloadResult: IProductTempPayload = payload;
         if (error) {
             throw new RuntimeError({
                 statusMessage: error.message,
@@ -18,7 +20,7 @@ $<code>$<methods>
         return new Base{{pascalCase name}}DTO(
             value.name,
             value.description,
-            value.validFrom,
-            value.validTo,
+            payloadResult.validFromDate,
+            payloadResult.validToDate,
         );
     }
