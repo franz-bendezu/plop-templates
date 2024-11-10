@@ -1,12 +1,6 @@
 $<imports>$<code>$<methods>
     static fromBody(body: string | null): Base{{pascalCase name}}DTO {
-        if (!body) {
-            throw new RuntimeError({
-                statusMessage: 'Body is required',
-                statusCode: StatusCodes.BAD_REQUEST,
-            });
-        }
-        const payload = JSON.parse(body);
+        const payload = JSON.parse(body || '{}');
         const { error, value } = {{camelCase name}}Schema.validate(payload);
         const payloadResult: IProductTempPayload = payload;
         if (error) {

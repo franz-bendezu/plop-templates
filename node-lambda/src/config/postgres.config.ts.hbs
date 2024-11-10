@@ -24,7 +24,6 @@ export interface IDatabaseTransactionClient extends IDatabaseClient {
     transaction<T>(callback: (client: IDatabaseClient) => Promise<T>): Promise<T>;
 }
 
-
 export default class PostgresConfig implements IDatabaseTransactionClient {
     public static readonly APPLICATION_NAME = '{{folder}}';
 
