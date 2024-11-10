@@ -1,12 +1,12 @@
 // Imports
-import  I{{pascalCase name}}Repository from './{{kebabCase name}}.repository.interface';
+import I{{pascalCase name}}Repository from './{{kebabCase name}}.repository.interface';
 import {{pascalCase name}} from '../model/{{kebabCase name}}.model';
-import { IPostgresConfig } from '../config/postgres.config';
+import { IDatabaseTransactionClient } from '../config/postgres.config';
 import { RuntimeError } from '../common/error/runtime-error';
 
 export default class {{pascalCase name}}Repository implements I{{pascalCase name}}Repository {
 
-    constructor(private readonly pgClient: IPostgresConfig) { }
+    constructor(private readonly pgClient: IDatabaseTransactionClient) { }
 
     // Methods
 }

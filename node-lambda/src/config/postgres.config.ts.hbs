@@ -11,7 +11,7 @@ export interface IDatabaseConfig {
     dbClusterIdentifier: string;
 }
 
-export interface IPostgresConfig {
+export interface IDatabaseClient {
     query<T extends QueryResultRow, I = any[]>(
         query: string,
         values: QueryConfigValues<I>,
@@ -19,10 +19,13 @@ export interface IPostgresConfig {
     query<T extends QueryResultRow>(
         query: string,
     ): Promise<QueryResult<T>>;
-    transaction<T>(callback: (client: Client) => Promise<T>): Promise<T>;
+}
+export interface IDatabaseTransactionClient extends IDatabaseClient {
+    transaction<T>(callback: (client: IDatabaseClient) => Promise<T>): Promise<T>;
 }
 
-export default class PostgresConfig implements IPostgresConfig {
+
+export default class PostgresConfig implements IDatabaseTransactionClient {
     public static readonly APPLICATION_NAME = '{{folder}}';
 
     currentConfig?: IDatabaseConfig;
