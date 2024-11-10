@@ -2,6 +2,7 @@ $<imports>
 import I{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}.interface';
 import I{{pascalCase name}}ResultRow from '../../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}-query-result.interface';
 import {{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/model/{{kebabCase name}}.model';
+import { CREATE_QUERY } from '../../../src/{{kebabCase moduleName}}/repository/query/{{kebabCase name}}.query';
 import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/interface/base-{{kebabCase name}}.interface';$<code>$<tests>
     it('should create a new {{pascalCase name}} instance when save is successful', async () => {
         const inputData: IBase{{pascalCase name}} = {
@@ -35,9 +36,28 @@ import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/inte
             fields: [],
         };
 
-        pgClient.transaction.mockResolvedValue(queryResult);
+        pgClient.query.mockResolvedValue(queryResult);
+
+        pgClient.transaction.mockImplementation(async (callback) => {
+            return await callback(pgClient);
+        });
 
         const result = await {{camelCase name}}Repository.save(inputData);
+
+
+        expect(pgClient.transaction).toHaveBeenCalledTimes(1);
+
+        expect(pgClient.query).toHaveBeenCalledTimes(1);
+
+        expect(pgClient.query).toHaveBeenCalledWith(
+            CREATE_QUERY,
+            [
+                'test',
+                'description',
+                new Date('2021-01-01T05:00:00.000Z'),
+                new Date('2021-01-01T05:00:00.000Z'),
+            ],
+        );
 
         expect(result).toBeInstanceOf({{pascalCase name}});
         const expected = new {{pascalCase name}}(
