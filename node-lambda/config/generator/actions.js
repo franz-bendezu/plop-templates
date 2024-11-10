@@ -246,6 +246,18 @@ export const GENERATOR_ACTIONS = [
   },
   {
     type: "add",
+    path: TEST_PATH + "/dto/{{kebabCase name}}-params.dto.test.ts",
+    templateFile: TEMPLATE_PATH + "/test/dto/model-params.dto.test.hbs",
+    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+  },
+  {
+    type: "add",
+    path: TEST_PATH + "/dto/base-{{kebabCase name}}.dto.test.ts",
+    templateFile: TEMPLATE_PATH + "/test/dto/base-model.dto.test.hbs",
+    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+  },
+  {
+    type: "add",
     path: TEST_PATH + "/controller/{{kebabCase name}}.controller.test.ts",
     templateFile: TEMPLATE_PATH + "/test/controller/controller.test.hbs",
   },

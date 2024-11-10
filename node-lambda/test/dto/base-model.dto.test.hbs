@@ -1,0 +1,37 @@
+import Base{{pascalCase name}}DTO, { I{{pascalCase name}}Payload } from '../../../src/{{kebabCase moduleName}}/dto/base-{{kebabCase name}}.dto';
+import { RuntimeError } from '../../../src/{{kebabCase moduleName}}/common/error/runtime-error';
+
+describe('Base{{pascalCase name}}DTO', () => {
+    it('should throw an error if body is null', () => {
+        expect(() => Base{{pascalCase name}}DTO.fromBody(null)).toThrow(RuntimeError);
+    });
+
+    it('should throw an error if body is invalid JSON', () => {
+        const invalidJson = '{ name: \'Product\' }';
+        expect(() => Base{{pascalCase name}}DTO.fromBody(invalidJson)).toThrow(SyntaxError);
+    });
+
+    it('should throw an error if validation fails', () => {
+        const invalidPayload = JSON.stringify({ name: 'Product' });
+        expect(() => Base{{pascalCase name}}DTO.fromBody(invalidPayload)).toThrow(
+            RuntimeError
+        );
+    });
+
+    it('should return a Base{{pascalCase name}}DTO instance if validation passes', () => {
+        const payload: Required<I{{pascalCase name}}Payload> = {
+            name: 'Product',
+            description: 'Description',
+            validFromDate: '2023-01-01',
+            validToDate: '2023-12-31',
+        };
+        const serializedPayload = JSON.stringify(payload);
+
+        const result = Base{{pascalCase name}}DTO.fromBody(serializedPayload);
+        expect(result).toBeInstanceOf(Base{{pascalCase name}}DTO);
+        expect(result.name).toBe('Product');
+        expect(result.description).toBe('Description');
+        expect(result.validFromDate).toBe('2023-01-01');
+        expect(result.validToDate).toBe('2023-12-31');
+    });
+});
