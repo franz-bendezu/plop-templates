@@ -258,6 +258,17 @@ export const GENERATOR_ACTIONS = [
   },
   {
     type: "add",
+    path: TEST_PATH + "/model/base-{{kebabCase name}}.model.test.ts",
+    templateFile: TEMPLATE_PATH + "/test/model/base-model.model.test.hbs",
+    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+  },
+  {
+    type: "add",
+    path: TEST_PATH + "/model/{{kebabCase name}}.model.test.ts",
+    templateFile: TEMPLATE_PATH + "/test/model/model.model.test.hbs",
+  },
+  {
+    type: "add",
     path: TEST_PATH + "/controller/{{kebabCase name}}.controller.test.ts",
     templateFile: TEMPLATE_PATH + "/test/controller/controller.test.hbs",
   },
