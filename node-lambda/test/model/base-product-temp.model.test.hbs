@@ -1,0 +1,53 @@
+import Base{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/model/base-{{kebabCase name}}.model';
+import Base{{pascalCase name}}DTO from '../../../src/{{kebabCase moduleName}}/dto/base-{{kebabCase name}}.dto';
+
+describe('Base{{pascalCase name}}', () => {
+    it('should create an instance of Base{{pascalCase name}}', () => {
+        const name = 'Test Product';
+        const description = 'Test Description';
+        const validFrom = new Date('2023-01-01T05:00:00.000Z');
+        const validTo = new Date('2023-12-31T05:00:00.000Z');
+
+        const {{camelCase name}} = new Base{{pascalCase name}}(name, description, validFrom, validTo);
+
+        expect({{camelCase name}}).toBeInstanceOf(Base{{pascalCase name}});
+        expect({{camelCase name}}.name).toBe(name);
+        expect({{camelCase name}}.description).toBe(description);
+        expect({{camelCase name}}.validFrom).toEqual(validFrom);
+        expect({{camelCase name}}.validTo).toEqual(validTo);
+    });
+
+    it('should create an instance of Base{{pascalCase name}} from DTO', () => {
+        const dto: Base{{pascalCase name}}DTO = {
+            name: 'Test Product',
+            description: 'Test Description',
+            validFromDate: '2023-01-01',
+            validToDate: '2023-12-31'
+        };
+
+        const {{camelCase name}} = Base{{pascalCase name}}.fromDTO(dto);
+
+        expect({{camelCase name}}).toBeInstanceOf(Base{{pascalCase name}});
+        expect({{camelCase name}}.name).toBe(dto.name);
+        expect({{camelCase name}}.description).toBe(dto.description);
+        expect({{camelCase name}}.validFrom).toEqual(new Date(dto.validFromDate + 'T05:00:00.000Z'));
+        expect({{camelCase name}}.validTo).toEqual(new Date(dto.validToDate + 'T05:00:00.000Z'));
+    });
+
+    it('should handle null validToDate in DTO', () => {
+        const dto: Base{{pascalCase name}}DTO = {
+            name: 'Test Product',
+            description: 'Test Description',
+            validFromDate: '2023-01-01',
+            validToDate: null
+        };
+
+        const {{camelCase name}} = Base{{pascalCase name}}.fromDTO(dto);
+
+        expect({{camelCase name}}).toBeInstanceOf(Base{{pascalCase name}});
+        expect({{camelCase name}}.name).toBe(dto.name);
+        expect({{camelCase name}}.description).toBe(dto.description);
+        expect({{camelCase name}}.validFrom).toEqual(new Date(dto.validFromDate + 'T05:00:00.000Z'));
+        expect({{camelCase name}}.validTo).toBeNull();
+    });
+});

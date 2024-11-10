@@ -1,0 +1,97 @@
+import {{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/model/{{kebabCase name}}.model';
+
+describe('{{pascalCase name}}', () => {
+    it('should create an instance of {{pascalCase name}} with correct properties', () => {
+        const id = 1;
+        const name = 'Test Product';
+        const description = 'Test Description';
+        const validFrom = new Date('2023-01-01');
+        const validTo = new Date('2023-12-31');
+        const createdAt = new Date('2023-01-01');
+        const modifiedAt = new Date('2023-06-01');
+        const createdBy = 'creator';
+        const modifiedBy = 'modifier';
+
+        const {{camelCase name}} = new {{pascalCase name}}(
+            id,
+            name,
+            description,
+            validFrom,
+            validTo,
+            createdAt,
+            modifiedAt,
+            createdBy,
+            modifiedBy
+        );
+
+        expect({{camelCase name}}.id).toBe(id);
+        expect({{camelCase name}}.name).toBe(name);
+        expect({{camelCase name}}.description).toBe(description);
+        expect({{camelCase name}}.validFrom).toBe(validFrom);
+        expect({{camelCase name}}.validTo).toBe(validTo);
+        expect({{camelCase name}}.createdAt).toBe(createdAt);
+        expect({{camelCase name}}.modifiedAt).toBe(modifiedAt);
+        expect({{camelCase name}}.createdBy).toBe(createdBy);
+        expect({{camelCase name}}.modifiedBy).toBe(modifiedBy);
+    });
+
+    it('should create an instance of {{pascalCase name}} with null validTo and modifiedBy', () => {
+        const id = 2;
+        const name = 'Test Product 2';
+        const description = 'Test Description 2';
+        const validFrom = new Date('2023-01-01');
+        const validTo = null;
+        const createdAt = new Date('2023-01-01');
+        const modifiedAt = null;
+        const createdBy = 'creator2';
+        const modifiedBy = null;
+
+        const {{camelCase name}} = new {{pascalCase name}}(
+            id,
+            name,
+            description,
+            validFrom,
+            validTo,
+            createdAt,
+            modifiedAt,
+            createdBy,
+            modifiedBy
+        );
+
+        expect({{camelCase name}}.id).toBe(id);
+        expect({{camelCase name}}.name).toBe(name);
+        expect({{camelCase name}}.description).toBe(description);
+        expect({{camelCase name}}.validFrom).toBe(validFrom);
+        expect({{camelCase name}}.validTo).toBe(validTo);
+        expect({{camelCase name}}.createdAt).toBe(createdAt);
+        expect({{camelCase name}}.modifiedAt).toBe(modifiedAt);
+        expect({{camelCase name}}.createdBy).toBe(createdBy);
+        expect({{camelCase name}}.modifiedBy).toBe(modifiedBy);
+    });
+
+    it('should create an instance of {{pascalCase name}} from data', () => {
+        const data = {
+            id: 3,
+            name: 'Test Product 3',
+            description: 'Test Description 3',
+            validFrom: new Date('2023-01-01'),
+            validTo: new Date('2023-12-31'),
+            createdAt: new Date('2023-01-01'),
+            modifiedAt: new Date('2023-06-01'),
+            createdBy: 'creator3',
+            modifiedBy: 'modifier3',
+        };
+
+        const {{camelCase name}} = {{pascalCase name}}.from(data);
+
+        expect({{camelCase name}}.id).toBe(data.id);
+        expect({{camelCase name}}.name).toBe(data.name);
+        expect({{camelCase name}}.description).toBe(data.description);
+        expect({{camelCase name}}.validFrom).toBe(data.validFrom);
+        expect({{camelCase name}}.validTo).toBe(data.validTo);
+        expect({{camelCase name}}.createdAt).toBe(data.createdAt);
+        expect({{camelCase name}}.modifiedAt).toBe(data.modifiedAt);
+        expect({{camelCase name}}.createdBy).toBe(data.createdBy);
+        expect({{camelCase name}}.modifiedBy).toBe(data.modifiedBy);
+    });
+});
