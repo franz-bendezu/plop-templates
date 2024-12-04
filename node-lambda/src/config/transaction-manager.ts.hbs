@@ -1,0 +1,27 @@
+import { IDatabaseManager } from './postgres.config';
+import {
+  ITransactionManager,
+  HandleTransactionWithDeps,
+  TransactionFactory,
+} from './transaction-manager.interface';
+
+export class TransactionManager<D> implements ITransactionManager<D> {
+  constructor(
+    private readonly dbManager: IDatabaseManager,
+    private readonly factory: TransactionFactory<D>,
+  ) { }
+
+  async connection<T>(handler: HandleTransactionWithDeps<T, D>): Promise<T> {
+    return this.dbManager.connection(async (connectionClient) =>
+      handler(this.factory(connectionClient))
+    );
+  }
+
+  async transaction<T>(
+    handler: HandleTransactionWithDeps<T, D>,
+  ): Promise<T> {
+    return this.dbManager.transaction(
+      async (transactionClient) =>  handler(this.factory(transactionClient)),
+    );
+  }
+}
