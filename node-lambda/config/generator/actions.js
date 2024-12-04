@@ -1,4 +1,4 @@
-import { CREATE_OPERATION } from "../constants.js";
+import { CREATE_OPERATION, READ_OPERATION } from "../constants.js";
 import {
   BLOCK_METHOD_PATTERN,
   SRC_PATH,
@@ -19,7 +19,7 @@ export const GENERATOR_ACTIONS = [
     type: "add",
     path: SRC_PATH + "/model/{{kebabCase name}}.model.ts",
     templateFile: TEMPLATE_PATH + "/src/model/model.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -43,13 +43,13 @@ export const GENERATOR_ACTIONS = [
     type: "add",
     path: SRC_PATH + "/common/schema/{{kebabCase name}}-params.schema.ts",
     templateFile: TEMPLATE_PATH + "/src/common/schema/model-params.schema.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
     path: SRC_PATH + "/interface/{{kebabCase name}}.interface.ts",
     templateFile: TEMPLATE_PATH + "/src/interface/model.interface.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -61,7 +61,7 @@ export const GENERATOR_ACTIONS = [
     type: "add",
     path: SRC_PATH + "/dto/{{kebabCase name}}.dto.ts",
     templateFile: TEMPLATE_PATH + "/src/dto/model-dto.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -73,7 +73,7 @@ export const GENERATOR_ACTIONS = [
     type: "add",
     path: SRC_PATH + "/dto/{{kebabCase name}}-params.dto.ts",
     templateFile: TEMPLATE_PATH + "/src/dto/model-dto-params.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "modify",
@@ -94,7 +94,7 @@ export const GENERATOR_ACTIONS = [
     templateFile:
       TEMPLATE_PATH +
       "/src/repository/repository-method-find-by-params-interface.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "modify",
@@ -114,7 +114,7 @@ export const GENERATOR_ACTIONS = [
     path: SRC_PATH + "/repository/query/{{kebabCase name}}.query.ts",
     templateFile:
       TEMPLATE_PATH + "/src/repository/query/model-query-find-by-params.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -129,7 +129,7 @@ export const GENERATOR_ACTIONS = [
     pattern: BLOCK_METHOD_PATTERN,
     templateFile:
       TEMPLATE_PATH + "/src/repository/repository-find-by-params.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "modify",
@@ -151,7 +151,7 @@ export const GENERATOR_ACTIONS = [
     templateFile:
       TEMPLATE_PATH +
       "/src/service/service-method-find-by-params-interface.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "modify",
@@ -171,7 +171,7 @@ export const GENERATOR_ACTIONS = [
     path: SRC_PATH + "/service/{{kebabCase name}}.service.ts",
     pattern: BLOCK_METHOD_PATTERN,
     templateFile: TEMPLATE_PATH + "/src/service/service-find-by-params.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "modify",
@@ -191,7 +191,7 @@ export const GENERATOR_ACTIONS = [
     pattern: BLOCK_METHOD_PATTERN,
     templateFile:
       TEMPLATE_PATH + "/src/controller/controller-interface-find-by-params.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "modify",
@@ -212,7 +212,7 @@ export const GENERATOR_ACTIONS = [
     pattern: BLOCK_METHOD_PATTERN,
     templateFile:
       TEMPLATE_PATH + "/src/controller/controller-find-by-params.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "modify",
@@ -227,7 +227,7 @@ export const GENERATOR_ACTIONS = [
     path: SRC_PATH + "/handler.ts",
     pattern: BLOCK_RESPONSE_PATTERN,
     templateFile: TEMPLATE_PATH + "/src/handler-return-find-by-params.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
 
   {
@@ -247,7 +247,7 @@ export const GENERATOR_ACTIONS = [
     type: "add",
     path: TEST_PATH + "/dto/{{kebabCase name}}-params.dto.test.ts",
     templateFile: TEMPLATE_PATH + "/test/dto/model-params.dto.test.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -278,7 +278,7 @@ export const GENERATOR_ACTIONS = [
     templateFile:
       TEMPLATE_PATH +
       "/test/controller/controller-method-find-by-params.test.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "modify",
@@ -300,7 +300,7 @@ export const GENERATOR_ACTIONS = [
     templateFile:
       TEMPLATE_PATH +
       "/test/repository/repository-method-find-by-params.test.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "modify",
@@ -321,7 +321,7 @@ export const GENERATOR_ACTIONS = [
     pattern: BLOCK_TEST_PATTERN,
     templateFile:
       TEMPLATE_PATH + "/test/service/service-method-find-by-params.test.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "modify",
@@ -342,7 +342,7 @@ export const GENERATOR_ACTIONS = [
     pattern: BLOCK_TEST_PATTERN,
     templateFile:
       TEMPLATE_PATH + "/test/handler-return-find-by-params.test.hbs",
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "modify",
@@ -356,7 +356,7 @@ export const GENERATOR_ACTIONS = [
     path: TEST_PATH + "/handler-invoker.ts",
     templateFile: TEMPLATE_PATH + "/test/handler-invoker-find-by-params.hbs",
     pattern: BLOCK_TEST_PATTERN,
-    skip: (answers) => (answers.operation !== "read" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
