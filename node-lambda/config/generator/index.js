@@ -1,7 +1,7 @@
 import { GENERATOR_ACTIONS } from "./actions.js";
 import {
-  CREATE_OPERATION,
-  READ_OPERATION,
+  CREATE_ONE_OPERATION,
+  READ_MANY_OPERATION,
   UPDATE_OPERATION,
   DELETE_OPERATION,
 } from "../constants.js";
@@ -29,8 +29,8 @@ export const GENERATOR_CONFIG = {
       name: "operation",
       message: "Resource operation",
       choices: [
-        CREATE_OPERATION,
-        READ_OPERATION,
+        CREATE_ONE_OPERATION,
+        READ_MANY_OPERATION,
         UPDATE_OPERATION,
         DELETE_OPERATION,
       ],
