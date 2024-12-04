@@ -76,6 +76,12 @@ export const GENERATOR_ACTIONS = [
     skip: (answers) => (answers.operation !== READ_MANY_OPERATION ? "Skip" : undefined),
   },
   {
+    type: "add",
+    path: SRC_PATH + "/dto/base-{{kebabCase name}}.dto.ts",
+    templateFile: TEMPLATE_PATH + "/src/dto/base-dto.hbs",
+    skip: (answers) => (answers.operation !== CREATE_ONE_OPERATION ? "Skip" : undefined),
+  },
+  {
     type: "modify",
     path: SRC_PATH + "/dto/base-{{kebabCase name}}.dto.ts",
     pattern: BLOCK_METHOD_PATTERN,
