@@ -128,7 +128,7 @@ export const GENERATOR_ACTIONS = [
     path: SRC_PATH + "/repository/{{kebabCase name}}.repository.ts",
     pattern: BLOCK_METHOD_PATTERN,
     templateFile:
-      TEMPLATE_PATH + "/src/repository/repository-find-by-params.hbs",
+      TEMPLATE_PATH + "/src/repository/repository-method-find-by-params.hbs",
     skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
@@ -170,7 +170,7 @@ export const GENERATOR_ACTIONS = [
     type: "modify",
     path: SRC_PATH + "/service/{{kebabCase name}}.service.ts",
     pattern: BLOCK_METHOD_PATTERN,
-    templateFile: TEMPLATE_PATH + "/src/service/service-find-by-params.hbs",
+    templateFile: TEMPLATE_PATH + "/src/service/service-method-find-by-params.hbs",
     skip: (answers) => (answers.operation !== READ_OPERATION ? "Skip" : undefined),
   },
   {
