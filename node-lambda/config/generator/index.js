@@ -22,7 +22,12 @@ export const GENERATOR_CONFIG = {
       type: "list",
       name: "operation",
       message: "Resource operation",
-      choices: ["create", "read", "update", "delete"],
+      choices: [
+        CREATE_OPERATION,
+        READ_OPERATION,
+        UPDATE_OPERATION,
+        DELETE_OPERATION,
+      ],
     },
   ],
   actions: GENERATOR_ACTIONS,

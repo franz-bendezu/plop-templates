@@ -1,4 +1,4 @@
-import test, { skip } from "node:test";
+import { CREATE_OPERATION } from "../constants.js";
 import {
   BLOCK_METHOD_PATTERN,
   SRC_PATH,
@@ -7,7 +7,6 @@ import {
   BLOCK_RESPONSE_PATTERN,
   BLOCK_TEST_PATTERN,
 } from "../constants.js";
-import path from "path";
 
 export const GENERATOR_ACTIONS = [
   {
@@ -26,19 +25,19 @@ export const GENERATOR_ACTIONS = [
     type: "add",
     path: SRC_PATH + "/model/{{kebabCase name}}.model.ts",
     templateFile: TEMPLATE_PATH + "/src/model/model-saved.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
     path: SRC_PATH + "/model/base-{{kebabCase name}}.model.ts",
     templateFile: TEMPLATE_PATH + "/src/model/base-model.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
     path: SRC_PATH + "/common/schema/{{kebabCase name}}.schema.ts",
     templateFile: TEMPLATE_PATH + "/src/common/schema/model.schema.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -56,7 +55,7 @@ export const GENERATOR_ACTIONS = [
     type: "add",
     path: SRC_PATH + "/interface/{{kebabCase name}}.interface.ts",
     templateFile: TEMPLATE_PATH + "/src/interface/model-saved.interface.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -68,7 +67,7 @@ export const GENERATOR_ACTIONS = [
     type: "add",
     path: SRC_PATH + "/dto/{{kebabCase name}}.dto.ts",
     templateFile: TEMPLATE_PATH + "/src/dto/model-dto-saved.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -81,7 +80,7 @@ export const GENERATOR_ACTIONS = [
     path: SRC_PATH + "/dto/base-{{kebabCase name}}.dto.ts",
     pattern: BLOCK_METHOD_PATTERN,
     templateFile: TEMPLATE_PATH + "/src/dto/base-dto-method-from-body.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -103,7 +102,7 @@ export const GENERATOR_ACTIONS = [
     pattern: BLOCK_METHOD_PATTERN,
     templateFile:
       TEMPLATE_PATH + "/src/repository/repository-method-create-interface.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -122,7 +121,7 @@ export const GENERATOR_ACTIONS = [
     path: SRC_PATH + "/repository/query/{{kebabCase name}}.query.ts",
     templateFile:
       TEMPLATE_PATH + "/src/repository/query/model-query-create.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "modify",
@@ -138,7 +137,7 @@ export const GENERATOR_ACTIONS = [
     pattern: BLOCK_METHOD_PATTERN,
     templateFile:
       TEMPLATE_PATH + "/src/repository/repository-method-create.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -160,7 +159,7 @@ export const GENERATOR_ACTIONS = [
     pattern: BLOCK_METHOD_PATTERN,
     templateFile:
       TEMPLATE_PATH + "/src/service/service-method-create-interface.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -179,7 +178,7 @@ export const GENERATOR_ACTIONS = [
     path: SRC_PATH + "/service/{{kebabCase name}}.service.ts",
     pattern: BLOCK_METHOD_PATTERN,
     templateFile: TEMPLATE_PATH + "/src/service/service-method-create.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -200,7 +199,7 @@ export const GENERATOR_ACTIONS = [
     pattern: BLOCK_METHOD_PATTERN,
     templateFile:
       TEMPLATE_PATH + "/src/controller/controller-method-create-interface.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -221,7 +220,7 @@ export const GENERATOR_ACTIONS = [
     pattern: BLOCK_METHOD_PATTERN,
     templateFile:
       TEMPLATE_PATH + "/src/controller/controller-method-create.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "modify",
@@ -236,7 +235,7 @@ export const GENERATOR_ACTIONS = [
     path: SRC_PATH + "/handler.ts",
     pattern: BLOCK_RESPONSE_PATTERN,
     templateFile: TEMPLATE_PATH + "/src/handler-return-create.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "addMany",
@@ -254,13 +253,13 @@ export const GENERATOR_ACTIONS = [
     type: "add",
     path: TEST_PATH + "/dto/base-{{kebabCase name}}.dto.test.ts",
     templateFile: TEMPLATE_PATH + "/test/dto/base-model.dto.test.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
     path: TEST_PATH + "/model/base-{{kebabCase name}}.model.test.ts",
     templateFile: TEMPLATE_PATH + "/test/model/base-model.model.test.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -287,7 +286,7 @@ export const GENERATOR_ACTIONS = [
     pattern: BLOCK_TEST_PATTERN,
     templateFile:
       TEMPLATE_PATH + "/test/controller/controller-method-create.test.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -309,7 +308,7 @@ export const GENERATOR_ACTIONS = [
     pattern: BLOCK_TEST_PATTERN,
     templateFile:
       TEMPLATE_PATH + "/test/repository/repository-method-create.test.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -330,7 +329,7 @@ export const GENERATOR_ACTIONS = [
     pattern: BLOCK_TEST_PATTERN,
     templateFile:
       TEMPLATE_PATH + "/test/service/service-method-create.test.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -350,7 +349,7 @@ export const GENERATOR_ACTIONS = [
     path: TEST_PATH + "/handler.test.ts",
     pattern: BLOCK_TEST_PATTERN,
     templateFile: TEMPLATE_PATH + "/test/handler-return-create.test.hbs",
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "add",
@@ -364,7 +363,7 @@ export const GENERATOR_ACTIONS = [
     path: TEST_PATH + "/handler-invoker.ts",
     templateFile: TEMPLATE_PATH + "/test/handler-invoker-create.hbs",
     pattern: BLOCK_TEST_PATTERN,
-    skip: (answers) => (answers.operation !== "create" ? "Skip" : undefined),
+    skip: (answers) => (answers.operation !== CREATE_OPERATION ? "Skip" : undefined),
   },
   {
     type: "upgradeDevDependencies",
