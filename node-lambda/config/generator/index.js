@@ -1,4 +1,10 @@
 import { GENERATOR_ACTIONS } from "./actions.js";
+import {
+  CREATE_OPERATION,
+  READ_OPERATION,
+  UPDATE_OPERATION,
+  DELETE_OPERATION,
+} from "../constants.js";
 
 export const GENERATOR_CONFIG = {
   description: "Generate a handler for a new resource",
