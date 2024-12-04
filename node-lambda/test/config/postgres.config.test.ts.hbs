@@ -89,7 +89,7 @@ describe('PostgresConfig', () => {
             );
         const query = 'SELECT * FROM users WHERE id = $1';
         const values = [1];
-        const result = await postgresConfig.query(query, values);
+        const result = await postgresConfig.executeQuery(query, values);
 
         expect(createClient).toHaveBeenCalled();
         expect(clientConnect).toHaveBeenCalled();
@@ -113,7 +113,7 @@ describe('PostgresConfig', () => {
 
 
         const query = 'SELECT * FROM users';
-        const result = await postgresConfig.query(query);
+        const result = await postgresConfig.executeQuery(query);
 
         expect(createClient).toHaveBeenCalled();
         expect(clientConnect).toHaveBeenCalled();
@@ -134,7 +134,7 @@ describe('PostgresConfig', () => {
             );
 
         const query = 'SELECT * FROM users';
-        await expect(postgresConfig.query(query)).rejects.toThrow('Query error');
+        await expect(postgresConfig.executeQuery(query)).rejects.toThrow('Query error');
 
         expect(createClient).toHaveBeenCalled();
         expect(clientConnect).toHaveBeenCalled();
@@ -186,5 +186,26 @@ describe('PostgresConfig', () => {
         expect(callback).toHaveBeenCalledWith(mockClient);
         expect(mockClient.query).toHaveBeenCalledWith('ROLLBACK');
         expect(mockClient.end).toHaveBeenCalledTimes(1);
+    });
+
+    it('should execute a callback with a client and return the result', async () => {
+        const callback = jest.fn().mockResolvedValue('result');
+        const clientQuery = jest.fn();
+        const clientEnd = jest.fn();
+        const clientConnect = jest.fn();
+        const mockClient: any = {
+            query: clientQuery,
+            end: clientEnd,
+            connect: clientConnect,
+        };
+
+        jest.spyOn(postgresConfig, 'createClient').mockResolvedValue(mockClient);
+
+        const result = await postgresConfig.connection(callback);
+
+        expect(mockClient.connect).toHaveBeenCalledTimes(1);
+        expect(callback).toHaveBeenCalledWith(mockClient);
+        expect(mockClient.end).toHaveBeenCalledTimes(1);
+        expect(result).toBe('result');
     });
 });

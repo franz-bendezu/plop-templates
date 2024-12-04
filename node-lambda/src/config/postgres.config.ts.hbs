@@ -20,11 +20,22 @@ export interface IDatabaseClient {
         query: string,
     ): Promise<QueryResult<T>>;
 }
-export interface IDatabaseTransactionClient extends IDatabaseClient {
-    transaction<T>(callback: (client: IDatabaseClient) => Promise<T>): Promise<T>;
+export interface IDatabaseManager {
+    executeQuery<T extends QueryResultRow, I = any[]>(
+        query: string,
+        values: QueryConfigValues<I>,
+    ): Promise<QueryResult<T>>;
+    executeQuery<T extends QueryResultRow>(
+        query: string,
+    ): Promise<QueryResult<T>>;
+    connection<T>(callback: (client: IDatabaseClient) => Promise<T>): Promise<T>;
+    transaction<T>(
+        callback: (client: IDatabaseClient) => Promise<T>,
+        beforeTransactionCallback?: (client: IDatabaseClient) => Promise<void>
+    ): Promise<T>;
 }
 
-export default class PostgresConfig implements IDatabaseTransactionClient {
+export default class PostgresConfig implements IDatabaseManager {
     public static readonly APPLICATION_NAME = '{{folder}}';
 
     currentConfig?: IDatabaseConfig;
@@ -59,14 +70,14 @@ export default class PostgresConfig implements IDatabaseTransactionClient {
         });
     }
 
-    async query<T extends QueryResultRow, I = any[]>(
+    async executeQuery<T extends QueryResultRow, I = any[]>(
         query: string,
         values: QueryConfigValues<I>,
     ): Promise<QueryResult<T>>;
-    async query<T extends QueryResultRow>(
+    async executeQuery<T extends QueryResultRow>(
         query: string,
     ): Promise<QueryResult<T>>;
-    async query<T extends QueryResultRow, I = any[]>(
+    async executeQuery<T extends QueryResultRow, I = any[]>(
         query: string,
         values?: QueryConfigValues<I>,
     ): Promise<QueryResult<T>> {
@@ -79,12 +90,24 @@ export default class PostgresConfig implements IDatabaseTransactionClient {
         }
     }
 
-    async transaction<T>(callback: (client: Client) => Promise<T>): Promise<T> {
+    async connection<T>(callback: (client: Client) => Promise<T>): Promise<T> {
+        const client = await this.createClient();
+        try {
+            await client.connect();
+            return await callback(client);
+        } finally {
+            await client.end();
+        }
+    }
+
+    async transaction<T>(
+        transactionCallback: (client: Client) => Promise<T>,
+    ): Promise<T> {
         const client = await this.createClient();
         try {
             await client.connect();
             await client.query('BEGIN');
-            const result = await callback(client);
+            const result = await transactionCallback(client);
             await client.query('COMMIT');
             return result;
         } catch (error) {
