@@ -36,20 +36,20 @@ import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/inte
             fields: [],
         };
 
-        pgClient.query.mockResolvedValue(queryResult);
+        dbClient.query.mockResolvedValue(queryResult);
 
-        pgClient.transaction.mockImplementation(async (callback) => {
-            return await callback(pgClient);
+        dbClient.transaction.mockImplementation(async (callback) => {
+            return await callback(dbClient);
         });
 
         const result = await {{camelCase name}}Repository.save(inputData);
 
 
-        expect(pgClient.transaction).toHaveBeenCalledTimes(1);
+        expect(dbClient.transaction).toHaveBeenCalledTimes(1);
 
-        expect(pgClient.query).toHaveBeenCalledTimes(1);
+        expect(dbClient.query).toHaveBeenCalledTimes(1);
 
-        expect(pgClient.query).toHaveBeenCalledWith(
+        expect(dbClient.query).toHaveBeenCalledWith(
             CREATE_QUERY,
             [
                 'test',
@@ -89,7 +89,7 @@ import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/inte
         };
 
         const error = new Error('Database error');
-        pgClient.transaction.mockRejectedValue(error);
+        dbClient.transaction.mockRejectedValue(error);
 
         await expect({{camelCase name}}Repository.save(inputData)).rejects.toThrow(RuntimeError);
         await expect({{camelCase name}}Repository.save(inputData)).rejects.toThrow('Bennu Database error');

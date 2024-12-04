@@ -5,7 +5,7 @@ import I{{pascalCase name}}ResultRow from '../interface/{{kebabCase name}}-query
     async findAllByParams(params: I{{pascalCase name}}Params): Promise<{{pascalCase name}}[]> {
         try {
             // Implement data fetching logic here
-            const queryResult = await this.pgClient.query<I{{pascalCase name}}ResultRow>(
+            const queryResult = await this.dbClient.query<I{{pascalCase name}}ResultRow>(
                 FIND_BY_PARAMS,
                 [params.id]
             );

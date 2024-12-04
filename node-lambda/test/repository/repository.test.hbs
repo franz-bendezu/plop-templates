@@ -6,14 +6,14 @@ import {{pascalCase name}}Repository from '../../../src/{{kebabCase moduleName}}
 
 describe('{{pascalCase name}}Repository', () => {
     let {{camelCase name}}Repository: {{pascalCase name}}Repository;
-    let pgClient: jest.Mocked<IDatabaseManager>;
+    let dbClient: jest.Mocked<IDatabaseManager>;
 
     beforeEach(() => {
-        pgClient = {
+        dbClient = {
             query: jest.fn(),
             transaction: jest.fn(),
         };
-        {{camelCase name}}Repository = new {{pascalCase name}}Repository(pgClient);
+        {{camelCase name}}Repository = new {{pascalCase name}}Repository(dbClient);
     });
 
     it('should be defined', () => {

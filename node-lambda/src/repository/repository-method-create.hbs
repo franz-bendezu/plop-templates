@@ -4,7 +4,7 @@ import I{{pascalCase name}}ResultRow from '../interface/{{kebabCase name}}-query
 import IBase{{pascalCase name}} from '../interface/base-{{dashCase name}}.interface';$<code>$<methods>
     async save(data: IBase{{pascalCase name}}): Promise<{{pascalCase name}}> {
         try {
-            const queryResult = await this.pgClient.transaction(
+            const queryResult = await this.dbClient.transaction(
                 (client) => client.query<I{{pascalCase name}}ResultRow>(CREATE_QUERY, [
                     data.name,
                     data.description,
