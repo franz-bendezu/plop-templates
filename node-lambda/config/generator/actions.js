@@ -78,7 +78,7 @@ export const GENERATOR_ACTIONS = [
   {
     type: "add",
     path: SRC_PATH + "/dto/base-{{kebabCase name}}.dto.ts",
-    templateFile: TEMPLATE_PATH + "/src/dto/base-dto.hbs",
+    templateFile: TEMPLATE_PATH + "/src/dto/base-dto.dto.hbs",
     skip: (answers) => (answers.operation !== CREATE_ONE_OPERATION ? "Skip" : undefined),
   },
   {
