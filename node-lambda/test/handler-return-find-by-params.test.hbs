@@ -5,10 +5,13 @@ import I{{pascalCase name}}Params from '../../src/{{kebabCase moduleName}}/inter
         const mockData: {{pascalCase name}}DTO[] = [{
             id: 1,
             name: 'test',
-            createdAt: new Date('2023-01-01'),
-            modifiedAt: new Date('2023-01-01'),
+            createdAt: '2023-01-01',
+            modifiedAt: '2023-01-01',
             createdBy: 'user',
             modifiedBy: 'user-mod',
+            description: 'test description',
+            validFromDate: '2023-01-01',
+            validToDate: null
             {{#each paramsProperties}}
             {{name}}: '{{value}}',
             {{/each}}
