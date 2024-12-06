@@ -38,14 +38,9 @@ import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/inte
 
         dbClient.query.mockResolvedValue(queryResult);
 
-        dbClient.transaction.mockImplementation(async (callback) => {
-            return await callback(dbClient);
-        });
-
         const result = await {{camelCase name}}Repository.save(inputData);
 
-
-        expect(dbClient.transaction).toHaveBeenCalledTimes(1);
+        expect(dbManager.transaction).toHaveBeenCalledTimes(1);
 
         expect(dbClient.query).toHaveBeenCalledTimes(1);
 
@@ -89,7 +84,7 @@ import IBase{{pascalCase name}} from '../../../src/{{kebabCase moduleName}}/inte
         };
 
         const error = new Error('Database error');
-        dbClient.transaction.mockRejectedValue(error);
+        dbManager.transaction.mockRejectedValue(error);
 
         await expect({{camelCase name}}Repository.save(inputData)).rejects.toThrow(RuntimeError);
         await expect({{camelCase name}}Repository.save(inputData)).rejects.toThrow('Bennu Database error');

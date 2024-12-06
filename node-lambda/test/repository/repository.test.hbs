@@ -1,19 +1,32 @@
 // Imports
 import { QueryResult } from 'pg';
 import { RuntimeError } from '../../../src/{{kebabCase moduleName}}/common/error/runtime-error';
-import { IDatabaseManager } from '../../../src/{{kebabCase moduleName}}/config/postgres.config';
+import { IDatabaseManager. IDatabaseClient } from '../../../src/{{kebabCase moduleName}}/config/postgres.config';
 import {{pascalCase name}}Repository from '../../../src/{{kebabCase moduleName}}/repository/{{kebabCase name}}.repository';
 
 describe('{{pascalCase name}}Repository', () => {
     let {{camelCase name}}Repository: {{pascalCase name}}Repository;
-    let dbClient: jest.Mocked<IDatabaseManager>;
+    let dbManager: jest.Mocked<IDatabaseManager>;
+    let dbClient: jest.Mocked<IDatabaseClient>;
 
     beforeEach(() => {
+        dbManager = {
+            executeQuery: jest.fn(),
+            transaction: jest.fn(),
+            connection: jest.fn(),
+        };
         dbClient = {
             query: jest.fn(),
-            transaction: jest.fn(),
         };
-        {{camelCase name}}Repository = new {{pascalCase name}}Repository(dbClient);
+        {{camelCase name}}Repository = new {{pascalCase name}}Repository(dbManager);
+
+        dbManager.transaction.mockImplementation(async (callback) => {
+            return await callback(dbClient);
+        });
+
+        dbManager.connection.mockImplementation(async () => {
+            return  await dbClient;
+        });
     });
 
     it('should be defined', () => {
