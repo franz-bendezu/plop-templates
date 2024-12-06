@@ -4,8 +4,8 @@ export default interface I{{pascalCase name}} extends IAudit {
     id: number;
     name: string;
     description: string;
-    validFrom: string;
-    validTo: string;
+    validFrom: Date;
+    validTo: Date | null;
     {{#each modelProperties}}
     {{name}}: {{type}};
     {{/each}}
