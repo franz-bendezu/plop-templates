@@ -1,5 +1,8 @@
 $<imports>
 import {{pascalCase name}}ParamsDTO from '../dto/{{kebabCase name}}-params.dto';$<code>$<methods>
     async findAllByParams(params: {{pascalCase name}}ParamsDTO): Promise<{{pascalCase name}}DTO[]> {
-        return await this.{{camelCase name}}Service.findAllByParams(params);
+        const result = await this.{{camelCase name}}Service.findAllByParams(params);
+        return result.map((conditionProduct) => {
+            return ConditionProductDTO.from(conditionProduct);
+        });
     }
