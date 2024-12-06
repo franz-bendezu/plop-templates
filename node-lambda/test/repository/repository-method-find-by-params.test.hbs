@@ -24,7 +24,7 @@ import I{{pascalCase name}}Params from '../../../src/{{kebabCase moduleName}}/in
             fields: [],
         };
 
-        dbClient.executeQuery.mockResolvedValue(queryResult);
+        dbManager.executeQuery.mockResolvedValue(queryResult);
 
         const result = await {{camelCase name}}Repository.findAllByParams(params);
 
@@ -46,7 +46,7 @@ import I{{pascalCase name}}Params from '../../../src/{{kebabCase moduleName}}/in
         };
 
         const error = new Error('Database error');
-        dbClient.executeQuery.mockRejectedValue(error);
+        dbManager.executeQuery.mockRejectedValue(error);
 
         await expect({{camelCase name}}Repository.findAllByParams(params)).rejects.toThrow(RuntimeError);
         await expect({{camelCase name}}Repository.findAllByParams(params)).rejects.toThrow('Bennu Database error');

@@ -24,8 +24,8 @@ describe('{{pascalCase name}}Repository', () => {
             return await callback(dbClient);
         });
 
-        dbManager.connection.mockImplementation(async () => {
-            return  await dbClient;
+        dbManager.connection.mockImplementation(async (callback) => {
+            return await callback(dbClient);
         });
     });
 
