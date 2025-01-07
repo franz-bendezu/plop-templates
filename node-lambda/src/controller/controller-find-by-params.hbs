@@ -3,6 +3,6 @@ import {{pascalCase name}}ParamsDTO from '../dto/{{kebabCase name}}-params.dto';
     async findAllByParams(params: {{pascalCase name}}ParamsDTO): Promise<{{pascalCase name}}DTO[]> {
         const result = await this.{{camelCase name}}Service.findAllByParams(params);
         return result.map((conditionProduct) => {
-            return ConditionProductDTO.from(conditionProduct);
+            return {{pascalCase name}}DTO.from(conditionProduct);
         });
     }
