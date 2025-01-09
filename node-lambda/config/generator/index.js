@@ -14,7 +14,7 @@ export const GENERATOR_CONFIG = {
     {
       type: "input",
       name: "moduleName",
-      message: "Resource path",
+      message: "Module name",
     },
     {
       type: "input",
