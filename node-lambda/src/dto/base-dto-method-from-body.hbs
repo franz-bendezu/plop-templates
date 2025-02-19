@@ -1,8 +1,8 @@
 $<imports>$<code>$<methods>
     static fromBody(body: string | null): Base{{pascalCase name}}DTO {
-        const payload = JSON.parse(body || '{}');
+        const payload = JSON.parse(body ?? '{}');
         const { error, value } = {{camelCase name}}Schema.validate(payload);
-        const payloadResult: IProductTempPayload = payload;
+        const payloadResult: I{{pascalCase name}}Payload = payload;
         if (error) {
             throw new RuntimeError({
                 statusMessage: error.message,
