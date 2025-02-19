@@ -45,7 +45,7 @@ import { I{{pascalCase name}}Payload } from '../../src/{{kebabCase moduleName}}/
     it('should throw RuntimeError when save operation fails', async () => {
         const mockError = new RuntimeError({ statusMessage: 'Save failed' });
 
-        const mockSave = jest.spyOn(productTempController, 'save')
+        const mockSave = jest.spyOn({{camelCase name}}Controller, 'save')
             .mockRejectedValue(mockError);
 
         const data: I{{pascalCase name}}Payload = {
@@ -67,7 +67,7 @@ import { I{{pascalCase name}}Payload } from '../../src/{{kebabCase moduleName}}/
 
     it('should throw internal server error when an unexpected error occurs', async () => {
         const mockError = new Error('Unexpected error');
-        const mockSave = jest.spyOn(productTempController, 'save')
+        const mockSave = jest.spyOn({{camelCase name}}Controller, 'save')
             .mockRejectedValue(mockError);
 
         const data: I{{pascalCase name}}Payload = {
