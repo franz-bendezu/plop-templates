@@ -1,0 +1,84 @@
+import { Logger } from '../../../src/{{kebabCase moduleName}}/common/logger/logger';
+import { LogLevel } from '../../../src/{{kebabCase moduleName}}/common/logger/logger.interface';
+
+describe('Logger', () => {
+    let logger: Logger;
+    let mockPinoLogger: any;
+    
+    beforeEach(() => {
+        // Mock the pino logger methods
+        mockPinoLogger = {
+            error: jest.fn(),
+            warn: jest.fn(),
+            info: jest.fn(),
+            debug: jest.fn(),
+            trace: jest.fn(),
+            level: LogLevel.INFO
+        };
+        
+        // Create a new logger and set the mock
+        logger = new Logger();
+        // @ts-ignore - accessing private property for testing
+        logger['logger'] = mockPinoLogger;
+    });
+
+    it('should set log level when valid level provided', () => {
+        logger.setLogLevel(LogLevel.DEBUG);
+        expect(mockPinoLogger.level).toBe(LogLevel.DEBUG);
+    });
+
+    it('should not set log level when invalid level provided', () => {
+        mockPinoLogger.level = LogLevel.INFO;
+        logger.setLogLevel('invalid-level' as any);
+        expect(mockPinoLogger.level).toBe(LogLevel.INFO);
+    });
+
+    it('should log error messages', () => {
+        logger.error('Test error');
+        expect(mockPinoLogger.error).toHaveBeenCalledWith({}, 'Test error');
+    });
+
+    it('should log error messages with data', () => {
+        const data = { id: 1 };
+        logger.error('Test error', data);
+        expect(mockPinoLogger.error).toHaveBeenCalledWith(data, 'Test error');
+    });
+
+    it('should log warning messages', () => {
+        logger.warn('Test warning');
+        expect(mockPinoLogger.warn).toHaveBeenCalledWith({}, 'Test warning');
+    });
+
+    it('should log info messages', () => {
+        logger.info('Test info');
+        expect(mockPinoLogger.info).toHaveBeenCalledWith({}, 'Test info');
+    });
+
+    it('should log debug messages', () => {
+        logger.debug('Test debug');
+        expect(mockPinoLogger.debug).toHaveBeenCalledWith({}, 'Test debug');
+    });
+
+    it('should log trace messages', () => {
+        logger.trace('Test trace');
+        expect(mockPinoLogger.trace).toHaveBeenCalledWith({}, 'Test trace');
+    });
+
+    it('should log lambda operations with structured data', () => {
+        const details = { requestId: 'abc123' };
+        logger.lambdaOperation('TestLambda', 'invoked', details);
+        expect(mockPinoLogger.info).toHaveBeenCalledWith(
+            {
+                lambdaName: 'TestLambda',
+                action: 'invoked',
+                requestId: 'abc123'
+            }, 
+            'Lambda TestLambda: invoked'
+        );
+    });
+
+    it('should return the underlying pino logger', () => {
+        const pinoLogger = logger.getLogger();
+        expect(pinoLogger).toBe(mockPinoLogger);
+    });
+});

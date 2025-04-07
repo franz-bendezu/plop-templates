@@ -1,16 +1,17 @@
 // Imports
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import { {{camelCase name}}Controller } from './controller/{{kebabCase name}}.provider';
+import { {{camelCase name}}Controller, logger } from './controller/{{kebabCase name}}.provider';
 import { isRuntimeError } from './common/error/runtime-error';
 import { ApiGatewayResponse } from './common/response/api-gateway';
 import { StatusCodes } from './common/response/status-code';
 import { StatusMessages } from './common/response/status-message';
 
 export const index: APIGatewayProxyHandler = async (event) => {
+    logger.debug('Lambda invoked with event', event);
     try {
     // Return
     } catch (error) {
-        console.error('Error:', error);
+        logger.error('Error processing request:', error);
         if (isRuntimeError(error)) {
             return error.toAPIGatewayResponse();
         } else {

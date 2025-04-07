@@ -1,10 +1,14 @@
 import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
+import { Logger } from '../common/logger/logger';
+import { ILogger } from '../common/logger/logger.interface';
 import PostgresConfig from '../config/postgres.config';
 import SecretsManagerConfig from '../config/secret-manager.config';
 import {{pascalCase name}}Repository from '../repository/{{kebabCase name}}.repository';
 import {{pascalCase name}}Service from '../service/{{kebabCase name}}.service';
 import {{pascalCase name}}Controller from './{{kebabCase name}}.controller';
 
+// Create the logger instance
+export const logger: ILogger = new Logger();
 
 const secretsManagerClient = new SecretsManagerClient();
 const secretsManagerConfig = new SecretsManagerConfig(secretsManagerClient);

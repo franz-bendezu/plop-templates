@@ -1,0 +1,99 @@
+import pino from 'pino';
+import { ILogger, LogLevel } from './logger.interface';
+
+/**
+ * Logger utility for application based on Pino
+ * Provides logging functionality with different log levels
+ */
+export class Logger implements ILogger {
+    private logger: pino.Logger;
+
+    constructor() {
+        this.logger = pino({
+            level: process.env.LOG_LEVEL || LogLevel.INFO,
+            timestamp: pino.stdTimeFunctions.isoTime,
+            formatters: {
+                level: (label) => {
+                    return { level: label };
+                },
+            },
+        });
+    }
+    
+    /**
+     * Set the current log level
+     * @param {LogLevel} level - Log level to set
+     */
+    setLogLevel(level: LogLevel): void {
+        if (Object.values(LogLevel).includes(level)) {
+            this.logger.level = level;
+        }
+    }
+    
+    /**
+     * Log an error message
+     * @param {string} message - Message to log
+     * @param {any} [data] - Optional data to include
+     */
+    error(message: string, data?: any): void {
+        this.logger.error(data || {}, message);
+    }
+    
+    /**
+     * Log a warning message
+     * @param {string} message - Message to log
+     * @param {any} [data] - Optional data to include
+     */
+    warn(message: string, data?: any): void {
+        this.logger.warn(data || {}, message);
+    }
+    
+    /**
+     * Log an info message
+     * @param {string} message - Message to log
+     * @param {any} [data] - Optional data to include
+     */
+    info(message: string, data?: any): void {
+        this.logger.info(data || {}, message);
+    }
+    
+    /**
+     * Log a debug message
+     * @param {string} message - Message to log
+     * @param {any} [data] - Optional data to include
+     */
+    debug(message: string, data?: any): void {
+        this.logger.debug(data || {}, message);
+    }
+    
+    /**
+     * Log a trace message
+     * @param {string} message - Message to log
+     * @param {any} [data] - Optional data to include
+     */
+    trace(message: string, data?: any): void {
+        this.logger.trace(data || {}, message);
+    }
+    
+    /**
+     * Log a message specifically about lambda operations
+     * @param {string} lambdaName - Name of the lambda
+     * @param {string} action - Action being performed
+     * @param {string} details - Details about the action
+     */
+    lambdaOperation(lambdaName: string, action: string, details?: any): void {
+        this.info(`Lambda ${lambdaName}: ${action}`, {
+            lambdaName,
+            action,
+            ...details
+        });
+    }
+    
+    /**
+     * Get the underlying Pino logger instance
+     * @returns {pino.Logger} The Pino logger instance
+     */
+    getLogger(): pino.Logger {
+        return this.logger;
+    }
+}

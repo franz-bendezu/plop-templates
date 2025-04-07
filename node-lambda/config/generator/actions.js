@@ -17,6 +17,21 @@ export const GENERATOR_ACTIONS = [
   },
   {
     type: "add",
+    path: SRC_PATH + "/common/logger/logger.interface.ts",
+    templateFile: TEMPLATE_PATH + "/src/common/logger/logger.interface.ts.hbs",
+  },
+  {
+    type: "add",
+    path: SRC_PATH + "/common/logger/logger.ts",
+    templateFile: TEMPLATE_PATH + "/src/common/logger/logger.ts.hbs",
+  },
+  {
+    type: "add",
+    path: SRC_PATH + "/common/logger/index.ts",
+    templateFile: TEMPLATE_PATH + "/src/common/logger/index.ts.hbs",
+  },
+  {
+    type: "add",
     path: SRC_PATH + "/model/{{kebabCase name}}.model.ts",
     templateFile: TEMPLATE_PATH + "/src/model/model.hbs",
     skip: (answers) => (answers.operation !== READ_MANY_OPERATION ? "Skip" : undefined),
@@ -248,6 +263,11 @@ export const GENERATOR_ACTIONS = [
     destination: TEST_PATH,
     base: TEMPLATE_PATH + "/test",
     templateFiles: TEMPLATE_PATH + "/test/**/*.ts.hbs",
+  },
+  {
+    type: "add",
+    path: TEST_PATH + "/common/logger.test.ts",
+    templateFile: TEMPLATE_PATH + "/test/common/logger.test.ts.hbs",
   },
   {
     type: "add",
