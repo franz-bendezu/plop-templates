@@ -36,5 +36,9 @@ export function upgradeDevDependencies(answers, config, plop) {
     { stdio: "inherit", cwd: projectPath } 
   );
 
+  // Install pino for logging
+  execSync("npm install --save pino", { stdio: "inherit", cwd: projectPath });
+  execSync("npm install --save-dev @types/pino", { stdio: "inherit", cwd: projectPath });
+
   return "Dev dependencies and dependencies upgraded";
 }
