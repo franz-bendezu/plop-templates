@@ -1,4 +1,4 @@
-import { SERVICE_ACTIONS } from "./actions/service-actions.js";
+import { HANDLER_ACTIONS } from "./actions/handler-actions.js";
 import {
   CREATE_ONE_OPERATION,
   READ_MANY_OPERATION,
@@ -8,8 +8,8 @@ import {
   CREATE_MANY_OPERATION,
 } from "../constants.js";
 
-export const GENERATOR_ONLY_SERVICE = {
-  description: "Generate only the service component",
+export const GENERATOR_ONLY_HANDLER = {
+  description: "Generate only the handler component",
   prompts: [
     {
       type: "input",
@@ -39,6 +39,12 @@ export const GENERATOR_ONLY_SERVICE = {
         DELETE_OPERATION,
       ],
     },
+    {
+      type: "input",
+      name: "nameSecretDb",
+      message: "Environment variable name for DB Secret",
+      default: "NAME_SECRET_DB",
+    },
   ],
-  actions: SERVICE_ACTIONS,
+  actions: HANDLER_ACTIONS,
 };
