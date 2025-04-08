@@ -11,6 +11,15 @@ import { TEST_CONTROLLER_ACTIONS } from "./actions/test-controller-actions.js";
 import { TEST_HANDLER_ACTIONS } from "./actions/test-handler-actions.js";
 import { COMMON_ACTIONS } from "./actions/common-actions.js";
 
+/**
+ * Generates plop actions based on selected components
+ * 
+ * @param {Object} data - The user input data
+ * @param {string[]} data.components - List of components to generate
+ * @param {boolean} data.generateAll - Flag to generate all components
+ * @param {string} data.folder - Folder path where files will be generated
+ * @returns {Array} Array of plop actions to be executed
+ */
 export const GENERATOR_ACTIONS = function (data) {
   // Set up components based on selection
   data.components = data.generateAll
@@ -29,7 +38,7 @@ export const GENERATOR_ACTIONS = function (data) {
 
   // Common files needed for all components
   if (data.components.includes("common")) {
-    actions.push( ...COMMON_ACTIONS);
+    actions.push(...COMMON_ACTIONS);
 
     // Add common tests if tests component is included
     if (data.components.includes("tests")) {
