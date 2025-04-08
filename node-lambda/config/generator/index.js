@@ -4,12 +4,10 @@ import {
   READ_MANY_OPERATION,
   UPDATE_OPERATION,
   DELETE_OPERATION,
-  CREATE_MANY_OPERATION,
-  READ_ONE_OPERATION,
 } from "../constants.js";
 
 export const GENERATOR_CONFIG = {
-  description: "Generate a handler for a new resource",
+  description: "Generate a handler with its support files",
   prompts: [
     {
       type: "input",
@@ -40,25 +38,32 @@ export const GENERATOR_CONFIG = {
       ],
     },
     {
-      type: "checkbox",
-      name: "components",
-      message: "Which components do you want to generate?",
-      choices: [
-        { name: "Model", value: "model", checked: true },
-        { name: "Repository", value: "repository", checked: true },
-        { name: "Service", value: "service", checked: true },
-        { name: "Controller", value: "controller", checked: true },
-        { name: "Handler", value: "handler", checked: true },
-        { name: "Common Utilities", value: "common", checked: false },
-        { name: "Tests", value: "tests", checked: true },
-      ],
-      when: (answers) => !answers.generateAll,
+      type: "input",
+      name: "nameSecretDb",
+      message: "Environment variable name for DB Secret",
+      default: "NAME_SECRET_DB",
     },
     {
       type: "confirm",
       name: "generateAll",
       message: "Generate all components?",
       default: true,
+    },
+    {
+      type: "checkbox",
+      name: "components",
+      message: "Select components to generate",
+      choices: [
+        { name: "Model Layer", value: "model" },
+        { name: "Repository Layer", value: "repository" },
+        { name: "Service Layer", value: "service" },
+        { name: "Controller Layer", value: "controller" },
+        { name: "Handler Layer", value: "handler" },
+        { name: "Common Utilities", value: "common" },
+        { name: "Tests", value: "tests" },
+      ],
+      default: ["model", "repository", "service", "controller", "handler", "common", "tests"],
+      when: (answers) => !answers.generateAll,
     },
   ],
   actions: GENERATOR_ACTIONS,
