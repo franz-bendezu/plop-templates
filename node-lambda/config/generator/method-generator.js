@@ -13,6 +13,16 @@ export const GENERATOR_ADD_METHOD = {
   prompts: [
     {
       type: "input",
+      name: "moduleName",
+      message: "Module name",
+    },
+    {
+      type: "input",
+      name: "folder",
+      message: "Resource folder",
+    },
+    {
+      type: "input",
       name: "name",
       message: "Resource name",
     },
