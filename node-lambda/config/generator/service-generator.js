@@ -1,4 +1,4 @@
-import { SERVICE_ACTIONS } from "./service-actions.js";
+import { SERVICE_ACTIONS } from "./actions/service-actions.js";
 import {
   CREATE_ONE_OPERATION,
   READ_MANY_OPERATION,

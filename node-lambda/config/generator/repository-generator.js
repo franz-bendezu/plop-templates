@@ -1,4 +1,4 @@
-import { REPOSITORY_ACTIONS } from "./repository-actions.js";
+import { REPOSITORY_ACTIONS } from "./actions/repository-actions.js";
 import {
   CREATE_ONE_OPERATION,
   READ_MANY_OPERATION,

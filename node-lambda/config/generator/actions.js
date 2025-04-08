@@ -1,14 +1,14 @@
-import { REPOSITORY_ACTIONS } from "./repository-actions.js";
-import { SERVICE_ACTIONS } from "./service-actions.js";
+import { REPOSITORY_ACTIONS } from "./actions/repository-actions.js";
+import { SERVICE_ACTIONS } from "./actions/service-actions.js";
 import { CONTROLLER_ACTIONS } from "./actions/controller-actions.js";
 import { MODEL_ACTIONS } from "./model-actions.js";
-import { HANDLER_ACTIONS } from "./handler-actions.js";
+import { HANDLER_ACTIONS } from "./actions/handler-actions.js";
 import { TEST_COMMON_ACTIONS } from "./actions/test-common-actions.js";
-import { TEST_MODEL_ACTIONS } from "./test-model-actions.js";
-import { TEST_REPOSITORY_ACTIONS } from "./test-repository-actions.js";
-import { TEST_SERVICE_ACTIONS } from "./test-service-actions.js";
+import { TEST_MODEL_ACTIONS } from "./actions/test-model-actions.js";
+import { TEST_REPOSITORY_ACTIONS } from "./actions/test-repository-actions.js";
+import { TEST_SERVICE_ACTIONS } from "./actions/test-service-actions.js";
 import { TEST_CONTROLLER_ACTIONS } from "./actions/test-controller-actions.js";
-import { TEST_HANDLER_ACTIONS } from "./test-handler-actions.js";
+import { TEST_HANDLER_ACTIONS } from "./actions/test-handler-actions.js";
 import { COMMON_ACTIONS } from "./actions/common-actions.js";
 
 export const GENERATOR_ACTIONS = function (data) {

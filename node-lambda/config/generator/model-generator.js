@@ -1,4 +1,4 @@
-import { MODEL_ACTIONS } from "./model-actions.js";
+import { MODEL_ACTIONS } from "./actions/model-actions.js";
 import {
   CREATE_ONE_OPERATION,
   READ_MANY_OPERATION,
