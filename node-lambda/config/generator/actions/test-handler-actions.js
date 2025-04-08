@@ -8,8 +8,8 @@ import {
   TEST_PATH,
   TEMPLATE_PATH,
   BLOCK_TEST_PATTERN,
-} from "../constants.js";
-import { createSkipFunction } from "./utils.js";
+} from "../../constants.js";
+import { createSkipFunction } from "../utils.js";
 
 export const TEST_HANDLER_ACTIONS = [
   // Handler Tests

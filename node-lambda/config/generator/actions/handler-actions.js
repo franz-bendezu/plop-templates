@@ -7,8 +7,8 @@ import {
   READ_ONE_OPERATION,
   SRC_PATH,
   TEMPLATE_PATH
-} from "../constants.js";
-import { createSkipFunction } from "./utils.js";
+} from "../../constants.js";
+import { createSkipFunction } from "../utils.js";
 
 export const HANDLER_ACTIONS = [
   {

@@ -1,4 +1,4 @@
-import { TEST_PATH, TEMPLATE_PATH } from "../constants.js";
+import { TEST_PATH, TEMPLATE_PATH } from "../../constants.js";
 
 export const TEST_COMMON_ACTIONS = [
   {

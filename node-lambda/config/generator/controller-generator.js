@@ -1,4 +1,4 @@
-import { CONTROLLER_ACTIONS } from "./controller-actions.js";
+import { CONTROLLER_ACTIONS } from "./actions/controller-actions.js";
 import {
   CREATE_ONE_OPERATION,
   READ_MANY_OPERATION,

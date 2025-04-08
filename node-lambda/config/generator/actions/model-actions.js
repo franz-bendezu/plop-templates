@@ -6,8 +6,8 @@ import {
   SRC_PATH,
   TEMPLATE_PATH,
   BLOCK_METHOD_PATTERN 
-} from "../constants.js";
-import { createSkipFunction } from "./utils.js";
+} from "../../constants.js";
+import { createSkipFunction } from "../utils.js";
 
 export const MODEL_ACTIONS = [
   {
