@@ -115,3 +115,19 @@ export const SERVICE_ACTIONS = [
   ...CREATE_SERVICE_ACTIONS,
   ...MODIFY_SERVICE_ACTIONS
 ];
+
+/**
+ * Generates service actions based on the provided data.
+ * @param {Object} data - The data to filter the actions.
+ * @param {Array} data.operations - The operations to filter the actions.
+ * @param {Array} data.skip - The actions to skip.
+ * @returns {Array} - The filtered service actions.
+ */
+export const generateServiceActions = (data) => {
+  return SERVICE_ACTIONS.filter((action) => {
+    if (action.skip) {
+      return !action.skip(data);
+    }
+    return true;
+  });
+};

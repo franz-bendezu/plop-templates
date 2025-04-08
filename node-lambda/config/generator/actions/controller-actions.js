@@ -120,3 +120,13 @@ export const CONTROLLER_ACTIONS = [
   ...CREATE_CONTROLLER_ACTIONS,
   ...MODIFY_CONTROLLER_ACTIONS
 ];
+
+
+export const generateControllerActions = (data) => {
+  return CONTROLLER_ACTIONS.filter((action) => {
+    if (action.skip) {
+      return !action.skip(data);
+    }
+    return true;
+  })
+}

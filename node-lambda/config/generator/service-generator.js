@@ -1,4 +1,4 @@
-import { SERVICE_ACTIONS } from "./actions/service-actions.js";
+import { generateServiceActions } from "./actions/service-actions.js";
 import {
   CREATE_ONE_OPERATION,
   READ_MANY_OPERATION,
@@ -40,5 +40,7 @@ export const GENERATOR_ONLY_SERVICE = {
       ],
     },
   ],
-  actions: SERVICE_ACTIONS,
+  actions: (data) => {
+    return generateServiceActions(data);
+  },
 };

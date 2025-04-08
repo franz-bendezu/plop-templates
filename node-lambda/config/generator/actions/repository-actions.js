@@ -151,3 +151,19 @@ export const REPOSITORY_ACTIONS = [
   ...CREATE_REPOSITORY_ACTIONS,
   ...MODIFY_REPOSITORY_ACTIONS
 ];
+
+/**
+ * Generates repository actions based on the provided data.
+ * @param {Object} data - The data to filter the actions.
+ * @param {Array} data.operations - The operations to filter the actions.
+ * @param {Array} data.skip - The actions to skip.
+ * @returns {Array} - The filtered repository actions.
+ */
+export const generateRepositoryActions = (data) => {
+  return REPOSITORY_ACTIONS.filter((action) => {
+    if (action.skip) {
+      return !action.skip(data);
+    }
+    return true;
+  });
+};

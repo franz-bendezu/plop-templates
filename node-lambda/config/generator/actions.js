@@ -1,15 +1,15 @@
-import { REPOSITORY_ACTIONS } from "./actions/repository-actions.js";
-import { SERVICE_ACTIONS } from "./actions/service-actions.js";
-import { CONTROLLER_ACTIONS } from "./actions/controller-actions.js";
-import { MODEL_ACTIONS } from "./actions/model-actions.js";
-import { HANDLER_ACTIONS } from "./actions/handler-actions.js";
-import { TEST_COMMON_ACTIONS } from "./actions/test-common-actions.js";
-import { TEST_MODEL_ACTIONS } from "./actions/test-model-actions.js";
-import { TEST_REPOSITORY_ACTIONS } from "./actions/test-repository-actions.js";
-import { TEST_SERVICE_ACTIONS } from "./actions/test-service-actions.js";
-import { TEST_CONTROLLER_ACTIONS } from "./actions/test-controller-actions.js";
-import { TEST_HANDLER_ACTIONS } from "./actions/test-handler-actions.js";
-import { COMMON_ACTIONS } from "./actions/common-actions.js";
+import { generateRepositoryActions } from "./actions/repository-actions.js";
+import { generateServiceActions } from "./actions/service-actions.js";
+import { generateControllerActions } from "./actions/controller-actions.js";
+import { generateModelActions } from "./actions/model-actions.js";
+import { generateHandlerActions } from "./actions/handler-actions.js";
+import { generateTestCommonActions } from "./actions/test-common-actions.js";
+import { generateTestModelActions } from "./actions/test-model-actions.js";
+import { generateTestRepositoryActions } from "./actions/test-repository-actions.js";
+import { generateTestServiceActions } from "./actions/test-service-actions.js";
+import { generateTestControllerActions } from "./actions/test-controller-actions.js";
+import { generateTestHandlerActions } from "./actions/test-handler-actions.js";
+import { generateCommonActions } from "./actions/common-actions.js";
 
 /**
  * Generates plop actions based on selected components
@@ -38,61 +38,61 @@ export const generateMainActions = function (data) {
 
   // Common files needed for all components
   if (data.components.includes("common")) {
-    actions.push(...COMMON_ACTIONS);
+    actions.push(...generateCommonActions(data));
 
     // Add common tests if tests component is included
     if (data.components.includes("tests")) {
-      actions.push(...TEST_COMMON_ACTIONS);
+      actions.push(...generateTestCommonActions(data));
     }
   }
 
   // Models
   if (data.components.includes("model")) {
-    actions.push(...MODEL_ACTIONS);
+    actions.push(...generateModelActions(data));
     
     // Add model tests if tests component is included
     if (data.components.includes("tests")) {
-      actions.push(...TEST_MODEL_ACTIONS);
+      actions.push(...generateTestModelActions(data));
     }
   }
 
   // Repository
   if (data.components.includes("repository")) {
-    actions.push(...REPOSITORY_ACTIONS);
+    actions.push(...generateRepositoryActions(data));
     
     // Add repository tests if tests component is included
     if (data.components.includes("tests")) {
-      actions.push(...TEST_REPOSITORY_ACTIONS);
+      actions.push(...generateTestRepositoryActions(data));
     }
   }
 
   // Service
   if (data.components.includes("service")) {
-    actions.push(...SERVICE_ACTIONS);
+    actions.push(...generateServiceActions(data));
     
     // Add service tests if tests component is included
     if (data.components.includes("tests")) {
-      actions.push(...TEST_SERVICE_ACTIONS);
+      actions.push(...generateTestServiceActions(data));
     }
   }
 
   // Controller
   if (data.components.includes("controller")) {
-    actions.push(...CONTROLLER_ACTIONS);
+    actions.push(...generateControllerActions(data));
     
     // Add controller tests if tests component is included
     if (data.components.includes("tests")) {
-      actions.push(...TEST_CONTROLLER_ACTIONS);
+      actions.push(...generateTestControllerActions(data));
     }
   }
 
   // Handler
   if (data.components.includes("handler")) {
-    actions.push(...HANDLER_ACTIONS);
+    actions.push(...generateHandlerActions(data));
     
     // Add handler tests if tests component is included
     if (data.components.includes("tests")) {
-      actions.push(...TEST_HANDLER_ACTIONS);
+      actions.push(...generateTestHandlerActions(data));
     }
   }
   // Add dependency upgrade action

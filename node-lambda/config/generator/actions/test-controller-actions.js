@@ -79,3 +79,19 @@ export const TEST_CONTROLLER_ACTIONS = [
   ...CREATE_TEST_CONTROLLER_ACTIONS,
   ...MODIFY_TEST_CONTROLLER_ACTIONS
 ];
+
+/**
+ * Generates test controller actions based on the provided data.
+ * @param {Object} data - The data to filter the actions.
+ * @param {Array} data.operations - The operations to filter the actions.
+ * @param {Array} data.skip - The actions to skip.
+ * @returns {Array} - The filtered test controller actions.
+ */
+export const generateTestControllerActions = (data) => {
+  return TEST_CONTROLLER_ACTIONS.filter((action) => {
+    if (action.skip) {
+      return !action.skip(data);
+    }
+    return true;
+  });
+};

@@ -67,3 +67,19 @@ export const HANDLER_ACTIONS = [
   ...CREATE_HANDLER_ACTIONS,
   ...MODIFY_HANDLER_ACTIONS
 ];
+
+/**
+ * Generates handler actions based on the provided data.
+ * @param {Object} data - The data to filter the actions.
+ * @param {Array} data.operations - The operations to filter the actions.
+ * @param {Array} data.skip - The actions to skip.
+ * @returns {Array} - The filtered handler actions.
+ */
+export const generateHandlerActions = (data) => {
+  return HANDLER_ACTIONS.filter((action) => {
+    if (action.skip) {
+      return !action.skip(data);
+    }
+    return true;
+  });
+};

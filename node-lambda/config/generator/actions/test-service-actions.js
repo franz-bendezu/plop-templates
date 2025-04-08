@@ -75,3 +75,19 @@ export const TEST_SERVICE_ACTIONS = [
   ...CREATE_TEST_SERVICE_ACTIONS,
   ...MODIFY_TEST_SERVICE_ACTIONS
 ];
+
+/**
+ * Generates test service actions based on the provided data.
+ * @param {Object} data - The data to filter the actions.
+ * @param {Array} data.operations - The operations to filter the actions.
+ * @param {Array} data.skip - The actions to skip.
+ * @returns {Array} - The filtered test service actions.
+ */
+export const generateTestServiceActions = (data) => {
+  return TEST_SERVICE_ACTIONS.filter((action) => {
+    if (action.skip) {
+      return !action.skip(data);
+    }
+    return true;
+  });
+};

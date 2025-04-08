@@ -1,4 +1,4 @@
-import { CONTROLLER_ACTIONS } from "./actions/controller-actions.js";
+import { generateControllerActions } from "./actions/controller-actions.js";
 import {
   CREATE_ONE_OPERATION,
   READ_MANY_OPERATION,
@@ -40,5 +40,7 @@ export const GENERATOR_ONLY_CONTROLLER = {
       ],
     },
   ],
-  actions: CONTROLLER_ACTIONS,
+  actions: (data) => {
+    return generateControllerActions(data);
+  },
 };

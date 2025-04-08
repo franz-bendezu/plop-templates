@@ -79,3 +79,19 @@ export const TEST_REPOSITORY_ACTIONS = [
   ...CREATE_TEST_REPOSITORY_ACTIONS,
   ...MODIFY_TEST_REPOSITORY_ACTIONS
 ];
+
+/**
+ * Generates test repository actions based on the provided data.
+ * @param {Object} data - The data to filter the actions.
+ * @param {Array} data.operations - The operations to filter the actions.
+ * @param {Array} data.skip - The actions to skip.
+ * @returns {Array} - The filtered test repository actions.
+ */
+export const generateTestRepositoryActions = (data) => {
+  return TEST_REPOSITORY_ACTIONS.filter((action) => {
+    if (action.skip) {
+      return !action.skip(data);
+    }
+    return true;
+  });
+};

@@ -1,4 +1,4 @@
-import { REPOSITORY_ACTIONS } from "./actions/repository-actions.js";
+import { generateRepositoryActions } from "./actions/repository-actions.js";
 import {
   CREATE_ONE_OPERATION,
   READ_MANY_OPERATION,
@@ -40,5 +40,7 @@ export const GENERATOR_ONLY_REPOSITORY = {
       ],
     },
   ],
-  actions: REPOSITORY_ACTIONS,
+  actions: (data) => {
+    return generateRepositoryActions(data);
+  },
 };

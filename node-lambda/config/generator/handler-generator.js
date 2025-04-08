@@ -1,4 +1,4 @@
-import { HANDLER_ACTIONS } from "./actions/handler-actions.js";
+import { generateHandlerActions } from "./actions/handler-actions.js";
 import {
   CREATE_ONE_OPERATION,
   READ_MANY_OPERATION,
@@ -46,5 +46,7 @@ export const GENERATOR_ONLY_HANDLER = {
       default: "NAME_SECRET_DB",
     },
   ],
-  actions: HANDLER_ACTIONS,
+  actions: (data) => {
+    return generateHandlerActions(data);
+  },
 };

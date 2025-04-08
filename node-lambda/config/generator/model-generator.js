@@ -1,4 +1,4 @@
-import { MODEL_ACTIONS } from "./actions/model-actions.js";
+import { generateModelActions } from "./actions/model-actions.js";
 import {
   CREATE_ONE_OPERATION,
   READ_MANY_OPERATION,
@@ -40,5 +40,7 @@ export const GENERATOR_ONLY_MODEL = {
       ],
     },
   ],
-  actions: MODEL_ACTIONS,
+  actions: (data) => {
+    return generateModelActions(data);
+  },
 };

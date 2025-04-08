@@ -60,3 +60,19 @@ export const TEST_MODEL_ACTIONS = [
   ...CREATE_TEST_MODEL_ACTIONS,
   ...MODIFY_TEST_MODEL_ACTIONS
 ];
+
+/**
+ * Generates test model actions based on the provided data.
+ * @param {Object} data - The data to filter the actions.
+ * @param {Array} data.operations - The operations to filter the actions.
+ * @param {Array} data.skip - The actions to skip.
+ * @returns {Array} - The filtered test model actions.
+ */
+export const generateTestModelActions = (data) => {
+  return TEST_MODEL_ACTIONS.filter((action) => {
+    if (action.skip) {
+      return !action.skip(data);
+    }
+    return true;
+  });
+};

@@ -113,3 +113,19 @@ export const TEST_HANDLER_ACTIONS = [
   ...CREATE_TEST_HANDLER_ACTIONS,
   ...MODIFY_TEST_HANDLER_ACTIONS
 ];
+
+/**
+ * Generates test handler actions based on the provided data.
+ * @param {Object} data - The data to filter the actions.
+ * @param {Array} data.operations - The operations to filter the actions.
+ * @param {Array} data.skip - The actions to skip.
+ * @returns {Array} - The filtered test handler actions.
+ */
+export const generateTestHandlerActions = (data) => {
+  return TEST_HANDLER_ACTIONS.filter((action) => {
+    if (action.skip) {
+      return !action.skip(data);
+    }
+    return true;
+  });
+};
