@@ -1,6 +1,6 @@
 import { TEST_PATH, TEMPLATE_PATH } from "../../constants.js";
 
-export const TEST_COMMON_ACTIONS = [
+export const CREATE_TEST_COMMON_ACTIONS = [
   {
     type: "addMany",
     destination: TEST_PATH + "/common",
@@ -13,4 +13,12 @@ export const TEST_COMMON_ACTIONS = [
     base: TEMPLATE_PATH + "/test/config",
     templateFiles: TEMPLATE_PATH + "/test/config/**/*.ts.hbs",
   },
+];
+
+// No modify actions in this file
+export const MODIFY_TEST_COMMON_ACTIONS = [];
+
+export const TEST_COMMON_ACTIONS = [
+  ...CREATE_TEST_COMMON_ACTIONS,
+  ...MODIFY_TEST_COMMON_ACTIONS
 ];

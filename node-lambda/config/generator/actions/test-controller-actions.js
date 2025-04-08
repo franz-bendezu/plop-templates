@@ -11,13 +11,16 @@ import {
 } from "../../constants.js";
 import { createSkipFunction } from "../utils.js";
 
-export const TEST_CONTROLLER_ACTIONS = [
+export const CREATE_TEST_CONTROLLER_ACTIONS = [
   // Controller Tests
   {
     type: "add",
     path: TEST_PATH + "/controller/{{kebabCase name}}.controller.test.ts",
     templateFile: TEMPLATE_PATH + "/test/controller/controller.test.hbs",
   },
+];
+
+export const MODIFY_TEST_CONTROLLER_ACTIONS = [
   {
     type: "modify",
     path: TEST_PATH + "/controller/{{kebabCase name}}.controller.test.ts",
@@ -70,4 +73,9 @@ export const TEST_CONTROLLER_ACTIONS = [
       TEMPLATE_PATH + "/test/controller/controller-method-create-list.test.hbs",
     skip: createSkipFunction(CREATE_MANY_OPERATION, "create list controller tests"),
   },
+];
+
+export const TEST_CONTROLLER_ACTIONS = [
+  ...CREATE_TEST_CONTROLLER_ACTIONS,
+  ...MODIFY_TEST_CONTROLLER_ACTIONS
 ];

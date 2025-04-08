@@ -9,7 +9,7 @@ import {
 } from "../../constants.js";
 import { createSkipFunction } from "../utils.js";
 
-export const MODEL_ACTIONS = [
+export const CREATE_MODEL_ACTIONS = [
   {
     type: "addMany",
     destination: SRC_PATH + "/dto",
@@ -88,6 +88,9 @@ export const MODEL_ACTIONS = [
     templateFile: TEMPLATE_PATH + "/src/dto/base-dto.dto.hbs",
     skip: createSkipFunction([CREATE_ONE_OPERATION, UPDATE_OPERATION], "base model DTO"),
   },
+];
+
+export const MODIFY_MODEL_ACTIONS = [
   {
     type: "modify",
     path: SRC_PATH + "/dto/base-{{kebabCase name}}.dto.ts",
@@ -95,4 +98,9 @@ export const MODEL_ACTIONS = [
     templateFile: TEMPLATE_PATH + "/src/dto/base-dto-method-from-body.hbs",
     skip: createSkipFunction([CREATE_ONE_OPERATION, UPDATE_OPERATION], "fromBody method in base DTO"),
   },
+];
+
+export const MODEL_ACTIONS = [
+  ...CREATE_MODEL_ACTIONS,
+  ...MODIFY_MODEL_ACTIONS
 ];

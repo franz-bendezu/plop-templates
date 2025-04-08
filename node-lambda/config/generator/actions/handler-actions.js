@@ -10,12 +10,15 @@ import {
 } from "../../constants.js";
 import { createSkipFunction } from "../utils.js";
 
-export const HANDLER_ACTIONS = [
+export const CREATE_HANDLER_ACTIONS = [
   {
     type: "add",
     path: SRC_PATH + "/handler.ts",
     templateFile: TEMPLATE_PATH + "/src/handler.ts.hbs",
   },
+];
+
+export const MODIFY_HANDLER_ACTIONS = [
   {
     type: "modify",
     path: SRC_PATH + "/handler.ts",
@@ -58,4 +61,9 @@ export const HANDLER_ACTIONS = [
     templateFile: TEMPLATE_PATH + "/src/handler-return-create-list.hbs",
     skip: createSkipFunction(CREATE_MANY_OPERATION, "create list handler implementation"),
   },
+];
+
+export const HANDLER_ACTIONS = [
+  ...CREATE_HANDLER_ACTIONS,
+  ...MODIFY_HANDLER_ACTIONS
 ];

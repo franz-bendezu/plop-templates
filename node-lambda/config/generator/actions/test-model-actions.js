@@ -10,7 +10,7 @@ import {
 } from "../../constants.js";
 import { createSkipFunction } from "../utils.js";
 
-export const TEST_MODEL_ACTIONS = [
+export const CREATE_TEST_MODEL_ACTIONS = [
   // Model Tests
   {
     type: "add",
@@ -51,4 +51,12 @@ export const TEST_MODEL_ACTIONS = [
       "base DTO tests"
     ),
   },
+];
+
+// No modify actions in this file
+export const MODIFY_TEST_MODEL_ACTIONS = [];
+
+export const TEST_MODEL_ACTIONS = [
+  ...CREATE_TEST_MODEL_ACTIONS,
+  ...MODIFY_TEST_MODEL_ACTIONS
 ];

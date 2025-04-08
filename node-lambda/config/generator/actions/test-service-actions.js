@@ -11,13 +11,16 @@ import {
 } from "../../constants.js";
 import { createSkipFunction } from "../utils.js";
 
-export const TEST_SERVICE_ACTIONS = [
+export const CREATE_TEST_SERVICE_ACTIONS = [
   // Service Tests
   {
     type: "add",
     path: TEST_PATH + "/service/{{kebabCase name}}.service.test.ts",
     templateFile: TEMPLATE_PATH + "/test/service/service.test.hbs",
   },
+];
+
+export const MODIFY_TEST_SERVICE_ACTIONS = [
   {
     type: "modify",
     path: TEST_PATH + "/service/{{kebabCase name}}.service.test.ts",
@@ -66,4 +69,9 @@ export const TEST_SERVICE_ACTIONS = [
       TEMPLATE_PATH + "/test/service/service-method-create-list.test.hbs",
     skip: createSkipFunction(CREATE_MANY_OPERATION, "create list service tests"),
   },
+];
+
+export const TEST_SERVICE_ACTIONS = [
+  ...CREATE_TEST_SERVICE_ACTIONS,
+  ...MODIFY_TEST_SERVICE_ACTIONS
 ];

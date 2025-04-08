@@ -11,13 +11,16 @@ import {
 } from "../../constants.js";
 import { createSkipFunction } from "../utils.js";
 
-export const TEST_REPOSITORY_ACTIONS = [
+export const CREATE_TEST_REPOSITORY_ACTIONS = [
   // Repository Tests
   {
     type: "add",
     path: TEST_PATH + "/repository/{{kebabCase name}}.repository.test.ts",
     templateFile: TEMPLATE_PATH + "/test/repository/repository.test.hbs",
   },
+];
+
+export const MODIFY_TEST_REPOSITORY_ACTIONS = [
   {
     type: "modify",
     path: TEST_PATH + "/repository/{{kebabCase name}}.repository.test.ts",
@@ -70,4 +73,9 @@ export const TEST_REPOSITORY_ACTIONS = [
       TEMPLATE_PATH + "/test/repository/repository-method-create-list.test.hbs",
     skip: createSkipFunction(CREATE_MANY_OPERATION, "create list repository tests"),
   },
+];
+
+export const TEST_REPOSITORY_ACTIONS = [
+  ...CREATE_TEST_REPOSITORY_ACTIONS,
+  ...MODIFY_TEST_REPOSITORY_ACTIONS
 ];

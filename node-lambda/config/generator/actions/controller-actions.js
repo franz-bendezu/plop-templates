@@ -11,12 +11,25 @@ import {
 } from "../../constants.js";
 import { createSkipFunction } from "../utils.js";
 
-export const CONTROLLER_ACTIONS = [
+export const CREATE_CONTROLLER_ACTIONS = [
   {
     type: "add",
     path: SRC_PATH + "/controller/{{kebabCase name}}.controller.interface.ts",
     templateFile: TEMPLATE_PATH + "/src/controller/controller-interface.hbs",
   },
+  {
+    type: "add",
+    path: SRC_PATH + "/controller/{{kebabCase name}}.controller.ts",
+    templateFile: TEMPLATE_PATH + "/src/controller/controller-impl.hbs",
+  },
+  {
+    type: "add",
+    path: SRC_PATH + "/controller/{{kebabCase name}}.provider.ts",
+    templateFile: TEMPLATE_PATH + "/src/controller/module.provider.ts.hbs",
+  },
+];
+
+export const MODIFY_CONTROLLER_ACTIONS = [
   {
     type: "modify",
     path: SRC_PATH + "/controller/{{kebabCase name}}.controller.interface.ts",
@@ -60,11 +73,6 @@ export const CONTROLLER_ACTIONS = [
     skip: createSkipFunction(CREATE_MANY_OPERATION, "create list controller interface method"),
   },
   {
-    type: "add",
-    path: SRC_PATH + "/controller/{{kebabCase name}}.controller.ts",
-    templateFile: TEMPLATE_PATH + "/src/controller/controller-impl.hbs",
-  },
-  {
     type: "modify",
     path: SRC_PATH + "/controller/{{kebabCase name}}.controller.ts",
     pattern: BLOCK_METHOD_PATTERN,
@@ -106,9 +114,9 @@ export const CONTROLLER_ACTIONS = [
     templateFile: TEMPLATE_PATH + "/src/controller/controller-method-create-list.hbs",
     skip: createSkipFunction(CREATE_MANY_OPERATION, "create list controller implementation"),
   },
-  {
-    type: "add",
-    path: SRC_PATH + "/controller/{{kebabCase name}}.provider.ts",
-    templateFile: TEMPLATE_PATH + "/src/controller/module.provider.ts.hbs",
-  },
+];
+
+export const CONTROLLER_ACTIONS = [
+  ...CREATE_CONTROLLER_ACTIONS,
+  ...MODIFY_CONTROLLER_ACTIONS
 ];
