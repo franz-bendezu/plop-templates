@@ -1,0 +1,80 @@
+import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyEventQueryStringParameters } from 'aws-lambda';
+import { index } from '../../../src/{{kebabCase moduleName}}/handler';
+
+export function createInvokeHandler(handler: APIGatewayProxyHandler) {
+    return async (
+        body: string | null = null, 
+        pathParameters: { [name: string]: string } | null = null,
+        queryParams: APIGatewayProxyEventQueryStringParameters | null = null
+    ) => {
+        const event: APIGatewayProxyEvent = {
+            body,
+            headers: {},
+            queryStringParameters: queryParams || {},
+            stageVariables: null,
+            multiValueHeaders: {},
+            httpMethod: '',
+            isBase64Encoded: false,
+            path: '',
+            pathParameters,
+            multiValueQueryStringParameters: null,
+            requestContext: {
+                accountId: '',
+                apiId: '',
+                authorizer: {},
+                protocol: '',
+                httpMethod: '',
+                identity: {
+                    accessKey: null,
+                    accountId: null,
+                    apiKey: null,
+                    apiKeyId: null,
+                    caller: null,
+                    clientCert: null,
+                    cognitoAuthenticationProvider: null,
+                    cognitoAuthenticationType: null,
+                    cognitoIdentityId: null,
+                    cognitoIdentityPoolId: null,
+                    principalOrgId: null,
+                    sourceIp: '',
+                    user: null,
+                    userAgent: null,
+                    userArn: null
+                },
+                path: '',
+                stage: '',
+                requestId: '',
+                requestTimeEpoch: 0,
+                resourceId: '',
+                resourcePath: ''
+            },
+            resource: ''
+        };
+        return handler(event, {} as any, {} as any);
+    };
+}
+
+export const invokeHandler = createInvokeHandler(index);
+
+export const createUpdateEvent = (id: string, data: any) => {
+    return {
+        pathParameters: {
+            id,
+        },
+        body: typeof data === 'string' ? data : JSON.stringify(data),
+    } as any;
+};
+
+export const createFindByIdEvent = (id: string) => {
+    return {
+        pathParameters: {
+            id,
+        },
+    } as any;
+};
+
+export const createCreateListEvent = (items: any[]) => {
+    return {
+        body: JSON.stringify(items),
+    } as any;
+};

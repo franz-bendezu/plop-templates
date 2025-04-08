@@ -1,0 +1,41 @@
+$<imports>
+import I{{pascalCase name}}Repository from '../../src/{{kebabCase moduleName}}/repository/{{kebabCase name}}.repository.interface';
+import I{{pascalCase name}} from '../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}.interface';$<code>$<tests>
+    describe('update', () => {
+        const testId = '12345';
+        
+        beforeEach(() => {
+            {{camelCase name}}Repository = {
+                update: jest.fn(),
+            };
+            {{camelCase name}}Service = new {{pascalCase name}}Service({{camelCase name}}Repository);
+        });
+        
+        it('should be defined', () => {
+            expect({{camelCase name}}Service).toBeDefined();
+        });
+        
+        it('should return the result of {{camelCase name}}Repository.update', async () => {
+            const updateData: I{{pascalCase name}} = {
+                id: testId,
+                name: 'Updated Name',
+                description: 'Updated Description',
+                validFrom: new Date('2021-01-01T05:00:00.000Z'),
+                validTo: new Date('2021-01-01T05:00:00.000Z'),
+                createdAt: new Date('2021-01-01T05:00:00.000Z'),
+                modifiedAt: new Date('2021-01-01T05:00:00.000Z'),
+                createdBy: 'user1',
+                modifiedBy: 'user1',
+                {{#each properties}}
+                {{camelCase name}}: 'Updated {{camelCase name}}',
+                {{/each}}
+            };
+            
+            {{camelCase name}}Repository.update.mockResolvedValue(updateData);
+            
+            const result = await {{camelCase name}}Service.update(testId, updateData);
+            
+            expect(result).toBe(updateData);
+            expect({{camelCase name}}Repository.update).toHaveBeenCalledWith(testId, updateData);
+        });
+    });

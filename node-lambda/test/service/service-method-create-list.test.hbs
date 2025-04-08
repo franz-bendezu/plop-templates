@@ -1,0 +1,77 @@
+$<imports>
+import I{{pascalCase name}}Repository from '../../src/{{kebabCase moduleName}}/repository/{{kebabCase name}}.repository.interface';
+import I{{pascalCase name}} from '../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}.interface';
+import IBase{{pascalCase name}} from '../../src/{{kebabCase moduleName}}/interface/base-{{kebabCase name}}.interface';$<code>$<tests>
+    describe('saveAll', () => {
+        beforeEach(() => {
+            {{camelCase name}}Repository = {
+                saveAll: jest.fn(),
+            };
+            {{camelCase name}}Service = new {{pascalCase name}}Service({{camelCase name}}Repository);
+        });
+        
+        it('should be defined', () => {
+            expect({{camelCase name}}Service).toBeDefined();
+        });
+        
+        it('should return the result of {{camelCase name}}Repository.saveAll', async () => {
+            const inputItems: IBase{{pascalCase name}}[] = [
+                {
+                    name: 'Test Name 1',
+                    description: 'Test Description 1',
+                    validFrom: new Date('2021-01-01T05:00:00.000Z'),
+                    validTo: new Date('2021-01-01T05:00:00.000Z'),
+                    {{#each properties}}
+                    {{camelCase name}}: '{{camelCase name}} value 1',
+                    {{/each}}
+                },
+                {
+                    name: 'Test Name 2',
+                    description: 'Test Description 2',
+                    validFrom: new Date('2021-01-01T05:00:00.000Z'),
+                    validTo: new Date('2021-01-01T05:00:00.000Z'),
+                    {{#each properties}}
+                    {{camelCase name}}: '{{camelCase name}} value 2',
+                    {{/each}}
+                }
+            ];
+            
+            const savedItems: I{{pascalCase name}}[] = [
+                {
+                    id: 'id1',
+                    name: 'Test Name 1',
+                    description: 'Test Description 1',
+                    validFrom: new Date('2021-01-01T05:00:00.000Z'),
+                    validTo: new Date('2021-01-01T05:00:00.000Z'),
+                    createdAt: new Date('2021-01-01T05:00:00.000Z'),
+                    modifiedAt: new Date('2021-01-01T05:00:00.000Z'),
+                    createdBy: 'user1',
+                    modifiedBy: 'user1',
+                    {{#each properties}}
+                    {{camelCase name}}: '{{camelCase name}} value 1',
+                    {{/each}}
+                },
+                {
+                    id: 'id2',
+                    name: 'Test Name 2',
+                    description: 'Test Description 2',
+                    validFrom: new Date('2021-01-01T05:00:00.000Z'),
+                    validTo: new Date('2021-01-01T05:00:00.000Z'),
+                    createdAt: new Date('2021-01-01T05:00:00.000Z'),
+                    modifiedAt: new Date('2021-01-01T05:00:00.000Z'),
+                    createdBy: 'user2',
+                    modifiedBy: 'user2',
+                    {{#each properties}}
+                    {{camelCase name}}: '{{camelCase name}} value 2',
+                    {{/each}}
+                }
+            ];
+            
+            {{camelCase name}}Repository.saveAll.mockResolvedValue(savedItems);
+            
+            const result = await {{camelCase name}}Service.saveAll(inputItems);
+            
+            expect(result).toBe(savedItems);
+            expect({{camelCase name}}Repository.saveAll).toHaveBeenCalledWith(inputItems);
+        });
+    });

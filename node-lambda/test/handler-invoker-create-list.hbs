@@ -1,0 +1,13 @@
+import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda';
+import { index } from '../../../src/{{kebabCase moduleName}}/handler';
+import { createInvokeHandler } from './utils/handler-invoker';
+
+const invokeHandler = createInvokeHandler(index);
+
+const createCreateListEvent = (items: any[]) => {
+    return invokeHandler(
+        JSON.stringify(items)
+    );
+};
+
+export default createCreateListEvent;

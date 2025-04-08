@@ -1,0 +1,63 @@
+$<imports>
+import I{{pascalCase name}}Service from '../../src/{{kebabCase moduleName}}/service/{{kebabCase name}}.service.interface';
+import I{{pascalCase name}} from '../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}.interface';
+import {{pascalCase name}}DTO from '../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}.dto';$<code>$<tests>
+    describe('update', () => {
+        const testId = '12345';
+        
+        beforeEach(() => {
+            {{camelCase name}}Service = {
+                update: jest.fn(),
+            };
+            {{camelCase name}}Controller = new {{pascalCase name}}Controller({{camelCase name}}Service);
+        });
+        
+        it('should be defined', () => {
+            expect({{camelCase name}}Controller).toBeDefined();
+        });
+        
+        it('should call service with converted model and return DTO', async () => {
+            const dto = new {{pascalCase name}}DTO();
+            dto.id = testId;
+            dto.name = 'Updated Name';
+            dto.description = 'Updated Description';
+            dto.validFrom = new Date('2021-01-01T05:00:00.000Z');
+            dto.validTo = new Date('2021-01-01T05:00:00.000Z');
+            {{#each properties}}
+            dto.{{camelCase name}} = 'Updated {{camelCase name}}';
+            {{/each}}
+            
+            const updatedModel: I{{pascalCase name}} = {
+                id: testId,
+                name: 'Updated Name',
+                description: 'Updated Description',
+                validFrom: new Date('2021-01-01T05:00:00.000Z'),
+                validTo: new Date('2021-01-01T05:00:00.000Z'),
+                createdAt: new Date('2021-01-01T05:00:00.000Z'),
+                modifiedAt: new Date('2021-01-01T05:00:00.000Z'),
+                createdBy: 'user1',
+                modifiedBy: 'user1',
+                {{#each properties}}
+                {{camelCase name}}: 'Updated {{camelCase name}}',
+                {{/each}}
+            };
+            
+            {{camelCase name}}Service.update.mockResolvedValue(updatedModel);
+            
+            const result = await {{camelCase name}}Controller.update(testId, dto);
+            
+            expect({{camelCase name}}Service.update).toHaveBeenCalledWith(
+                testId,
+                expect.objectContaining({
+                    id: testId,
+                    name: 'Updated Name',
+                    description: 'Updated Description'
+                })
+            );
+            
+            expect(result).toBeInstanceOf({{pascalCase name}}DTO);
+            expect(result.id).toBe(updatedModel.id);
+            expect(result.name).toBe(updatedModel.name);
+            expect(result.description).toBe(updatedModel.description);
+        });
+    });

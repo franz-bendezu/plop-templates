@@ -1,0 +1,14 @@
+import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda';
+import { index } from '../../../src/{{kebabCase moduleName}}/handler';
+import { createInvokeHandler } from './utils/handler-invoker';
+
+const invokeHandler = createInvokeHandler(index);
+
+export const createUpdateEvent = (id: string, data: any) => {
+    return invokeHandler(
+        typeof data === 'string' ? data : JSON.stringify(data),
+        { id }
+    );
+};
+
+export default createUpdateEvent;

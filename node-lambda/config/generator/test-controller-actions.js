@@ -3,6 +3,8 @@ import {
   READ_MANY_OPERATION,
   UPDATE_OPERATION,
   DELETE_OPERATION,
+  CREATE_MANY_OPERATION,
+  READ_ONE_OPERATION,
   TEST_PATH,
   TEMPLATE_PATH,
   BLOCK_TEST_PATTERN,
@@ -51,5 +53,21 @@ export const TEST_CONTROLLER_ACTIONS = [
     templateFile:
       TEMPLATE_PATH + "/test/controller/controller-method-delete.test.hbs",
     skip: createSkipFunction(DELETE_OPERATION, "delete controller tests"),
+  },
+  {
+    type: "modify",
+    path: TEST_PATH + "/controller/{{kebabCase name}}.controller.test.ts",
+    pattern: BLOCK_TEST_PATTERN,
+    templateFile:
+      TEMPLATE_PATH + "/test/controller/controller-method-find.test.hbs",
+    skip: createSkipFunction(READ_ONE_OPERATION, "find controller tests"),
+  },
+  {
+    type: "modify",
+    path: TEST_PATH + "/controller/{{kebabCase name}}.controller.test.ts",
+    pattern: BLOCK_TEST_PATTERN,
+    templateFile:
+      TEMPLATE_PATH + "/test/controller/controller-method-create-list.test.hbs",
+    skip: createSkipFunction(CREATE_MANY_OPERATION, "create list controller tests"),
   },
 ];

@@ -1,0 +1,117 @@
+$<imports>
+import IBase{{pascalCase name}} from '../../src/{{kebabCase moduleName}}/interface/base-{{kebabCase name}}.interface';
+import I{{pascalCase name}} from '../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}.interface';
+import { IDatabaseManager, ITransaction } from '../../src/{{kebabCase moduleName}}/config/postgres.config';
+import { RuntimeError } from '../../src/{{kebabCase moduleName}}/common/error/runtime-error';
+import { CREATE_BATCH_QUERY } from '../../src/{{kebabCase moduleName}}/repository/query/{{kebabCase name}}.query';
+
+describe('saveAll', () => {
+    
+    beforeEach(() => {
+        transaction = {
+            query: jest.fn(),
+        };
+        
+        dbClient = {
+            transaction: jest.fn(async (callback) => {
+                return await callback(transaction);
+            }),
+        };
+        
+        {{camelCase name}}Repository = new {{pascalCase name}}Repository(dbClient);
+    });
+    
+    it('should be defined', () => {
+        expect({{camelCase name}}Repository).toBeDefined();
+    });
+    
+    it('should execute batch query and return models', async () => {
+        const inputModels: IBase{{pascalCase name}}[] = [
+            {
+                name: 'Test Name 1',
+                description: 'Test Description 1',
+                validFrom: new Date('2021-01-01T05:00:00.000Z'),
+                validTo: new Date('2021-01-01T05:00:00.000Z'),
+                {{#each properties}}
+                {{camelCase name}}: '{{camelCase name}} value 1',
+                {{/each}}
+            },
+            {
+                name: 'Test Name 2',
+                description: 'Test Description 2',
+                validFrom: new Date('2021-01-01T05:00:00.000Z'),
+                validTo: new Date('2021-01-01T05:00:00.000Z'),
+                {{#each properties}}
+                {{camelCase name}}: '{{camelCase name}} value 2',
+                {{/each}}
+            }
+        ];
+        
+        const mockQueryResult = {
+            rows: [
+                {
+                    ID: 'id1',
+                    NAME: 'Test Name 1',
+                    DESCRIPTION: 'Test Description 1',
+                    VALID_FROM: new Date('2021-01-01T05:00:00.000Z'),
+                    VALID_TO: new Date('2021-01-01T05:00:00.000Z'),
+                    CREATED_AT: new Date('2021-01-01T05:00:00.000Z'),
+                    MODIFIED_AT: new Date('2021-01-01T05:00:00.000Z'),
+                    CREATED_BY: 'user1',
+                    MODIFIED_BY: 'user1',
+                    {{#each rowProperties}}
+                    {{name}}: '{{name}} value 1',
+                    {{/each}}
+                },
+                {
+                    ID: 'id2',
+                    NAME: 'Test Name 2',
+                    DESCRIPTION: 'Test Description 2',
+                    VALID_FROM: new Date('2021-01-01T05:00:00.000Z'),
+                    VALID_TO: new Date('2021-01-01T05:00:00.000Z'),
+                    CREATED_AT: new Date('2021-01-01T05:00:00.000Z'),
+                    MODIFIED_AT: new Date('2021-01-01T05:00:00.000Z'),
+                    CREATED_BY: 'user2',
+                    MODIFIED_BY: 'user2',
+                    {{#each rowProperties}}
+                    {{name}}: '{{name}} value 2',
+                    {{/each}}
+                }
+            ],
+            rowCount: 2
+        };
+        
+        transaction.query.mockResolvedValue(mockQueryResult);
+        
+        const result = await {{camelCase name}}Repository.saveAll(inputModels);
+        
+        expect(dbClient.transaction).toHaveBeenCalled();
+        expect(transaction.query).toHaveBeenCalled();
+        expect(result).toHaveLength(2);
+        expect(result[0]).toHaveProperty('id', 'id1');
+        expect(result[1]).toHaveProperty('id', 'id2');
+    });
+    
+    it('should return empty array when input is empty', async () => {
+        const result = await {{camelCase name}}Repository.saveAll([]);
+        
+        expect(dbClient.transaction).not.toHaveBeenCalled();
+        expect(result).toEqual([]);
+    });
+    
+    it('should throw error when database error occurs', async () => {
+        const inputModels: IBase{{pascalCase name}}[] = [
+            {
+                name: 'Test Name',
+                description: 'Test Description',
+                validFrom: new Date('2021-01-01T05:00:00.000Z'),
+                validTo: new Date('2021-01-01T05:00:00.000Z')
+            }
+        ];
+        
+        const dbError = new Error('Database error');
+        dbClient.transaction.mockRejectedValue(dbError);
+        
+        await expect({{camelCase name}}Repository.saveAll(inputModels)).rejects.toThrow(RuntimeError);
+    });
+});

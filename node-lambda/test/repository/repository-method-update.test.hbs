@@ -1,0 +1,94 @@
+$<imports>
+import { mock, MockProxy } from 'jest-mock-extended';
+import { IDatabaseManager, ITransaction } from '../../src/{{kebabCase moduleName}}/config/postgres.config';
+import { RuntimeError } from '../../src/{{kebabCase moduleName}}/common/error/runtime-error';
+import { UPDATE_QUERY } from '../../src/{{kebabCase moduleName}}/repository/query/{{kebabCase name}}.query';
+import {{pascalCase name}} from '../../src/{{kebabCase moduleName}}/model/{{kebabCase name}}.model';$<code>$<tests>
+    describe('update', () => {
+        const testId = '12345';
+        
+        const updateModel = new {{pascalCase name}}(
+            testId,
+            'Updated Name',
+            'Updated Description',
+            new Date(),
+            new Date(),
+            new Date(),
+            new Date(),
+            'user1',
+            'user1',
+            {{#each properties}}
+            'Updated {{camelCase name}}',
+            {{/each}}
+        );
+        
+        const mockQueryResult = {
+            rows: [
+                {
+                    ID: testId,
+                    NAME: 'Updated Name',
+                    DESCRIPTION: 'Updated Description',
+                    VALID_FROM: new Date(),
+                    VALID_TO: new Date(),
+                    CREATED_AT: new Date(),
+                    MODIFIED_AT: new Date(),
+                    CREATED_BY: 'user1',
+                    MODIFIED_BY: 'user1',
+                    {{#each rowProperties}}
+                    {{name}}: 'Updated {{name}}',
+                    {{/each}}
+                }
+            ],
+            rowCount: 1,
+            command: '',
+            oid: 1,
+            fields: []
+        };
+        
+        beforeEach(() => {
+            mockTransaction = mock<ITransaction>();
+            mockDbClient = mock<IDatabaseManager>();
+            repository = new {{pascalCase name}}Repository(mockDbClient);
+            
+            mockDbClient.transaction.mockImplementation(async (callback) => {
+                return await callback(mockTransaction);
+            });
+            mockTransaction.query.mockResolvedValue(mockQueryResult);
+        });
+        
+        it('should execute update query and return updated model', async () => {
+            const result = await repository.update(testId, updateModel);
+            
+            expect(mockDbClient.transaction).toHaveBeenCalled();
+            expect(mockTransaction.query).toHaveBeenCalledWith(
+                UPDATE_QUERY, 
+                expect.arrayContaining([
+                    testId,
+                    updateModel.name,
+                    updateModel.description
+                ])
+            );
+            
+            expect(result).toBeInstanceOf({{pascalCase name}});
+            expect(result.id).toBe(testId);
+            expect(result.name).toBe('Updated Name');
+            expect(result.description).toBe('Updated Description');
+        });
+        
+        it('should throw error when no rows are updated', async () => {
+            mockTransaction.query.mockResolvedValue({
+                ...mockQueryResult,
+                rows: [],
+                rowCount: 0
+            });
+            
+            await expect(repository.update(testId, updateModel)).rejects.toThrow(RuntimeError);
+        });
+        
+        it('should throw error when database error occurs', async () => {
+            const dbError = new Error('Database error');
+            mockDbClient.transaction.mockRejectedValue(dbError);
+            
+            await expect(repository.update(testId, updateModel)).rejects.toThrow(RuntimeError);
+        });
+    });

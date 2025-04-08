@@ -1,0 +1,65 @@
+$<imports>
+import I{{pascalCase name}} from '../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}.interface';
+import { mock, MockProxy } from 'jest-mock-extended';
+import { IDatabaseManager, ITransaction } from '../../src/{{kebabCase moduleName}}/config/postgres.config';
+import { RuntimeError } from '../../src/{{kebabCase moduleName}}/common/error/runtime-error';
+import { FIND_BY_ID_QUERY } from '../../src/{{kebabCase moduleName}}/repository/query/{{kebabCase name}}.query';$<code>$<tests>
+    describe('findById', () => {
+        
+        beforeEach(() => {
+            dbClient = {
+                executeQuery: jest.fn(),
+            };
+            {{camelCase name}}Repository = new {{pascalCase name}}Repository(dbClient);
+        });
+        
+        it('should be defined', () => {
+            expect({{camelCase name}}Repository).toBeDefined();
+        });
+        
+        it('should execute query and return model', async () => {
+            const mockQueryResult = {
+                rows: [
+                    {
+                        ID: 'id1',
+                        NAME: 'Test Name',
+                        DESCRIPTION: 'Test Description',
+                        VALID_FROM: new Date('2021-01-01T05:00:00.000Z'),
+                        VALID_TO: new Date('2021-01-01T05:00:00.000Z'),
+                        CREATED_AT: new Date('2021-01-01T05:00:00.000Z'),
+                        MODIFIED_AT: new Date('2021-01-01T05:00:00.000Z'),
+                        CREATED_BY: 'user1',
+                        MODIFIED_BY: 'user1',
+                        {{#each rowProperties}}
+                        {{name}}: '{{name}} value',
+                        {{/each}}
+                    }
+                ],
+                rowCount: 1
+            };
+            
+            dbClient.executeQuery.mockResolvedValue(mockQueryResult);
+            
+            const result = await {{camelCase name}}Repository.findById(testId);
+            
+            expect(dbClient.executeQuery).toHaveBeenCalledWith(FIND_BY_ID_QUERY, [testId]);
+            expect(result).toHaveProperty('id', 'id1');
+            expect(result).toHaveProperty('name', 'Test Name');
+        });
+        
+        it('should throw error when no rows are returned', async () => {
+            dbClient.executeQuery.mockResolvedValue({
+                rows: [],
+                rowCount: 0
+            });
+            
+            await expect({{camelCase name}}Repository.findById(testId)).rejects.toThrow(RuntimeError);
+        });
+        
+        it('should throw error when database error occurs', async () => {
+            const dbError = new Error('Database error');
+            dbClient.executeQuery.mockRejectedValue(dbError);
+            
+            await expect({{camelCase name}}Repository.findById(testId)).rejects.toThrow(RuntimeError);
+        });
+    });

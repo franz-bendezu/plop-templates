@@ -1,0 +1,44 @@
+$<imports>
+import I{{pascalCase name}}Service from '../../src/{{kebabCase moduleName}}/service/{{kebabCase name}}.service.interface';
+import I{{pascalCase name}} from '../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}.interface';
+import {{pascalCase name}}DTO from '../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}.dto';$<code>$<tests>
+    describe('findById', () => {
+        const testId = '12345';
+        
+        beforeEach(() => {
+            {{camelCase name}}Service = {
+                findById: jest.fn(),
+            };
+            {{camelCase name}}Controller = new {{pascalCase name}}Controller({{camelCase name}}Service);
+        });
+        
+        it('should be defined', () => {
+            expect({{camelCase name}}Controller).toBeDefined();
+        });
+        
+        it('should call service and return DTO', async () => {
+            const model: I{{pascalCase name}} = {
+                id: testId,
+                name: 'Test Name',
+                description: 'Test Description',
+                validFrom: new Date('2021-01-01T05:00:00.000Z'),
+                validTo: new Date('2021-01-01T05:00:00.000Z'),
+                createdAt: new Date('2021-01-01T05:00:00.000Z'),
+                modifiedAt: new Date('2021-01-01T05:00:00.000Z'),
+                createdBy: 'user1',
+                modifiedBy: 'user1',
+                {{#each properties}}
+                {{camelCase name}}: '{{camelCase name}} value',
+                {{/each}}
+            };
+            
+            {{camelCase name}}Service.findById.mockResolvedValue(model);
+            
+            const result = await {{camelCase name}}Controller.findById(testId);
+            
+            expect({{camelCase name}}Service.findById).toHaveBeenCalledWith(testId);
+            expect(result).toBeInstanceOf({{pascalCase name}}DTO);
+            expect(result.id).toBe(model.id);
+            expect(result.name).toBe(model.name);
+        });
+    });

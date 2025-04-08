@@ -1,0 +1,84 @@
+$<imports>
+import { mock, MockProxy } from 'jest-mock-extended';
+import I{{pascalCase name}}Service from '../../src/{{kebabCase moduleName}}/service/{{kebabCase name}}.service.interface';
+import IBase{{pascalCase name}} from '../../src/{{kebabCase moduleName}}/interface/base-{{kebabCase name}}.interface';
+import I{{pascalCase name}} from '../../src/{{kebabCase moduleName}}/interface/{{kebabCase name}}.interface';
+import Base{{pascalCase name}}DTO from '../../src/{{kebabCase moduleName}}/dto/base-{{kebabCase name}}.dto';
+import {{pascalCase name}}DTO from '../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}.dto';$<code>$<tests>
+    describe('saveAll', () => {
+        beforeEach(() => {
+            {{camelCase name}}Service = {
+                saveAll: jest.fn(),
+            };
+            {{camelCase name}}Controller = new {{pascalCase name}}Controller({{camelCase name}}Service);
+        });
+        
+        it('should be defined', () => {
+            expect({{camelCase name}}Controller).toBeDefined();
+        });
+        
+        it('should call service with converted models and return DTOs', async () => {
+            const dtoList: Base{{pascalCase name}}DTO[] = [
+                {
+                    name: 'Test Name 1',
+                    description: 'Test Description 1',
+                    validFrom: new Date('2021-01-01T05:00:00.000Z'),
+                    validTo: new Date('2021-01-01T05:00:00.000Z'),
+                    {{#each properties}}
+                    {{camelCase name}}: '{{camelCase name}} value 1',
+                    {{/each}}
+                },
+                {
+                    name: 'Test Name 2',
+                    description: 'Test Description 2',
+                    validFrom: new Date('2021-01-01T05:00:00.000Z'),
+                    validTo: new Date('2021-01-01T05:00:00.000Z'),
+                    {{#each properties}}
+                    {{camelCase name}}: '{{camelCase name}} value 2',
+                    {{/each}}
+                }
+            ];
+            
+            const savedModels: I{{pascalCase name}}[] = [
+                {
+                    id: 'id1',
+                    name: 'Test Name 1',
+                    description: 'Test Description 1',
+                    validFrom: new Date('2021-01-01T05:00:00.000Z'),
+                    validTo: new Date('2021-01-01T05:00:00.000Z'),
+                    createdAt: new Date('2021-01-01T05:00:00.000Z'),
+                    modifiedAt: new Date('2021-01-01T05:00:00.000Z'),
+                    createdBy: 'user1',
+                    modifiedBy: 'user1',
+                    {{#each properties}}
+                    {{camelCase name}}: '{{camelCase name}} value 1',
+                    {{/each}}
+                },
+                {
+                    id: 'id2',
+                    name: 'Test Name 2',
+                    description: 'Test Description 2',
+                    validFrom: new Date('2021-01-01T05:00:00.000Z'),
+                    validTo: new Date('2021-01-01T05:00:00.000Z'),
+                    createdAt: new Date('2021-01-01T05:00:00.000Z'),
+                    modifiedAt: new Date('2021-01-01T05:00:00.000Z'),
+                    createdBy: 'user2',
+                    modifiedBy: 'user2',
+                    {{#each properties}}
+                    {{camelCase name}}: '{{camelCase name}} value 2',
+                    {{/each}}
+                }
+            ];
+            
+            {{camelCase name}}Service.saveAll.mockResolvedValue(savedModels);
+            
+            const result = await {{camelCase name}}Controller.saveAll(dtoList);
+            
+            expect({{camelCase name}}Service.saveAll).toHaveBeenCalled();
+            expect(result).toHaveLength(2);
+            expect(result[0]).toBeInstanceOf({{pascalCase name}}DTO);
+            expect(result[1]).toBeInstanceOf({{pascalCase name}}DTO);
+            expect(result[0].id).toBe(savedModels[0].id);
+            expect(result[1].id).toBe(savedModels[1].id);
+        });
+    });

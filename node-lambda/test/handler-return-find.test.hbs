@@ -1,0 +1,104 @@
+$<imports>
+import { StatusCodes } from '../../../src/{{kebabCase moduleName}}/common/response/status-code';
+import { ApiGatewayResponse } from '../../../src/{{kebabCase moduleName}}/common/response/api-gateway';
+import { RuntimeError } from '../../../src/{{kebabCase moduleName}}/common/error/runtime-error';
+import { index } from '../../../src/{{kebabCase moduleName}}/handler';
+import {{pascalCase name}}DTO from '../../../src/{{kebabCase moduleName}}/dto/{{kebabCase name}}.dto';
+import { {{camelCase name}}Controller } from '../../../src/{{kebabCase moduleName}}/controller/{{kebabCase name}}.controller';
+import { ValidationMessage } from '../../../src/{{kebabCase moduleName}}/common/response/validation-message';
+import { StatusMessages } from '../../../src/{{kebabCase moduleName}}/common/response/status-messages';
+
+$<code>$<tests>
+describe('find by ID', () => {
+    const testId = '12345';
+    
+    beforeEach(() => {
+        jest.resetAllMocks();
+    });
+    
+    const invokeHandler = async (id: string) => {
+        const event = invokeHandler(id);
+        return await index(event, null, null);
+    };
+    
+    it('should successfully find a {{camelCase name}} by ID', async () => {
+        const responseData: {{pascalCase name}}DTO = {
+            id: testId,
+            name: 'Test Item',
+            createdAt: '2023-01-01 12:00:00',
+            modifiedAt: '2023-01-01 12:00:00',
+            createdBy: 'user',
+            modifiedBy: 'user',
+            description: 'Test Description',
+            validFromDate: '2023-01-01',
+            validToDate: '2023-01-31',
+            {{#each paramsProperties}}
+            {{name}}: '{{value}}',
+            {{/each}}
+        };
+        
+        const mockFindById = jest.spyOn({{camelCase name}}Controller, 'findById').mockResolvedValue(responseData);
+
+        const result = await invokeHandler(testId);
+
+        expect(result).toBeInstanceOf(ApiGatewayResponse);
+        expect(result).toEqual({
+            statusCode: 200,
+            body: JSON.stringify({
+                mensaje: '{{pascalCase name}} encontrado',
+                data: responseData,
+                estado: ValidationMessage.SUCCESS,
+            }),
+        });
+
+        expect(mockFindById).toHaveBeenCalledWith(testId);
+    });
+    
+    it('should return error when ID not provided', async () => {
+        const result = await invokeHandler('');
+        
+        expect(result).toEqual({
+            statusCode: 400,
+            body: JSON.stringify({
+                mensaje: 'ID es requerido',
+                estado: ValidationMessage.BAD,
+            }),
+        });
+    });
+    
+    it('should throw RuntimeError when find operation fails', async () => {
+        const mockError = new RuntimeError({ 
+            statusCode: StatusCodes.NOT_FOUND,
+            statusMessage: 'Item not found' 
+        });
+        
+        const mockFindById = jest.spyOn({{camelCase name}}Controller, 'findById')
+            .mockRejectedValue(mockError);
+
+        const result = await invokeHandler(testId);
+        expect(mockFindById).toHaveBeenCalled();
+        expect(result).toEqual({
+            statusCode: 404,
+            body: JSON.stringify({
+                mensaje: 'Item not found',
+                estado: ValidationMessage.BAD,
+            }),
+        });
+    });
+    
+    it('should throw internal server error when an unexpected error occurs', async () => {
+        const mockError = new Error('Unexpected error');
+        const mockFindById = jest.spyOn({{camelCase name}}Controller, 'findById')
+            .mockRejectedValue(mockError);
+
+        const result = await invokeHandler(testId);
+        expect(mockFindById).toHaveBeenCalled();
+        expect(result).toEqual({
+            statusCode: 500,
+            body: JSON.stringify({
+                mensaje: StatusMessages.INTERNAL_SERVER_ERROR,
+                estado: ValidationMessage.BAD,
+            }),
+        });
+    });
+});
