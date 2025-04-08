@@ -23,6 +23,16 @@ function initializeNpmProject(projectPath) {
 /**
  * Install dependencies with a single npm command
  */
+/**
+ * Installs the specified npm dependencies in the given project directory.
+ *
+ * @param {Object} dependencies - An object where keys are dependency names and values are their versions.
+ *                                If the version is an empty string or undefined, the latest version will be installed.
+ * @param {string} projectPath - The file path to the project where dependencies should be installed.
+ * @param {boolean} [isDev=false] - Whether to install the dependencies as development dependencies (--save-dev).
+ *                                  Defaults to false, meaning dependencies will be installed as regular (--save).
+ * @throws {Error} Throws an error if the installation process fails.
+ */
 function installDependencies(dependencies, projectPath, isDev = false) {
   if (!Object.keys(dependencies).length) return;
   
