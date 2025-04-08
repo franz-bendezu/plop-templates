@@ -20,7 +20,7 @@ import { COMMON_ACTIONS } from "./actions/common-actions.js";
  * @param {string} data.folder - Folder path where files will be generated
  * @returns {Array} Array of plop actions to be executed
  */
-export const GENERATOR_ACTIONS = function (data) {
+export const generateMainActions = function (data) {
   // Set up components based on selection
   data.components = data.generateAll
     ? [

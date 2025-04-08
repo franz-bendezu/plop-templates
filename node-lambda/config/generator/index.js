@@ -1,4 +1,4 @@
-import { GENERATOR_ACTIONS } from "./actions.js";
+import { generateMainActions } from "./actions.js";
 import {
   CREATE_ONE_OPERATION,
   READ_MANY_OPERATION,
@@ -68,5 +68,5 @@ export const GENERATOR_CONFIG = {
       when: (answers) => !answers.generateAll,
     },
   ],
-  actions: GENERATOR_ACTIONS,
+  actions: generateMainActions,
 };
