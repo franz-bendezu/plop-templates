@@ -1,0 +1,48 @@
+$<imports>
+import { CREATE_BATCH_QUERY } from './query/{{kebabCase name}}.query';
+import I{{pascalCase name}}ResultRow from '../interface/{{kebabCase name}}-query-result.interface';
+import IBase{{pascalCase name}} from '../interface/base-{{dashCase name}}.interface';$<code>$<methods>
+    async saveAll(dataList: IBase{{pascalCase name}}[]): Promise<{{pascalCase name}}[]> {
+        try {
+            if (dataList.length === 0) {
+                return [];
+            }
+            
+            const queryResult = await this.dbClient.transaction(async (client) => {
+                const values = dataList.flatMap(data => [
+                    data.name,
+                    data.description,
+                    data.validFrom,
+                    data.validTo,
+                    {{#each properties}}
+                    data.{{camelCase name}},
+                    {{/each}}
+                ]);
+                
+                return client.query<I{{pascalCase name}}ResultRow>(
+                    CREATE_BATCH_QUERY(dataList.length),
+                    values
+                );
+            });
+
+            return queryResult.rows.map(row => new {{pascalCase name}}(
+                row.ID,
+                row.NAME,
+                row.DESCRIPTION,
+                row.VALID_FROM,
+                row.VALID_TO,
+                row.CREATED_AT,
+                row.MODIFIED_AT,
+                row.CREATED_BY,
+                row.MODIFIED_BY,
+                {{#each rowProperties}}
+                row.{{name}},
+                {{/each}}
+            ));
+        } catch (error) {
+            throw new RuntimeError({
+                statusMessage: 'Bennu Database error',
+                cause: error,
+            });
+        }
+    }

@@ -1,0 +1,25 @@
+$<imports>
+import Base{{pascalCase name}}DTO from './dto/base-{{kebabCase name}}.dto';$<code>$<return>
+        if (!event.body) {
+            throw new RuntimeError({
+                statusMessage: 'Request body is required',
+                statusCode: StatusCodes.BAD_REQUEST,
+            });
+        }
+        
+        const requestBody = JSON.parse(event.body);
+        if (!Array.isArray(requestBody)) {
+            throw new RuntimeError({
+                statusMessage: 'Request body must be an array',
+                statusCode: StatusCodes.BAD_REQUEST,
+            });
+        }
+        
+        const dtoList = requestBody.map(item => Base{{pascalCase name}}DTO.fromObject(item));
+        const data = await {{camelCase name}}Controller.saveAll(dtoList);
+        
+        return new ApiGatewayResponse(
+            '{{pascalCase name}}s creados',
+            StatusCodes.OK,
+            data,
+        );

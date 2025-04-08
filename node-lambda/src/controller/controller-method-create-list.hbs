@@ -1,0 +1,8 @@
+$<imports>
+import Base{{pascalCase name}} from '../model/base-{{dashCase name}}.model';
+import Base{{pascalCase name}}DTO from '../dto/base-{{dashCase name}}.dto';$<code>$<methods>
+    async saveAll(dataList: Base{{pascalCase name}}DTO[]): Promise<{{pascalCase name}}DTO[]> {
+        const modelList = dataList.map(data => Base{{pascalCase name}}.fromDTO(data));
+        const results = await this.{{camelCase name}}Service.saveAll(modelList);
+        return results.map(result => {{pascalCase name}}DTO.from(result));
+    }

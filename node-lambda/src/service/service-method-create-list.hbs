@@ -1,0 +1,6 @@
+$<imports>
+import IBase{{pascalCase name}} from '../interface/base-{{dashCase name}}.interface';$<code>$<methods>
+    async saveAll(dataList: IBase{{pascalCase name}}[]): Promise<{{pascalCase name}}[]> {
+        // Implement business logic here
+        return await this.repository.saveAll(dataList);
+    }
