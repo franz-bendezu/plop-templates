@@ -37,6 +37,17 @@ function installDependencies(dependencies, projectPath, isDev = false) {
   });
 }
 
+/**
+ * Upgrades the development dependencies of a Node.js project.
+ *
+ * @param {Object} answers - The answers object containing user inputs.
+ * @param {string} answers.folder - The folder path where the project is located. Defaults to the current working directory if not provided.
+ * @param {Object} config - The configuration object (not used in this function).
+ * @param {Object} plop - The plop object (not used in this function).
+ * @returns {string} A message indicating that the NPM project was initialized (if needed) and dependencies were installed/upgraded.
+ *
+ * @throws {Error} If there is an issue uninstalling old dependencies or installing new ones.
+ */
 export function upgradeDevDependencies(answers, config, plop) {
   const projectPath = answers.folder || process.cwd(); // Use the provided path or the current working directory
   
