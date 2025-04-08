@@ -1,0 +1,5 @@
+$<imports>$<code>$<methods>
+    async findById(id: string): Promise<{{pascalCase name}}DTO> {
+        const result = await this.{{camelCase name}}Service.findById(id);
+        return {{pascalCase name}}DTO.from(result);
+    }

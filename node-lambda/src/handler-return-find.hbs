@@ -1,0 +1,15 @@
+$<imports>$<code>$<return>
+        const id = event.pathParameters?.id;
+        if (!id) {
+            throw new RuntimeError({
+                statusMessage: 'ID parameter is required',
+                statusCode: StatusCodes.BAD_REQUEST,
+            });
+        }
+        
+        const data = await {{camelCase name}}Controller.findById(id);
+        return new ApiGatewayResponse(
+            '{{pascalCase name}} encontrado',
+            StatusCodes.OK,
+            data,
+        );

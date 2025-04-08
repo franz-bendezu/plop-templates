@@ -1,0 +1,39 @@
+$<imports>
+import { FIND_BY_ID_QUERY } from './query/{{kebabCase name}}.query';
+import I{{pascalCase name}}ResultRow from '../interface/{{kebabCase name}}-query-result.interface';$<code>$<methods>
+    async findById(id: string): Promise<{{pascalCase name}}> {
+        try {
+            const queryResult = await this.dbClient.executeQuery<I{{pascalCase name}}ResultRow>(
+                FIND_BY_ID_QUERY,
+                [id]
+            );
+            
+            if (queryResult.rowCount === 0) {
+                throw new RuntimeError({
+                    statusMessage: '{{pascalCase name}} not found',
+                    statusCode: 404,
+                });
+            }
+            
+            const row = queryResult.rows[0];
+            return new {{pascalCase name}}(
+                row.ID,
+                row.NAME,
+                row.DESCRIPTION,
+                row.VALID_FROM,
+                row.VALID_TO,
+                row.CREATED_AT,
+                row.MODIFIED_AT,
+                row.CREATED_BY,
+                row.MODIFIED_BY,
+                {{#each rowProperties}}
+                row.{{name}},
+                {{/each}}
+            );
+        } catch (error) {
+            throw new RuntimeError({
+                statusMessage: 'Bennu Database error',
+                cause: error,
+            });
+        }
+    }
