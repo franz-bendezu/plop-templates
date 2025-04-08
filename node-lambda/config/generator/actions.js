@@ -1,7 +1,7 @@
 import { REPOSITORY_ACTIONS } from "./actions/repository-actions.js";
 import { SERVICE_ACTIONS } from "./actions/service-actions.js";
 import { CONTROLLER_ACTIONS } from "./actions/controller-actions.js";
-import { MODEL_ACTIONS } from "./model-actions.js";
+import { MODEL_ACTIONS } from "./actions/model-actions.js";
 import { HANDLER_ACTIONS } from "./actions/handler-actions.js";
 import { TEST_COMMON_ACTIONS } from "./actions/test-common-actions.js";
 import { TEST_MODEL_ACTIONS } from "./actions/test-model-actions.js";
