@@ -1,44 +1,61 @@
 import { execSync } from "child_process";
+import fs from "fs";
+import path from "path";
+import { dependencies, devDependencies, dependenciesToRemove } from "./dependencies.js";
+
+/**
+ * Initialize an npm project if package.json doesn't exist
+ */
+function initializeNpmProject(projectPath) {
+  const packageJsonPath = path.join(projectPath, "package.json");
+  
+  if (!fs.existsSync(packageJsonPath)) {
+    console.log("No package.json found. Initializing npm project...");
+    execSync("npm init -y", { 
+      stdio: "inherit", 
+      cwd: projectPath 
+    });
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Install dependencies with a single npm command
+ */
+function installDependencies(dependencies, projectPath, isDev = false) {
+  if (!Object.keys(dependencies).length) return;
+  
+  const installType = isDev ? "--save-dev" : "--save";
+  const depsString = Object.entries(dependencies)
+    .map(([dep, version]) => `${dep}@${version}`)
+    .join(" ");
+  
+  execSync(`npm install ${installType} ${depsString}`, { 
+    stdio: "inherit", 
+    cwd: projectPath 
+  });
+}
 
 export function upgradeDevDependencies(answers, config, plop) {
   const projectPath = answers.folder || process.cwd(); // Use the provided path or the current working directory
+  
+  // Initialize npm project if needed
+  initializeNpmProject(projectPath);
 
-  // Remove old versions
-  execSync("npm uninstall serverless-offline serverless", {
-    stdio: "inherit",
-    cwd: projectPath,
-  });
+  // Remove old versions if they exist
+  try {
+    execSync(`npm uninstall ${dependenciesToRemove.join(" ")}`, {
+      stdio: "inherit",
+      cwd: projectPath,
+    });
+  } catch (error) {
+    console.log("No old dependencies to uninstall, continuing...");
+  }
 
-  // Install specific versions
-  const devDeps = {
-    serverless: "^3.39.0",
-    "serverless-offline": "^13.8.2",
-    "@aws-sdk/client-secrets-manager": "^3.668.0",
-    "@types/aws-lambda": "^8.10.145",
-    "aws-sdk-client-mock": "^4.0.2",
-    jest: "^29.7.0",
-  };
-  execSync(
-    `npm install --save-dev ${Object.keys(devDeps)
-      .map((dep) => `${dep}@${devDeps[dep]}`)
-      .join(" ")}`,
-    { stdio: "inherit", cwd: projectPath }
-  );
-  const deps = {
-    "@joi/date": "^2.1.1",
-    joi: "^17.13.3",
-  };
+  // Install dependencies
+  installDependencies(devDependencies, projectPath, true);
+  installDependencies(dependencies, projectPath, false);
 
-  execSync(
-    `npm install --save ${Object.keys(deps)
-      .map((dep) => `${dep}@${deps[dep]}`)
-      .join(" ")}`,
-    { stdio: "inherit", cwd: projectPath } 
-  );
-
-  // Install pino for logging
-  execSync("npm install --save pino", { stdio: "inherit", cwd: projectPath });
-  execSync("npm install --save-dev @types/pino", { stdio: "inherit", cwd: projectPath });
-
-  return "Dev dependencies and dependencies upgraded";
+  return "NPM project initialized (if needed) and dependencies installed/upgraded";
 }
