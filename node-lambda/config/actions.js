@@ -28,7 +28,7 @@ function installDependencies(dependencies, projectPath, isDev = false) {
   
   const installType = isDev ? "--save-dev" : "--save";
   const depsString = Object.entries(dependencies)
-    .map(([dep, version]) => `${dep}@${version}`)
+    .map(([dep, version]) => version ? `${dep}@${version}` : dep)
     .join(" ");
   
   execSync(`npm install ${installType} ${depsString}`, { 
