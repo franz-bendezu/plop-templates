@@ -1,0 +1,14 @@
+$<imports>$<code>$<return>
+        const id = event.pathParameters?.id;
+        if (!id) {
+            throw new RuntimeError({
+                statusMessage: 'ID parameter is required',
+                statusCode: StatusCodes.BAD_REQUEST,
+            });
+        }
+        
+        await {{camelCase name}}Controller.delete(id);
+        return new ApiGatewayResponse(
+            '{{pascalCase name}} eliminado',
+            StatusCodes.OK,
+        );

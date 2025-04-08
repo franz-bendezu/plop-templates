@@ -1,0 +1,21 @@
+$<imports>
+import { DELETE_QUERY } from './query/{{kebabCase name}}.query';$<code>$<methods>
+    async delete(id: string): Promise<void> {
+        try {
+            const queryResult = await this.dbClient.transaction(
+                (client) => client.query(DELETE_QUERY, [id]),
+            );
+
+            if (queryResult.rowCount === 0) {
+                throw new RuntimeError({
+                    statusMessage: '{{pascalCase name}} not found',
+                    statusCode: 404,
+                });
+            }
+        } catch (error) {
+            throw new RuntimeError({
+                statusMessage: 'Bennu Database error',
+                cause: error,
+            });
+        }
+    }
