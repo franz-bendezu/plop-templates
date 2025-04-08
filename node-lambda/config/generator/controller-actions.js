@@ -3,6 +3,8 @@ import {
   READ_MANY_OPERATION,
   UPDATE_OPERATION,
   DELETE_OPERATION,
+  CREATE_MANY_OPERATION,
+  READ_ONE_OPERATION,
   SRC_PATH,
   TEMPLATE_PATH,
   BLOCK_METHOD_PATTERN 
@@ -44,6 +46,20 @@ export const CONTROLLER_ACTIONS = [
     skip: createSkipFunction(DELETE_OPERATION, "delete controller interface method"),
   },
   {
+    type: "modify",
+    path: SRC_PATH + "/controller/{{kebabCase name}}.controller.interface.ts",
+    pattern: BLOCK_METHOD_PATTERN,
+    templateFile: TEMPLATE_PATH + "/src/controller/controller-method-find-interface.hbs",
+    skip: createSkipFunction(READ_ONE_OPERATION, "find by ID controller interface method"),
+  },
+  {
+    type: "modify",
+    path: SRC_PATH + "/controller/{{kebabCase name}}.controller.interface.ts",
+    pattern: BLOCK_METHOD_PATTERN,
+    templateFile: TEMPLATE_PATH + "/src/controller/controller-method-create-list-interface.hbs",
+    skip: createSkipFunction(CREATE_MANY_OPERATION, "create list controller interface method"),
+  },
+  {
     type: "add",
     path: SRC_PATH + "/controller/{{kebabCase name}}.controller.ts",
     templateFile: TEMPLATE_PATH + "/src/controller/controller-impl.hbs",
@@ -75,6 +91,20 @@ export const CONTROLLER_ACTIONS = [
     pattern: BLOCK_METHOD_PATTERN,
     templateFile: TEMPLATE_PATH + "/src/controller/controller-method-delete.hbs",
     skip: createSkipFunction(DELETE_OPERATION, "delete controller implementation"),
+  },
+  {
+    type: "modify",
+    path: SRC_PATH + "/controller/{{kebabCase name}}.controller.ts",
+    pattern: BLOCK_METHOD_PATTERN,
+    templateFile: TEMPLATE_PATH + "/src/controller/controller-method-find.hbs",
+    skip: createSkipFunction(READ_ONE_OPERATION, "find by ID controller implementation"),
+  },
+  {
+    type: "modify",
+    path: SRC_PATH + "/controller/{{kebabCase name}}.controller.ts",
+    pattern: BLOCK_METHOD_PATTERN,
+    templateFile: TEMPLATE_PATH + "/src/controller/controller-method-create-list.hbs",
+    skip: createSkipFunction(CREATE_MANY_OPERATION, "create list controller implementation"),
   },
   {
     type: "add",

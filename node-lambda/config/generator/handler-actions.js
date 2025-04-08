@@ -3,6 +3,8 @@ import {
   READ_MANY_OPERATION,
   UPDATE_OPERATION,
   DELETE_OPERATION,
+  CREATE_MANY_OPERATION,
+  READ_ONE_OPERATION,
   SRC_PATH,
   TEMPLATE_PATH
 } from "../constants.js";
@@ -41,5 +43,19 @@ export const HANDLER_ACTIONS = [
     pattern: /(?<imports>\/\/\s*Imports)(?<code>[\s\S]*?)(?<return>\/\/\s*Return)/gi,
     templateFile: TEMPLATE_PATH + "/src/handler-return-delete.hbs",
     skip: createSkipFunction(DELETE_OPERATION, "delete handler implementation"),
+  },
+  {
+    type: "modify",
+    path: SRC_PATH + "/handler.ts",
+    pattern: /(?<imports>\/\/\s*Imports)(?<code>[\s\S]*?)(?<return>\/\/\s*Return)/gi,
+    templateFile: TEMPLATE_PATH + "/src/handler-return-find.hbs",
+    skip: createSkipFunction(READ_ONE_OPERATION, "find by ID handler implementation"),
+  },
+  {
+    type: "modify",
+    path: SRC_PATH + "/handler.ts",
+    pattern: /(?<imports>\/\/\s*Imports)(?<code>[\s\S]*?)(?<return>\/\/\s*Return)/gi,
+    templateFile: TEMPLATE_PATH + "/src/handler-return-create-list.hbs",
+    skip: createSkipFunction(CREATE_MANY_OPERATION, "create list handler implementation"),
   },
 ];

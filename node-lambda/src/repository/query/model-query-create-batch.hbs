@@ -1,0 +1,37 @@
+export const CREATE_BATCH_QUERY = (count: number) => {
+  const paramCount = 5 + {{properties.length}};
+  let query = `
+    INSERT INTO {{constantCase name}} (
+      NAME,
+      DESCRIPTION,
+      VALID_FROM,
+      VALID_TO,
+      {{#each properties}}
+      {{constantCase name}},
+      {{/each}}
+      CREATED_BY,
+      MODIFIED_BY
+    ) VALUES 
+  `;
+  
+  const values = [];
+  for (let i = 0; i < count; i++) {
+    const startParam = i * paramCount + 1;
+    values.push(`(
+      $${startParam}, 
+      $${startParam + 1}, 
+      $${startParam + 2}, 
+      $${startParam + 3}, 
+      {{#each properties}}
+      $${startParam + 4 + @index}, 
+      {{/each}}
+      'SYSTEM',
+      'SYSTEM'
+    )`);
+  }
+  
+  query += values.join(', ');
+  query += ` RETURNING *`;
+  
+  return query;
+};

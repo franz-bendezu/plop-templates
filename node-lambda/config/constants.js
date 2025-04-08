@@ -9,6 +9,7 @@ export const SRC_PATH = "{{kebabCase folder}}/src/{{kebabCase moduleName}}";
 export const TEST_PATH = "{{kebabCase folder}}/test/{{kebabCase moduleName}}";
 export const TEMPLATE_PATH = "plop-templates/node-lambda";
 
+// Operations
 export const CREATE_ONE_OPERATION = "create-one";
 export const CREATE_MANY_OPERATION = "create-many";
 export const READ_ONE_OPERATION = "read-one";

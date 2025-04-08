@@ -3,6 +3,8 @@ import {
   READ_MANY_OPERATION,
   UPDATE_OPERATION,
   DELETE_OPERATION,
+  CREATE_MANY_OPERATION,
+  READ_ONE_OPERATION,
   TEST_PATH,
   TEMPLATE_PATH,
   BLOCK_TEST_PATTERN,
@@ -45,6 +47,22 @@ export const TEST_HANDLER_ACTIONS = [
     templateFile: TEMPLATE_PATH + "/test/handler-return-delete.test.hbs",
     skip: createSkipFunction(DELETE_OPERATION, "delete handler tests"),
   },
+  // Find by ID handler test
+  {
+    type: "modify",
+    path: TEST_PATH + "/handler.test.ts",
+    pattern: BLOCK_TEST_PATTERN,
+    templateFile: TEMPLATE_PATH + "/test/handler-return-find.test.hbs",
+    skip: createSkipFunction(READ_ONE_OPERATION, "find by ID handler tests"),
+  },
+  // Create list handler test
+  {
+    type: "modify",
+    path: TEST_PATH + "/handler.test.ts",
+    pattern: BLOCK_TEST_PATTERN,
+    templateFile: TEMPLATE_PATH + "/test/handler-return-create-list.test.hbs",
+    skip: createSkipFunction(CREATE_MANY_OPERATION, "create list handler tests"),
+  },
   // Handler Invoker
   {
     type: "add",
@@ -72,5 +90,18 @@ export const TEST_HANDLER_ACTIONS = [
     path: TEST_PATH + "/handler-invoker.ts",
     templateFile: TEMPLATE_PATH + "/test/handler-invoker-delete.hbs",
     skip: createSkipFunction(DELETE_OPERATION, "delete handler invoker"),
+  },
+  // Handler invokers for new operations
+  {
+    type: "add",
+    path: TEST_PATH + "/handler-invoker.ts",
+    templateFile: TEMPLATE_PATH + "/test/handler-invoker-find.hbs",
+    skip: createSkipFunction(READ_ONE_OPERATION, "find by ID handler invoker"),
+  },
+  {
+    type: "add",
+    path: TEST_PATH + "/handler-invoker.ts",
+    templateFile: TEMPLATE_PATH + "/test/handler-invoker-create-list.hbs",
+    skip: createSkipFunction(CREATE_MANY_OPERATION, "create list handler invoker"),
   },
 ];

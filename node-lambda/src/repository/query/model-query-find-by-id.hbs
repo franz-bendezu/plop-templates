@@ -1,0 +1,6 @@
+export const FIND_BY_ID_QUERY = `
+  SELECT *
+  FROM {{constantCase name}}
+  WHERE ID = $1
+  AND DELETED = FALSE
+`;

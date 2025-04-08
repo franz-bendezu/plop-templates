@@ -3,6 +3,8 @@ import {
   READ_MANY_OPERATION,
   UPDATE_OPERATION,
   DELETE_OPERATION,
+  CREATE_MANY_OPERATION,
+  READ_ONE_OPERATION,
   SRC_PATH,
   TEMPLATE_PATH,
   BLOCK_METHOD_PATTERN 
@@ -44,6 +46,20 @@ export const SERVICE_ACTIONS = [
     skip: createSkipFunction(DELETE_OPERATION, "delete method interface"),
   },
   {
+    type: "modify",
+    path: SRC_PATH + "/service/{{kebabCase name}}.service.interface.ts",
+    pattern: BLOCK_METHOD_PATTERN,
+    templateFile: TEMPLATE_PATH + "/src/service/service-method-find-interface.hbs",
+    skip: createSkipFunction(READ_ONE_OPERATION, "find by ID method interface"),
+  },
+  {
+    type: "modify",
+    path: SRC_PATH + "/service/{{kebabCase name}}.service.interface.ts",
+    pattern: BLOCK_METHOD_PATTERN,
+    templateFile: TEMPLATE_PATH + "/src/service/service-method-create-list-interface.hbs",
+    skip: createSkipFunction(CREATE_MANY_OPERATION, "create list method interface"),
+  },
+  {
     type: "add",
     path: SRC_PATH + "/service/{{kebabCase name}}.service.ts",
     templateFile: TEMPLATE_PATH + "/src/service/service-impl.hbs",
@@ -75,5 +91,19 @@ export const SERVICE_ACTIONS = [
     pattern: BLOCK_METHOD_PATTERN,
     templateFile: TEMPLATE_PATH + "/src/service/service-method-delete.hbs",
     skip: createSkipFunction(DELETE_OPERATION, "delete method implementation"),
+  },
+  {
+    type: "modify",
+    path: SRC_PATH + "/service/{{kebabCase name}}.service.ts",
+    pattern: BLOCK_METHOD_PATTERN,
+    templateFile: TEMPLATE_PATH + "/src/service/service-method-find.hbs",
+    skip: createSkipFunction(READ_ONE_OPERATION, "find by ID method implementation"),
+  },
+  {
+    type: "modify",
+    path: SRC_PATH + "/service/{{kebabCase name}}.service.ts",
+    pattern: BLOCK_METHOD_PATTERN,
+    templateFile: TEMPLATE_PATH + "/src/service/service-method-create-list.hbs",
+    skip: createSkipFunction(CREATE_MANY_OPERATION, "create list method implementation"),
   },
 ];
