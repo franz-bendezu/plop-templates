@@ -4,6 +4,8 @@ import {
   READ_MANY_OPERATION,
   UPDATE_OPERATION,
   DELETE_OPERATION,
+  CREATE_MANY_OPERATION,
+  READ_ONE_OPERATION,
 } from "../constants.js";
 
 export const GENERATOR_CONFIG = {

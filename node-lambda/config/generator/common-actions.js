@@ -1,4 +1,4 @@
-import { SRC_PATH, TEMPLATE_PATH } from "../constants";
+import { SRC_PATH, TEMPLATE_PATH } from "../constants.js";
 
 export const COMMON_ACTIONS = [
   {
