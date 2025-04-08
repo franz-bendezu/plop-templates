@@ -109,7 +109,7 @@ The system supports the following operations across all generators:
 ### Generate a complete CRUD handler:
 
 ```bash
-plop node-lambda-handler
+plop node-lambda
 ```
 
 Then follow the prompts:
@@ -156,7 +156,7 @@ You can also run generators with inline arguments instead of interactive prompts
 ### Complete Lambda Handler
 
 ```bash
-plop node-lambda-handler -- --moduleName users --folder src/users --name user --operation "Create One" --nameSecretDb USERS_DB_SECRET --generateAll true
+plop node-lambda -- --moduleName users --folder src/users --name user --operation "Create One" --nameSecretDb USERS_DB_SECRET --generateAll true
 ```
 
 ### Individual Components
