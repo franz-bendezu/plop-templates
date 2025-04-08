@@ -28,6 +28,7 @@ export const OPERATION_DESCRIPTIONS = {
  */
 export const createSkipFunction = (requiredOperation, componentName) => {
   return (answers) => {
+    console.log("answers", answers);
     // Handle both single operation and array of operations
     const operations = Array.isArray(requiredOperation) ? requiredOperation : [requiredOperation];
     

@@ -34,7 +34,7 @@ export const GENERATOR_ADD_METHOD = {
     },
     {
       type: "list",
-      name: "methodType",
+      name: "operation",
       message: "Method to add",
       choices: [
         CREATE_ONE_OPERATION,
@@ -47,6 +47,6 @@ export const GENERATOR_ADD_METHOD = {
     },
   ],
   actions: (data) => {
-    return getMethodActions(data.componentType, data.methodType);
+    return getMethodActions(data.componentType, data.operation);
   },
 };

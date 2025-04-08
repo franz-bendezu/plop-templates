@@ -5,11 +5,11 @@ import { MODIFY_TEST_CONTROLLER_ACTIONS } from "./actions/test-controller-action
 import { MODIFY_TEST_REPOSITORY_ACTIONS } from "./actions/test-repository-actions.js";
 import { MODIFY_TEST_SERVICE_ACTIONS } from "./actions/test-service-actions.js";
 
-export const getControllerMethodActions = (methodType) => {
+export const getControllerMethodActions = (operation) => {
   const controllerActions = MODIFY_CONTROLLER_ACTIONS.filter(action => {
     if (action.skip) {
       return !action.skip({
-         operation: methodType,
+         operation: operation,
       });
     }
     return true;
@@ -18,7 +18,7 @@ export const getControllerMethodActions = (methodType) => {
   const controllerTestActions = MODIFY_TEST_CONTROLLER_ACTIONS.filter(action => {
     if (action.skip) {
       return !action.skip({
-         operation: methodType,
+         operation: operation,
       });
     }
     return true;
@@ -30,11 +30,11 @@ export const getControllerMethodActions = (methodType) => {
   ];
 };
 
-export const getServiceMethodActions = (methodType) => {
+export const getServiceMethodActions = (operation) => {
   const serviceActions = MODIFY_SERVICE_ACTIONS.filter(action => {
     if (action.skip) {
       return !action.skip({
-         operation: methodType,
+         operation: operation,
       });
     }
     return true;
@@ -43,7 +43,7 @@ export const getServiceMethodActions = (methodType) => {
   const serviceTestActions = MODIFY_TEST_SERVICE_ACTIONS.filter(action => {
     if (action.skip) {
       return !action.skip({
-         operation: methodType,
+         operation: operation,
       });
     }
     return true;
@@ -55,11 +55,11 @@ export const getServiceMethodActions = (methodType) => {
   ];
 };
 
-export const getRepositoryMethodActions = (methodType) => {
+export const getRepositoryMethodActions = (operation) => {
   const repositoryActions = MODIFY_REPOSITORY_ACTIONS.filter(action => {
     if (action.skip) {
       return !action.skip({
-         operation: methodType,
+         operation: operation,
       });
     }
     return true;
@@ -68,7 +68,7 @@ export const getRepositoryMethodActions = (methodType) => {
   const repositoryTestActions = MODIFY_TEST_REPOSITORY_ACTIONS.filter(action => {
     if (action.skip) {
       return !action.skip({
-         operation: methodType,
+         operation: operation,
       });
     }
     return true;
@@ -80,13 +80,13 @@ export const getRepositoryMethodActions = (methodType) => {
   ];
 };
 
-export const getMethodActions = (componentType, methodType) => {
+export const getMethodActions = (componentType, operation) => {
   if (componentType === 'controller') {
-    return getControllerMethodActions(methodType);
+    return getControllerMethodActions(operation);
   } else if (componentType === 'service') {
-    return getServiceMethodActions(methodType);
+    return getServiceMethodActions(operation);
   } else if (componentType === 'repository') {
-    return getRepositoryMethodActions(methodType);
+    return getRepositoryMethodActions(operation);
   }
   return [];
 };
