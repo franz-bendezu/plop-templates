@@ -24,7 +24,7 @@ export const OPERATION_DESCRIPTIONS = {
  * 
  * @param {string|string[]} requiredOperation - The operation(s) that should NOT be skipped
  * @param {string} componentName - The name of the component for better error messaging
- * @returns {Function} A skip function that returns undefined to continue or a descriptive message to skip
+ * @returns {(answers: {operation: string}) => string|undefined} A skip function that returns undefined to continue or a descriptive message to skip
  */
 export const createSkipFunction = (requiredOperation, componentName) => {
   return (answers) => {
