@@ -1,157 +1,160 @@
-# Node Lambda Code Generator
+# Node Lambda Templates
 
-A flexible code generator for AWS Lambda functions with support for component-based generation, creating clean, testable, and modular code.
-
-## Features
-
-- Generate complete Lambda handlers with all components
-- Generate individual components (Model, Repository, Service, Controller)
-- Support for different operations (create, read, update, delete)
-- Comprehensive test suite generation
-- Clean architecture design pattern
+This package provides a set of code generators for creating Lambda functions with a clean architecture pattern.
 
 ## Installation
 
-Add the following to your `plopfile.js`:
-
-```javascript
-import nodeLambdaConfig from './plop-templates/node-lambda/plop.config.js';
-
-export default function(plop) {
-  nodeLambdaConfig(plop);
-  // Your other generators
-}
+```bash
+npm install -g plop
 ```
 
 ## Usage
 
-### Generate Complete Lambda
+To start the generator:
 
-Generate a complete Lambda handler with all components:
+```bash
+plop
+```
 
-```sh
+## Available Generators
+
+The system offers the following generators to help you build your Lambda functions:
+
+### 1. Complete Lambda Handler Generator
+
+Generates a complete Lambda handler with all necessary components.
+
+```bash
 plop node-lambda-handler
 ```
 
-Or with command line arguments:
+This generator will prompt you for:
+- Module name
+- Resource folder
+- Resource name
+- Operation type (Create, Read, Update, Delete)
+- DB Secret environment variable name
+- Option to generate all components or select specific ones
 
-```sh
-plop node-lambda-handler -- --name product --moduleName product --folder product-api --operation read-many
+### 2. Individual Component Generators
+
+If you only need specific components, you can use these dedicated generators:
+
+#### Handler Generator
+
+Generates only the Lambda handler component:
+
+```bash
+plop node-lambda-handler
 ```
 
-### Generate Individual Components
+#### Controller Generator
 
-You can also generate specific components if needed:
+Generates only the controller component:
 
-#### Generate Only Repository
-
-```sh
-plop node-lambda-repository -- --name product --moduleName product --folder product-api --operation read-many
+```bash
+plop node-lambda-controller
 ```
 
-#### Generate Only Service
+#### Service Generator
 
-```sh
-plop node-lambda-service -- --name product --moduleName product --folder product-api --operation read-many
+Generates only the service component:
+
+```bash
+plop node-lambda-service
 ```
 
-#### Generate Only Controller
+#### Repository Generator
 
-```sh
-plop node-lambda-controller -- --name product --moduleName product --folder product-api --operation read-many
+Generates only the repository component:
+
+```bash
+plop node-lambda-repository
 ```
 
-#### Generate Only Model
+#### Model Generator
 
-```sh
-plop node-lambda-model -- --name product --moduleName product --folder product-api --operation read-many
+Generates only the model component:
+
+```bash
+plop node-lambda-model
 ```
 
-## Operation Types
+### 3. Add Method to Existing Component
 
-The generator supports the following operations:
+You can add new methods to existing components:
 
-- `create-one`: Generate components for creating a single resource
-- `create-many`: Generate components for creating multiple resources
-- `read-one`: Generate components for reading a single resource by ID
-- `read-many`: Generate components for reading multiple resources with filters
-- `update`: Generate components for updating a resource
-- `delete`: Generate components for deleting a resource
-
-## Component Selection
-
-When generating a complete Lambda handler, you can choose which components to include:
-
-- Model: Data models, interfaces, and DTOs
-- Repository: Database access layer
-- Service: Business logic layer
-- Controller: Request handling and response formatting
-- Handler: AWS Lambda entry point
-- Common Utilities: Error handling, logging, and configuration
-- Tests: Comprehensive test suite for all components
-
-## Generated Structure
-
-The generator creates a clean architecture with the following structure:
-
-```
-project-api/
-├── src/
-│   └── module-name/
-│       ├── common/
-│       │   ├── error/
-│       │   ├── formatter/
-│       │   ├── logger/
-│       │   ├── response/
-│       │   └── schema/
-│       ├── config/
-│       ├── controller/
-│       ├── dto/
-│       ├── interface/
-│       ├── model/
-│       ├── repository/
-│       │   └── query/
-│       ├── service/
-│       └── handler.ts
-└── test/
-    └── module-name/
-        ├── common/
-        ├── config/
-        ├── controller/
-        ├── dto/
-        ├── model/
-        ├── repository/
-        ├── service/
-        ├── handler.test.ts
-        └── handler-invoker.ts
+```bash
+plop add-method
 ```
 
-## Dependencies
+This generator will prompt you for:
+- Resource name
+- Component type (controller, service, repository)
+- Method type to add (Create, Read, Update, Delete)
 
-The generator installs the following dependencies:
+### 4. Available Operations
 
-- `@aws-sdk/client-secrets-manager`: AWS Secrets Manager client
-- `@types/aws-lambda`: TypeScript types for AWS Lambda
-- `aws-sdk-client-mock`: Mock for AWS SDK clients
-- `jest`: Testing framework
-- `joi` and `@joi/date`: Schema validation
-- `pino`: Logging library
-- `serverless` and `serverless-offline`: Serverless framework and local development
+The system supports the following operations across all generators:
 
-## Examples
+- `CREATE_ONE`: Create a single resource
+- `CREATE_MANY`: Create multiple resources
+- `READ_ONE`: Get a single resource by ID
+- `READ_MANY`: List resources with pagination/filtering
+- `UPDATE`: Update a resource
+- `DELETE`: Delete a resource
 
-### Creating a User API with CRUD Operations
+## Example Usage
 
-1. Generate the base structure with create operation:
-   ```sh
-   plop node-lambda-handler -- --name user --moduleName user --folder user-api --operation create-one
-   ```
+### Generate a complete CRUD handler:
 
-2. Add read functionality:
-   ```sh
-   plop node-lambda-repository -- --name user --moduleName user --folder user-api --operation read-many
-   plop node-lambda-service -- --name user --moduleName user --folder user-api --operation read-many
-   plop node-lambda-controller -- --name user --moduleName user --folder user-api --operation read-many
-   ```
+```bash
+plop node-lambda-handler
+```
 
-3. Add update and delete functionality as needed.
+Then follow the prompts:
+```
+? Module name users
+? Resource folder src/users
+? Resource name user
+? Resource operation Create One
+? Environment variable name for DB Secret USERS_DB_SECRET
+? Generate all components? Yes
+```
+
+### Generate only a repository component:
+
+```bash
+plop node-lambda-repository
+```
+
+Then follow the prompts:
+```
+? Module name users
+? Resource folder src/users
+? Resource name user
+? Resource operation Read Many
+```
+
+### Add a delete method to an existing controller:
+
+```bash
+plop add-method
+```
+
+Then follow the prompts:
+```
+? Resource name user
+? Component type controller
+? Method to add Delete
+```
+
+## Project Structure
+
+The generated code follows a clean architecture pattern with the following components:
+
+- **Handler**: Entry point for the Lambda function
+- **Controller**: Handles request/response formatting
+- **Service**: Contains business logic
+- **Repository**: Data access layer
+- **Model**: Data model definitions
