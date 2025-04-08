@@ -30,6 +30,11 @@ export const GENERATOR_ACTIONS = function (data) {
   // Common files needed for all components
   if (data.components.includes("common")) {
     actions.push( ...COMMON_ACTIONS);
+
+    // Add common tests if tests component is included
+    if (data.components.includes("tests")) {
+      actions.push(...TEST_COMMON_ACTIONS);
+    }
   }
 
   // Models
@@ -81,12 +86,6 @@ export const GENERATOR_ACTIONS = function (data) {
       actions.push(...TEST_HANDLER_ACTIONS);
     }
   }
-
-  // Common test files
-  if (data.components.includes("tests")) {
-    actions.push(...TEST_COMMON_ACTIONS);
-  }
-
   // Add dependency upgrade action
   actions.push({
     type: "upgradeDevDependencies",
