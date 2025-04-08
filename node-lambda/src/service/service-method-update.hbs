@@ -1,0 +1,6 @@
+$<imports>
+import {{pascalCase name}} from '../model/{{kebabCase name}}.model';$<code>$<methods>
+    async update(id: string, data: {{pascalCase name}}): Promise<{{pascalCase name}}> {
+        // Implement business logic here
+        return await this.repository.update(id, data);
+    }

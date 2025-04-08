@@ -1,0 +1,19 @@
+$<imports>
+import {{pascalCase name}}DTO from './dto/{{kebabCase name}}.dto';$<code>$<return>
+        const id = event.pathParameters?.id;
+        if (!id) {
+            throw new RuntimeError({
+                statusMessage: 'ID parameter is required',
+                statusCode: StatusCodes.BAD_REQUEST,
+            });
+        }
+        
+        const data = await {{camelCase name}}Controller.update(
+            id,
+            {{pascalCase name}}DTO.fromBody(event.body),
+        );
+        return new ApiGatewayResponse(
+            '{{pascalCase name}} actualizado',
+            StatusCodes.OK,
+            data,
+        );

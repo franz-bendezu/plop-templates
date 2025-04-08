@@ -1,0 +1,47 @@
+$<imports>
+import { UPDATE_QUERY } from './query/{{kebabCase name}}.query';
+import I{{pascalCase name}}ResultRow from '../interface/{{kebabCase name}}-query-result.interface';$<code>$<methods>
+    async update(id: string, data: {{pascalCase name}}): Promise<{{pascalCase name}}> {
+        try {
+            const queryResult = await this.dbClient.transaction(
+                (client) => client.query<I{{pascalCase name}}ResultRow>(UPDATE_QUERY, [
+                    id,
+                    data.name,
+                    data.description,
+                    data.validFrom,
+                    data.validTo,
+                    {{#each properties}}
+                    data.{{camelCase name}},
+                    {{/each}}
+                ]),
+            );
+
+            if (queryResult.rowCount === 0) {
+                throw new RuntimeError({
+                    statusMessage: '{{pascalCase name}} not found',
+                    statusCode: 404,
+                });
+            }
+
+            const row = queryResult.rows[0];
+            return new {{pascalCase name}}(
+                row.ID,
+                row.NAME,
+                row.DESCRIPTION,
+                row.VALID_FROM,
+                row.VALID_TO,
+                row.CREATED_AT,
+                row.MODIFIED_AT,
+                row.CREATED_BY,
+                row.MODIFIED_BY,
+                {{#each rowProperties}}
+                row.{{name}},
+                {{/each}}
+            );
+        } catch (error) {
+            throw new RuntimeError({
+                statusMessage: 'Bennu Database error',
+                cause: error,
+            });
+        }
+    }

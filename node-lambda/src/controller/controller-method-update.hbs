@@ -1,0 +1,10 @@
+$<imports>
+import {{pascalCase name}}DTO from '../dto/{{kebabCase name}}.dto';
+import {{pascalCase name}} from '../model/{{dashCase name}}.model';$<code>$<methods>
+    async update(id: string, data: {{pascalCase name}}DTO): Promise<{{pascalCase name}}DTO> {
+        const result = await this.{{camelCase name}}Service.update(
+            id,
+            {{pascalCase name}}.fromDTO(data)
+        );
+        return {{pascalCase name}}DTO.from(result);
+    }
