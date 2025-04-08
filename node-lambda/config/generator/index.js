@@ -39,6 +39,27 @@ export const GENERATOR_CONFIG = {
         DELETE_OPERATION,
       ],
     },
+    {
+      type: "checkbox",
+      name: "components",
+      message: "Which components do you want to generate?",
+      choices: [
+        { name: "Model", value: "model", checked: true },
+        { name: "Repository", value: "repository", checked: true },
+        { name: "Service", value: "service", checked: true },
+        { name: "Controller", value: "controller", checked: true },
+        { name: "Handler", value: "handler", checked: true },
+        { name: "Common Utilities", value: "common", checked: false },
+        { name: "Tests", value: "tests", checked: true },
+      ],
+      when: (answers) => !answers.generateAll,
+    },
+    {
+      type: "confirm",
+      name: "generateAll",
+      message: "Generate all components?",
+      default: true,
+    },
   ],
   actions: GENERATOR_ACTIONS,
 };

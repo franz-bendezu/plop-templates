@@ -1,5 +1,9 @@
 import { upgradeDevDependencies } from "./config/actions.js";
 import { GENERATOR_CONFIG } from "./config/generator/index.js";
+import { GENERATOR_ONLY_REPOSITORY } from "./config/generator/repository-generator.js";
+import { GENERATOR_ONLY_SERVICE } from "./config/generator/service-generator.js";
+import { GENERATOR_ONLY_CONTROLLER } from "./config/generator/controller-generator.js";
+import { GENERATOR_ONLY_MODEL } from "./config/generator/model-generator.js";
 
 // plopfile.js
 export default function NodeLambdaConfig(
@@ -8,5 +12,12 @@ export default function NodeLambdaConfig(
 ) {
   plop.setActionType("upgradeDevDependencies", upgradeDevDependencies);
 
-  plop.setGenerator("node-lamda-handler", GENERATOR_CONFIG);
+  // Main generator
+  plop.setGenerator("node-lambda-handler", GENERATOR_CONFIG);
+  
+  // Component generators
+  plop.setGenerator("node-lambda-repository", GENERATOR_ONLY_REPOSITORY);
+  plop.setGenerator("node-lambda-service", GENERATOR_ONLY_SERVICE);
+  plop.setGenerator("node-lambda-controller", GENERATOR_ONLY_CONTROLLER);
+  plop.setGenerator("node-lambda-model", GENERATOR_ONLY_MODEL);
 }
