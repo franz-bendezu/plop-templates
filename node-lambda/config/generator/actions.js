@@ -4,7 +4,7 @@ import { CONTROLLER_ACTIONS } from "./controller-actions.js";
 import { MODEL_ACTIONS } from "./model-actions.js";
 import { HANDLER_ACTIONS } from "./handler-actions.js";
 import { TEST_ACTIONS } from "./test-actions.js";
-import { TEMPLATE_PATH } from "../constants.js";
+import { SRC_PATH, TEMPLATE_PATH } from "../constants.js";
 
 export const GENERATOR_ACTIONS = function (data) {
   // Set up components based on selection
