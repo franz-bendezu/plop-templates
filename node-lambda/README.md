@@ -149,6 +149,55 @@ Then follow the prompts:
 ? Method to add Delete
 ```
 
+## Inline Command Examples
+
+You can also run generators with inline arguments instead of interactive prompts:
+
+### Complete Lambda Handler
+
+```bash
+plop node-lambda-handler -- --moduleName users --folder src/users --name user --operation "Create One" --nameSecretDb USERS_DB_SECRET --generateAll true
+```
+
+### Individual Components
+
+Repository:
+```bash
+plop node-lambda-repository -- --moduleName users --folder src/users --name user --operation "Read Many"
+```
+
+Service:
+```bash
+plop node-lambda-service -- --moduleName users --folder src/users --name user --operation "Create One"
+```
+
+Controller:
+```bash
+plop node-lambda-controller -- --moduleName users --folder src/users --name user --operation "Update"
+```
+
+Model:
+```bash
+plop node-lambda-model -- --moduleName users --folder src/users --name user --operation "Delete"
+```
+
+Handler:
+```bash
+plop node-lambda-handler -- --moduleName users --folder src/users --name user --operation "Read One" --nameSecretDb USERS_DB_SECRET
+```
+
+### Add Method
+
+```bash
+plop add-method -- --name user --componentType controller --methodType "Delete"
+```
+
+### Upgrade Dependencies
+
+```bash
+plop upgrade-dependencies -- --folder ./my-project
+```
+
 ## Project Structure
 
 The generated code follows a clean architecture pattern with the following components:
