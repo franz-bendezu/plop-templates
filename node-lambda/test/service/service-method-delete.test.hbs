@@ -1,0 +1,61 @@
+$<imports>
+import { RuntimeError } from '../../src/{{kebabCase moduleName}}/common/error/runtime-error';
+import { Logger } from '../../src/{{kebabCase moduleName}}/common/logger/logger';
+import {{pascalCase name}}Repository from '../../src/{{kebabCase moduleName}}/repository/{{kebabCase name}}.repository';
+import {{pascalCase name}}Service from '../../src/{{kebabCase moduleName}}/service/{{kebabCase name}}.service';
+import {{pascalCase name}} from '../../src/{{kebabCase moduleName}}/model/{{kebabCase name}}.model';$<code>$<tests>
+describe('delete', () => {
+    let mockLogger: jest.Mocked<Logger>;
+    let mockRepository: jest.Mocked<{{pascalCase name}}Repository>;
+    let service: {{pascalCase name}}Service;
+    
+    const testId = '12345';
+    
+    beforeEach(() => {
+        mockLogger = {
+            error: jest.fn(),
+            warn: jest.fn(),
+            info: jest.fn(),
+            debug: jest.fn(),
+            trace: jest.fn()
+        } as unknown as jest.Mocked<Logger>;
+        
+        mockRepository = {
+            delete: jest.fn()
+        } as unknown as jest.Mocked<{{pascalCase name}}Repository>;
+        
+        service = new {{pascalCase name}}Service(mockRepository, mockLogger);
+    });
+    
+    it('should delete the entity successfully and return true', async () => {
+        mockRepository.delete.mockResolvedValue(true);
+        
+        const result = await service.delete(testId);
+        
+        expect(mockRepository.delete).toHaveBeenCalledWith(testId);
+        expect(result).toBe(true);
+        expect(mockLogger.info).toHaveBeenCalled();
+    });
+    
+    it('should throw RuntimeError when repository fails to delete', async () => {
+        const error = new RuntimeError('No {{pascalCase name}} found with id');
+        mockRepository.delete.mockRejectedValue(error);
+        
+        await expect(service.delete(testId)).rejects.toThrow(RuntimeError);
+        await expect(service.delete(testId)).rejects.toThrow('No {{pascalCase name}} found with id');
+        
+        expect(mockRepository.delete).toHaveBeenCalledWith(testId);
+        expect(mockLogger.error).toHaveBeenCalled();
+    });
+    
+    it('should log and rethrow unexpected errors', async () => {
+        const error = new Error('Unexpected error');
+        mockRepository.delete.mockRejectedValue(error);
+        
+        await expect(service.delete(testId)).rejects.toThrow(Error);
+        await expect(service.delete(testId)).rejects.toThrow('Unexpected error');
+        
+        expect(mockRepository.delete).toHaveBeenCalledWith(testId);
+        expect(mockLogger.error).toHaveBeenCalled();
+    });
+});

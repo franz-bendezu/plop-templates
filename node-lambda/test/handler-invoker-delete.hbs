@@ -1,0 +1,14 @@
+import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda';
+import { index } from '../../../src/{{kebabCase moduleName}}/handler';
+import { createInvokeHandler } from './utils/handler-invoker';
+
+const invokeHandler = createInvokeHandler(index);
+
+const createDeleteEvent = (id: string) => {
+    return invokeHandler(
+        null,
+        { id }
+    );
+};
+
+export default createDeleteEvent;

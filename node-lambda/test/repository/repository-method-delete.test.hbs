@@ -1,0 +1,86 @@
+$<imports>
+import { IDatabaseManager, ITransaction } from '../../src/{{kebabCase moduleName}}/config/postgres.config';
+import { RuntimeError } from '../../src/{{kebabCase moduleName}}/common/error/runtime-error';
+import { DELETE_QUERY } from '../../src/{{kebabCase moduleName}}/repository/query/{{kebabCase name}}.query';
+import {{pascalCase name}} from '../../src/{{kebabCase moduleName}}/model/{{kebabCase name}}.model';
+import {{pascalCase name}}Repository from '../../src/{{kebabCase moduleName}}/repository/{{kebabCase name}}.repository';$<code>$<tests>
+    describe('delete', () => {
+        let mockTransaction: jest.Mocked<ITransaction>;
+        let mockDbClient: jest.Mocked<IDatabaseManager>;
+        let repository: {{pascalCase name}}Repository;
+        const testId = '12345';
+        
+        const mockQueryResult = {
+            rows: [
+                {
+                    ID: testId,
+                    NAME: 'Test Name',
+                    DESCRIPTION: 'Test Description',
+                    VALID_FROM: new Date(),
+                    VALID_TO: new Date(),
+                    CREATED_AT: new Date(),
+                    MODIFIED_AT: new Date(),
+                    CREATED_BY: 'user1',
+                    MODIFIED_BY: 'user1',
+                    {{#each rowProperties}}
+                    {{name}}: 'Test {{name}}',
+                    {{/each}}
+                }
+            ],
+            rowCount: 1,
+            command: '',
+            oid: 1,
+            fields: []
+        };
+        
+        beforeEach(() => {
+            mockTransaction = {
+                query: jest.fn(),
+                release: jest.fn()
+            } as unknown as jest.Mocked<ITransaction>;
+            
+            mockDbClient = {
+                transaction: jest.fn(),
+                query: jest.fn(),
+                executeQuery: jest.fn()
+            } as unknown as jest.Mocked<IDatabaseManager>;
+            
+            repository = new {{pascalCase name}}Repository(mockDbClient);
+            
+            mockDbClient.transaction.mockImplementation(async (callback) => {
+                return await callback(mockTransaction);
+            });
+            mockTransaction.query.mockResolvedValue(mockQueryResult);
+        });
+        
+        it('should execute delete query and return true when successful', async () => {
+            const result = await repository.delete(testId);
+            
+            expect(mockDbClient.transaction).toHaveBeenCalled();
+            expect(mockTransaction.query).toHaveBeenCalledWith(
+                DELETE_QUERY, 
+                [testId]
+            );
+            
+            expect(result).toBe(true);
+        });
+        
+        it('should throw error when no rows are deleted', async () => {
+            mockTransaction.query.mockResolvedValue({
+                ...mockQueryResult,
+                rows: [],
+                rowCount: 0
+            });
+            
+            await expect(repository.delete(testId)).rejects.toThrow(RuntimeError);
+            await expect(repository.delete(testId)).rejects.toThrow('No {{pascalCase name}} found with id');
+        });
+        
+        it('should throw error when database error occurs', async () => {
+            const dbError = new Error('Database error');
+            mockDbClient.transaction.mockRejectedValue(dbError);
+            
+            await expect(repository.delete(testId)).rejects.toThrow(RuntimeError);
+            await expect(repository.delete(testId)).rejects.toThrow('Bennu Database error');
+        });
+    });
