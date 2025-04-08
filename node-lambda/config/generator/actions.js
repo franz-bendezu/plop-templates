@@ -9,7 +9,7 @@ import { TEST_REPOSITORY_ACTIONS } from "./test-repository-actions.js";
 import { TEST_SERVICE_ACTIONS } from "./test-service-actions.js";
 import { TEST_CONTROLLER_ACTIONS } from "./test-controller-actions.js";
 import { TEST_HANDLER_ACTIONS } from "./test-handler-actions.js";
-import { SRC_PATH, TEMPLATE_PATH } from "../constants.js";
+import { COMMON_ACTIONS } from "./common-actions.js";
 
 export const GENERATOR_ACTIONS = function (data) {
   // Set up components based on selection
@@ -29,22 +29,7 @@ export const GENERATOR_ACTIONS = function (data) {
 
   // Common files needed for all components
   if (data.components.includes("common")) {
-    actions.push(
-      ...[
-        {
-          type: "addMany",
-          destination: SRC_PATH + "/common",
-          base: TEMPLATE_PATH + "/src/common",
-          templateFiles: TEMPLATE_PATH + "/src/common/**/*.ts.hbs",
-        },
-        {
-          type: "addMany",
-          destination: SRC_PATH + "/config",
-          base: TEMPLATE_PATH + "/src/config",
-          templateFiles: TEMPLATE_PATH + "/src/config/**/*.ts.hbs",
-        },
-      ]
-    );
+    actions.push( ...COMMON_ACTIONS);
   }
 
   // Models
