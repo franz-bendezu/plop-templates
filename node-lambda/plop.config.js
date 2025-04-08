@@ -15,7 +15,7 @@ export default function NodeLambdaConfig(
   plop.setActionType("upgradeDevDependencies", upgradeDevDependencies);
 
   // Main generator
-  plop.setGenerator("node-lambda-handler", GENERATOR_CONFIG);
+  plop.setGenerator("node-lambda", GENERATOR_CONFIG);
   
   // Component generators
   plop.setGenerator("node-lambda-repository", GENERATOR_ONLY_REPOSITORY);
