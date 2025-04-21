@@ -11,11 +11,18 @@ function initializeNpmProject(projectPath) {
   
   if (!fs.existsSync(packageJsonPath)) {
     console.log("No package.json found. Initializing npm project...");
-    execSync("npm init -y", { 
-      stdio: "inherit", 
-      cwd: projectPath 
-    });
-    return true;
+    try {
+      // Use { shell: true } to ensure the command runs correctly across platforms
+      execSync("npm init -y", { 
+        stdio: "inherit", 
+        cwd: projectPath,
+        shell: true 
+      });
+      return true;
+    } catch (error) {
+      console.error(`Error initializing npm project: ${error.message}`);
+      throw new Error(`Failed to initialize npm project: ${error.message}`);
+    }
   }
   return false;
 }
@@ -41,10 +48,16 @@ function installDependencies(dependencies, projectPath, isDev = false) {
     .map(([dep, version]) => version ? `${dep}@${version}` : dep)
     .join(" ");
   
-  execSync(`npm install ${installType} ${depsString}`, { 
-    stdio: "inherit", 
-    cwd: projectPath 
-  });
+  try {
+    execSync(`npm install ${installType} ${depsString}`, { 
+      stdio: "inherit", 
+      cwd: projectPath,
+      shell: true 
+    });
+  } catch (error) {
+    console.error(`Error installing dependencies: ${error.message}`);
+    throw new Error(`Failed to install dependencies: ${error.message}`);
+  }
 }
 
 /**
@@ -69,14 +82,20 @@ export function upgradeDevDependencies(answers, config, plop) {
     execSync(`npm uninstall ${dependenciesToRemove.join(" ")}`, {
       stdio: "inherit",
       cwd: projectPath,
+      shell: true
     });
   } catch (error) {
     console.log("No old dependencies to uninstall, continuing...");
   }
 
   // Install dependencies
-  installDependencies(devDependencies, projectPath, true);
-  installDependencies(dependencies, projectPath, false);
+  try {
+    installDependencies(devDependencies, projectPath, true);
+    installDependencies(dependencies, projectPath, false);
+  } catch (error) {
+    console.error(`Failed to install dependencies: ${error.message}`);
+    throw error; // Re-throw to ensure the error is reported up
+  }
 
   return "NPM project initialized (if needed) and dependencies installed/upgraded";
 }
