@@ -13,18 +13,19 @@ export const GENERATOR_CONFIG = {
   prompts: [
     {
       type: "input",
-      name: "moduleName",
-      message: "Module name",
-    },
-    {
-      type: "input",
       name: "folder",
       message: "Resource folder",
+      default: ".",
     },
     {
       type: "input",
       name: "name",
       message: "Resource name",
+    },
+    {
+      type: "input",
+      name: "moduleName",
+      message: "Module name",
     },
     {
       type: "list",
