@@ -24,12 +24,12 @@ export const FOLDER_PATH = "{{kebabCase folder}}";
 /**
  * Base path for source files, used for template generation targets
  */
-export const SRC_PATH = "{{kebabCase folder}}/src/{{kebabCase moduleName}}";
+export const SRC_PATH = `${FOLDER_PATH}/src/{{kebabCase moduleName}}`;
 
 /**
  * Base path for test files, used for template generation targets
  */
-export const TEST_PATH = "{{kebabCase folder}}/test/{{kebabCase moduleName}}";
+export const TEST_PATH = `${FOLDER_PATH}/test/{{kebabCase moduleName}}`;
 
 /**
  * Path to template files used for code generation
