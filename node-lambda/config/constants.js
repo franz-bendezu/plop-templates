@@ -1,3 +1,5 @@
+import  { resolve } from "path";
+
 /**
  * Regular expression pattern used to identify where to insert methods in generated code
  */
@@ -19,7 +21,7 @@ export const BLOCK_TEST_PATTERN =
 /**
  * Base path for the folder, used for template generation targets
  */
-export const FOLDER_PATH = "{{kebabCase folder}}";
+export const FOLDER_PATH = resolve(process.cwd(), "{{kebabCase folder}}");
 
 /**
  * Base path for source files, used for template generation targets
