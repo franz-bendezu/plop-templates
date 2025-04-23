@@ -1,8 +1,18 @@
 import { Client, QueryConfigValues, QueryResult, QueryResultRow } from 'pg';
 import { ISecretsManagerConfig } from './secret-manager.config';
-import { IDatabaseConfig, IDatabaseManager, IDatabaseClient } from './database.interface';
+import { IDatabaseConfig, IDatabaseManager } from './database.interface';
 
-export default class PostgresConfig implements IDatabaseManager {
+export interface IDatabaseManagerPostgres extends IDatabaseManager<Client> {
+    executeQuery<T extends QueryResultRow>(
+        query: string,
+    ): Promise<QueryResult<T>>;
+    executeQuery<T extends QueryResultRow, I = any[]>(
+        query: string,
+        values: QueryConfigValues<I>,
+    ): Promise<QueryResult<T>>;
+}
+
+export default class PostgresConfig implements IDatabaseManagerPostgres<Client> {
     public static readonly APPLICATION_NAME = '{{folder}}';
 
     currentConfig?: IDatabaseConfig;
@@ -39,13 +49,6 @@ export default class PostgresConfig implements IDatabaseManager {
 
     async executeQuery<T extends QueryResultRow, I = any[]>(
         query: string,
-        values: QueryConfigValues<I>,
-    ): Promise<QueryResult<T>>;
-    async executeQuery<T extends QueryResultRow>(
-        query: string,
-    ): Promise<QueryResult<T>>;
-    async executeQuery<T extends QueryResultRow, I = any[]>(
-        query: string,
         values?: QueryConfigValues<I>,
     ): Promise<QueryResult<T>> {
         const client = await this.createClient();
@@ -57,7 +60,7 @@ export default class PostgresConfig implements IDatabaseManager {
         }
     }
 
-    async connection<T>(callback: (client: IDatabaseClient) => Promise<T>): Promise<T> {
+    async connection<T>(callback: (client: Client) => Promise<T>): Promise<T> {
         const client = await this.createClient();
         try {
             await client.connect();
@@ -68,7 +71,7 @@ export default class PostgresConfig implements IDatabaseManager {
     }
 
     async transaction<T>(
-        transactionCallback: (client: IDatabaseClient) => Promise<T>,
+        transactionCallback: (client: Client) => Promise<T>,
     ): Promise<T> {
         const client = await this.createClient();
         try {
