@@ -1,10 +1,12 @@
-import * as oracledb from 'oracledb';
+import { Connection, getConnection, OUT_FORMAT_OBJECT } from 'oracledb';
 import { ISecretsManagerConfig } from './secret-manager.config';
-import { IDatabaseConfig, IDatabaseClient, IDatabaseManager } from './database.interface';
+import {
+    IDatabaseConfig,
+    IDatabaseManager,
+} from './database.interface';
 
-export default class OracleConfig implements IDatabaseManager {
+export default class OracleConfig implements IDatabaseManager<Connection> {
     public static readonly APPLICATION_NAME = '{{folder}}';
-
     currentConfig?: IDatabaseConfig;
     constructor(private readonly secretsManagerConfig: ISecretsManagerConfig) { }
 
@@ -25,62 +27,48 @@ export default class OracleConfig implements IDatabaseManager {
         return this.currentConfig;
     }
 
-    async createClient(): Promise<oracledb.Connection> {
+    async createClient(): Promise<Connection> {
         const config = await this.getDatabaseConfig();
-        return oracledb.getConnection({
+        return getConnection({
             user: config.username,
             password: config.password,
-            connectString: `${config.host}:${config.port}/${config.dbname}`
+            connectString: `${config.host}:${config.port}/${config.dbname}`,
         });
     }
 
     async executeQuery<T extends any[] = any[], I = any[]>(
         query: string,
-        values?: I[],
-    ): Promise<{ rows: T }> {
+        values?: I[]
+    ) {
         const client = await this.createClient();
         try {
-            const result = await client.execute<T>(query, values || [], { outFormat: oracledb.OUT_FORMAT_OBJECT });
-            return { rows: result.rows || [] };
+            const result = await client.execute<T>(query, values || [], {
+                outFormat: OUT_FORMAT_OBJECT,
+            });
+            return { rows: result.rows || [], rowCount: result.rowsAffected || 0 };
         } finally {
             await client.close();
         }
     }
 
-    async connection<T>(callback: (client: IDatabaseClient) => Promise<T>): Promise<T> {
+    async connection<T>(
+        callback: (client: Connection) => Promise<T>,
+    ): Promise<T> {
         const client = await this.createClient();
         try {
-            const clientWrapper: IDatabaseClient = {
-                query: async <R, P = any[]>(query: string, values?: P[]) => {
-                    const result = await client.execute<R>(query, values || [], { outFormat: oracledb.OUT_FORMAT_OBJECT });
-                    return {
-                        rows: result.rows || [],
-                        rowCount: result.rows?.length || 0
-                    };
-                }
-            };
-            return await callback(clientWrapper);
+            return await callback(client);
         } finally {
             await client.close();
         }
     }
 
     async transaction<T>(
-        transactionCallback: (client: IDatabaseClient) => Promise<T>,
+        transactionCallback: (client: Connection) => Promise<T>,
     ): Promise<T> {
         const client = await this.createClient();
         try {
-            const clientWrapper: IDatabaseClient = {
-                query: async <R, P = any[]>(query: string, values?: P[]) => {
-                    const result = await client.execute<R>(query, values || [], { outFormat: oracledb.OUT_FORMAT_OBJECT });
-                    return {
-                        rows: result.rows || [],
-                        rowCount: result.rows?.length || 0
-                    };
-                }
-            };
             await client.execute('BEGIN');
-            const result = await transactionCallback(clientWrapper);
+            const result = await transactionCallback(client);
             await client.execute('COMMIT');
             return result;
         } catch (error) {
