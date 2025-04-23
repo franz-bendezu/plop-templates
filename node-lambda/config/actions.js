@@ -1,8 +1,6 @@
 import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
-import { dependencies, devDependencies, dependenciesToRemove } from "./dependencies.js";
-
 /**
  * Initialize an npm project if package.json doesn't exist
  */
@@ -71,9 +69,11 @@ function installDependencies(dependencies, projectPath, isDev = false) {
  *
  * @throws {Error} If there is an issue uninstalling old dependencies or installing new ones.
  */
-export function upgradeDevDependencies(answers, config, plop) {
+export function manageDependencies(answers, config, plop) {
   const projectPath = answers.folder || process.cwd(); // Use the provided path or the current working directory
-  
+  const dependencies = config.dependencies || {};
+  const devDependencies = config.devDependencies || {};
+  const dependenciesToRemove = config.dependenciesToRemove || [];
   // Initialize npm project if needed
   initializeNpmProject(projectPath);
 

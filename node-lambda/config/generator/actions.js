@@ -11,10 +11,16 @@ import { generateTestControllerActions } from "./actions/test-controller-actions
 import { generateTestHandlerActions } from "./actions/test-handler-actions.js";
 import { generateCommonActions } from "./actions/common-actions.js";
 import { SRC_PATH, TEMPLATE_PATH } from "../constants.js";
+import {
+  dbDriverDependencies,
+  dependencies,
+  dependenciesToRemove,
+  devDependencies,
+} from "../dependencies.js";
 
 /**
  * Generates plop actions based on selected components
- * 
+ *
  * @param {Object} data - The user input data
  * @param {string[]} data.components - List of components to generate
  * @param {boolean} data.generateAll - Flag to generate all components
@@ -51,13 +57,13 @@ export const generateMainActions = function (data) {
   // Models
   if (data.components.includes("model")) {
     actions.push(...generateModelActions(data));
-    
+
     // Add model tests if tests component is included
     if (data.components.includes("tests")) {
       actions.push(...generateTestModelActions(data));
     }
   }
-  
+
   // Add database config based on selected driver
   if (data.dbDriver) {
     actions.push({
@@ -70,7 +76,7 @@ export const generateMainActions = function (data) {
   // Repository
   if (data.components.includes("repository")) {
     actions.push(...generateRepositoryActions(data));
-    
+
     // Add repository tests if tests component is included
     if (data.components.includes("tests")) {
       actions.push(...generateTestRepositoryActions(data));
@@ -80,7 +86,7 @@ export const generateMainActions = function (data) {
   // Service
   if (data.components.includes("service")) {
     actions.push(...generateServiceActions(data));
-    
+
     // Add service tests if tests component is included
     if (data.components.includes("tests")) {
       actions.push(...generateTestServiceActions(data));
@@ -90,7 +96,7 @@ export const generateMainActions = function (data) {
   // Controller
   if (data.components.includes("controller")) {
     actions.push(...generateControllerActions(data));
-    
+
     // Add controller tests if tests component is included
     if (data.components.includes("tests")) {
       actions.push(...generateTestControllerActions(data));
@@ -100,7 +106,7 @@ export const generateMainActions = function (data) {
   // Handler
   if (data.components.includes("handler")) {
     actions.push(...generateHandlerActions(data));
-    
+
     // Add handler tests if tests component is included
     if (data.components.includes("tests")) {
       actions.push(...generateTestHandlerActions(data));
@@ -108,7 +114,13 @@ export const generateMainActions = function (data) {
   }
   // Add dependency upgrade action
   actions.push({
-    type: "upgradeDevDependencies",
+    type: "manageDependencies",
+    dependencies: {
+      ...dependencies,
+      ...(data.dbDriver ? dbDriverDependencies[data.dbDriver] : {}),
+    },
+    devDependencies,
+    dependenciesToRemove,
   });
 
   return actions;

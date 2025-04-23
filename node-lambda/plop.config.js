@@ -1,4 +1,4 @@
-import { upgradeDevDependencies } from "./config/actions.js";
+import { manageDependencies } from "./config/actions.js";
 import { GENERATOR_CONFIG } from "./config/generator/index.js";
 import { GENERATOR_ONLY_REPOSITORY } from "./config/generator/repository-generator.js";
 import { GENERATOR_ONLY_SERVICE } from "./config/generator/service-generator.js";
@@ -12,7 +12,7 @@ export default function NodeLambdaConfig(
   /** @type {import('plop').NodePlopAPI} */
   plop
 ) {
-  plop.setActionType("upgradeDevDependencies", upgradeDevDependencies);
+  plop.setActionType("manageDependencies", manageDependencies);
 
   // Main generator
   plop.setGenerator("node-lambda", GENERATOR_CONFIG);
@@ -40,7 +40,7 @@ export default function NodeLambdaConfig(
     ],
     actions: [
       {
-        type: "upgradeDevDependencies",
+        type: "manageDependencies",
       }
     ]
   });

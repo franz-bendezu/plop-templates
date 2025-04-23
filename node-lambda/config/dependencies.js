@@ -17,8 +17,6 @@ export const dependencies = {
   "@joi/date": undefined,
   "joi": undefined,
   "pino": undefined,
-  "pg": undefined,
-  "oracledb": undefined
 };
 
 /**
@@ -28,3 +26,17 @@ export const dependenciesToRemove = [
   "serverless-offline",
   "serverless"
 ];
+
+/**
+ * Database driver specific dependencies
+ */
+export const dbDriverDependencies = {
+  "postgres": {
+    "pg": undefined,
+    "@types/pg": undefined,
+  },
+  "oracle": {
+    "oracledb": undefined,
+    "@types/oracledb": undefined,
+  },
+};
