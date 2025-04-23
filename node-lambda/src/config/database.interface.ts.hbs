@@ -10,20 +10,9 @@ export interface IDatabaseConfig {
 
 export interface QueryResult<T> {
     rows: T[];
-    rowCount: number;
 }
 
-export interface IDatabaseClient {
-    query<T extends any, I = any[]>(
-        query: string,
-        values?: I[],
-    ): Promise<QueryResult<T>>;
-    query<T extends any>(
-        query: string,
-    ): Promise<QueryResult<T>>;
-}
-
-export interface IDatabaseManager {
+export interface IDatabaseManager <C> {
     executeQuery<T extends any, I = any[]>(
         query: string,
         values?: I[],
@@ -31,8 +20,8 @@ export interface IDatabaseManager {
     executeQuery<T extends any>(
         query: string,
     ): Promise<QueryResult<T>>;
-    connection<T>(callback: (client: IDatabaseClient) => Promise<T>): Promise<T>;
+    connection<T>(callback: (client: C) => Promise<T>): Promise<T>;
     transaction<T>(
-        callback: (client: IDatabaseClient) => Promise<T>,
+        callback: (client: C) => Promise<T>,
     ): Promise<T>;
 }
