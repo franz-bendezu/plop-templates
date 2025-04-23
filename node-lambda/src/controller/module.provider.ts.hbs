@@ -1,7 +1,15 @@
 import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
 import { Logger } from '../common/logger/logger';
 import { ILogger } from '../common/logger/logger.interface';
+{{#if dbDriver}}
+{{#ifEquals dbDriver "postgres"}}
 import PostgresConfig from '../config/postgres.config';
+{{else if dbDriver "oracle"}}
+import OracleConfig from '../config/oracle.config';
+{{/ifEquals}}
+{{else}}
+import { IDatabaseClient } from '../config/database.interface';
+{{/if}}
 import SecretsManagerConfig from '../config/secret-manager.config';
 import {{pascalCase name}}Repository from '../repository/{{kebabCase name}}.repository';
 import {{pascalCase name}}Service from '../service/{{kebabCase name}}.service';
@@ -12,7 +20,16 @@ export const logger: ILogger = new Logger();
 
 const secretsManagerClient = new SecretsManagerClient();
 const secretsManagerConfig = new SecretsManagerConfig(secretsManagerClient);
-const postgresClient = new PostgresConfig(secretsManagerConfig);
-const {{camelCase name}}Repository = new {{pascalCase name}}Repository(postgresClient);
+{{#if dbDriver}}
+{{#ifEquals dbDriver "postgres"}}
+const dbClient = new PostgresConfig(secretsManagerConfig);
+const {{camelCase name}}Repository = new {{pascalCase name}}Repository(dbClient);
+{{else if dbDriver "oracle"}}
+const dbClient = new OracleConfig(secretsManagerConfig);
+const {{camelCase name}}Repository = new {{pascalCase name}}Repository(dbClient);
+{{/ifEquals}}
+{{else}}
+const {{camelCase name}}Repository = new {{pascalCase name}}Repository();
+{{/if}}
 const {{camelCase name}}Service = new {{pascalCase name}}Service({{camelCase name}}Repository);
 export const {{camelCase name}}Controller = new {{pascalCase name}}Controller({{camelCase name}}Service);
