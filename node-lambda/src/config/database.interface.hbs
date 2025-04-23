@@ -1,0 +1,23 @@
+export interface IDatabaseConfig {
+    username: string;
+    password: string;
+    engine: string;
+    host: string;
+    port: number;
+    dbname: string;
+    dbClusterIdentifier?: string;
+}
+
+export interface IDatabaseManager<T = any> {
+    fetchDatabaseConfig(): Promise<IDatabaseConfig>;
+    getDatabaseConfig(): Promise<IDatabaseConfig>;
+    createClient(): Promise<T>;
+    executeQuery<R = any, P = any[]>(
+        query: string,
+        values?: P[]
+    ): Promise<any>;
+    connection<R>(callback: (client: T) => Promise<R>): Promise<R>;
+    transaction<R>(
+        callback: (client: T) => Promise<R>,
+    ): Promise<R>;
+}

@@ -1,12 +1,27 @@
 // Imports
 import I{{pascalCase name}}Repository from './{{kebabCase name}}.repository.interface';
 import {{pascalCase name}} from '../model/{{kebabCase name}}.model';
-import { IDatabaseManager } from '../config/postgres.config';
+{{#if dbDriver}}
+{{#ifEquals dbDriver "postgres"}}
+import { IDatabaseManagerPostgres } from '../config/postgres.config';
+{{else if dbDriver "oracle"}}
+import { IDatabaseManagerOracle } from '../config/oracle.config';
+{{/ifEquals}}
+{{else}}
+import { IDatabaseManager } from '../config/database.interface';
+{{/if}}
 import { RuntimeError } from '../common/error/runtime-error';
 
 export default class {{pascalCase name}}Repository implements I{{pascalCase name}}Repository {
-
+    {{#if dbDriver}}
+    {{#ifEquals dbDriver "postgres"}}
+    constructor(private readonly dbClient: IDatabaseManagerPostgres) { }
+    {{else if dbDriver "oracle"}}
+    constructor(private readonly dbClient: IDatabaseManagerOracle) { }
+    {{/ifEquals}}
+    {{else}}
     constructor(private readonly dbClient: IDatabaseManager) { }
+    {{/if}}
 
     // Methods
 }

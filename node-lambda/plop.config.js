@@ -6,6 +6,7 @@ import { GENERATOR_ONLY_CONTROLLER } from "./config/generator/controller-generat
 import { GENERATOR_ONLY_MODEL } from "./config/generator/model-generator.js";
 import { GENERATOR_ONLY_HANDLER } from "./config/generator/handler-generator.js";
 import { GENERATOR_ADD_METHOD } from "./config/generator/method-generator.js";
+import { ifEquals } from "./config/helpers.js";
 
 // plopfile.js
 export default function NodeLambdaConfig(
@@ -13,6 +14,9 @@ export default function NodeLambdaConfig(
   plop
 ) {
   plop.setActionType("manageDependencies", manageDependencies);
+
+  // Register helpers
+  plop.setHelper('ifEquals', ifEquals);
 
   // Main generator
   plop.setGenerator("node-lambda", GENERATOR_CONFIG);
