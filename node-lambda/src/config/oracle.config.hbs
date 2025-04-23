@@ -1,11 +1,25 @@
-import { Connection, getConnection, OUT_FORMAT_OBJECT } from 'oracledb';
+import { BindParameters, Connection, getConnection, OUT_FORMAT_OBJECT, Result } from 'oracledb';
 import { ISecretsManagerConfig } from './secret-manager.config';
 import {
     IDatabaseConfig,
     IDatabaseManager,
 } from './database.interface';
 
-export default class OracleConfig implements IDatabaseManager<Connection> {
+export interface IDatabaseManagerOracle extends IDatabaseManager<Connection> {
+    executeQuery<T = any>(
+        query: string,
+    ): Promise<Result<T>>;
+    executeQuery<T = any>(
+        query: string,
+        values: BindParameters,
+    ): Promise<Result<T>>;
+    executeQuery<T = any>(
+        query: string,
+        values?: BindParameters[],
+    ): Promise<Result<T>>;
+}
+
+export default class OracleConfig implements IDatabaseManagerOracle {
     public static readonly APPLICATION_NAME = '{{folder}}';
     currentConfig?: IDatabaseConfig;
     constructor(private readonly secretsManagerConfig: ISecretsManagerConfig) { }
