@@ -8,20 +8,28 @@ export interface IDatabaseConfig {
     dbClusterIdentifier?: string;
 }
 
-export interface QueryResult<T> {
-    rows: T[];
+export interface QueryResult<T, Q> {
+    rows?: T[];
 }
 
-export interface IDatabaseManager <C> {
-    executeQuery<T extends any, I = any[]>(
+export interface QueryExecutor {
+    <T = any, I = any[], R = QueryResult<T, I>>(
+        query: string,
+    ): Promise<R>;
+    <T = any, I = any[], R = QueryResult<T, I>>(
+        query: string,
+        values: I[],
+    ): Promise<R>;
+    <T = any, I = any[], R = QueryResult<T, I>>(
         query: string,
         values?: I[],
-    ): Promise<QueryResult<T>>;
-    executeQuery<T extends any>(
-        query: string,
-    ): Promise<QueryResult<T>>;
-    connection<T>(callback: (client: C) => Promise<T>): Promise<T>;
-    transaction<T>(
-        callback: (client: C) => Promise<T>,
-    ): Promise<T>;
+    ): Promise<R>;
+}
+
+type DatabaseClientExecutor<C, T> = (client: C) => Promise<T>;
+
+export interface IDatabaseManager<C, E extends QueryExecutor = QueryExecutor> {
+    executeQuery: E;
+    connection<T>(callback: DatabaseClientExecutor<C, T>): Promise<T>;
+    transaction<T>(callback: DatabaseClientExecutor<C, T>,): Promise<T>;
 }
