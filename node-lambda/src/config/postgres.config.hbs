@@ -1,39 +1,6 @@
 import { Client, QueryConfigValues, QueryResult, QueryResultRow } from 'pg';
 import { ISecretsManagerConfig } from './secret-manager.config';
-
-export interface IDatabaseConfig {
-    username: string;
-    password: string;
-    engine: string;
-    host: string;
-    port: number;
-    dbname: string;
-    dbClusterIdentifier: string;
-}
-
-export interface IDatabaseClient {
-    query<T extends QueryResultRow, I = any[]>(
-        query: string,
-        values: QueryConfigValues<I>,
-    ): Promise<QueryResult<T>>;
-    query<T extends QueryResultRow>(
-        query: string,
-    ): Promise<QueryResult<T>>;
-}
-export interface IDatabaseManager {
-    executeQuery<T extends QueryResultRow, I = any[]>(
-        query: string,
-        values: QueryConfigValues<I>,
-    ): Promise<QueryResult<T>>;
-    executeQuery<T extends QueryResultRow>(
-        query: string,
-    ): Promise<QueryResult<T>>;
-    connection<T>(callback: (client: IDatabaseClient) => Promise<T>): Promise<T>;
-    transaction<T>(
-        callback: (client: IDatabaseClient) => Promise<T>,
-        beforeTransactionCallback?: (client: IDatabaseClient) => Promise<void>
-    ): Promise<T>;
-}
+import { IDatabaseConfig, IDatabaseManager, IDatabaseClient } from './database.interface';
 
 export default class PostgresConfig implements IDatabaseManager {
     public static readonly APPLICATION_NAME = '{{folder}}';
@@ -90,7 +57,7 @@ export default class PostgresConfig implements IDatabaseManager {
         }
     }
 
-    async connection<T>(callback: (client: Client) => Promise<T>): Promise<T> {
+    async connection<T>(callback: (client: IDatabaseClient) => Promise<T>): Promise<T> {
         const client = await this.createClient();
         try {
             await client.connect();
@@ -101,7 +68,7 @@ export default class PostgresConfig implements IDatabaseManager {
     }
 
     async transaction<T>(
-        transactionCallback: (client: Client) => Promise<T>,
+        transactionCallback: (client: IDatabaseClient) => Promise<T>,
     ): Promise<T> {
         const client = await this.createClient();
         try {
@@ -117,5 +84,4 @@ export default class PostgresConfig implements IDatabaseManager {
             await client.end();
         }
     }
-
 }

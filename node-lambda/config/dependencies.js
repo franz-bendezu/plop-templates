@@ -16,7 +16,9 @@ export const devDependencies = {
 export const dependencies = {
   "@joi/date": undefined,
   "joi": undefined,
-  "pino": undefined
+  "pino": undefined,
+  "pg": undefined,
+  "oracledb": undefined
 };
 
 /**

@@ -1,0 +1,38 @@
+export interface IDatabaseConfig {
+    username: string;
+    password: string;
+    engine: string;
+    host: string;
+    port: number;
+    dbname: string;
+    dbClusterIdentifier?: string;
+}
+
+export interface QueryResult<T> {
+    rows: T[];
+    rowCount: number;
+}
+
+export interface IDatabaseClient {
+    query<T extends any, I = any[]>(
+        query: string,
+        values?: I[],
+    ): Promise<QueryResult<T>>;
+    query<T extends any>(
+        query: string,
+    ): Promise<QueryResult<T>>;
+}
+
+export interface IDatabaseManager {
+    executeQuery<T extends any, I = any[]>(
+        query: string,
+        values?: I[],
+    ): Promise<QueryResult<T>>;
+    executeQuery<T extends any>(
+        query: string,
+    ): Promise<QueryResult<T>>;
+    connection<T>(callback: (client: IDatabaseClient) => Promise<T>): Promise<T>;
+    transaction<T>(
+        callback: (client: IDatabaseClient) => Promise<T>,
+    ): Promise<T>;
+}

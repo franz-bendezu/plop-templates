@@ -10,6 +10,7 @@ import { generateTestServiceActions } from "./actions/test-service-actions.js";
 import { generateTestControllerActions } from "./actions/test-controller-actions.js";
 import { generateTestHandlerActions } from "./actions/test-handler-actions.js";
 import { generateCommonActions } from "./actions/common-actions.js";
+import { SRC_PATH, TEMPLATE_PATH } from "../constants.js";
 
 /**
  * Generates plop actions based on selected components
@@ -18,6 +19,7 @@ import { generateCommonActions } from "./actions/common-actions.js";
  * @param {string[]} data.components - List of components to generate
  * @param {boolean} data.generateAll - Flag to generate all components
  * @param {string} data.folder - Folder path where files will be generated
+ * @param {string} data.dbDriver - Database driver to use (postgres or oracle)
  * @returns {Array} Array of plop actions to be executed
  */
 export const generateMainActions = function (data) {
@@ -54,6 +56,15 @@ export const generateMainActions = function (data) {
     if (data.components.includes("tests")) {
       actions.push(...generateTestModelActions(data));
     }
+  }
+  
+  // Add database config based on selected driver
+  if (data.dbDriver) {
+    actions.push({
+      type: "add",
+      path: SRC_PATH + "/config/{{dbDriver}}.config.ts",
+      templateFile: TEMPLATE_PATH + "/src/config/{{dbDriver}}.config.hbs",
+    });
   }
 
   // Repository

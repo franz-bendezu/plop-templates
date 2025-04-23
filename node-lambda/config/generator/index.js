@@ -9,7 +9,7 @@ import {
 } from "../constants.js";
 
 export const GENERATOR_CONFIG = {
-  description: "Generate a handler with its support files",
+  description: "Generate lambda handler with all necessary components",
   prompts: [
     {
       type: "input",
@@ -41,10 +41,22 @@ export const GENERATOR_CONFIG = {
       ],
     },
     {
+      type: "list",
+      name: "dbDriver",
+      message: "Database driver",
+      choices: [
+        { name: "PostgreSQL", value: "postgres" },
+        { name: "Oracle", value: "oracle" },
+        { name: "None", value: null },
+      ],
+      default: "postgres",
+    },
+    {
       type: "input",
       name: "nameSecretDb",
       message: "Environment variable name for DB Secret",
       default: "NAME_SECRET_DB",
+      when: (answers) => answers.dbDriver !== null,
     },
     {
       type: "confirm",
@@ -53,20 +65,19 @@ export const GENERATOR_CONFIG = {
       default: true,
     },
     {
+      when: (answers) => !answers.generateAll,
       type: "checkbox",
       name: "components",
       message: "Select components to generate",
       choices: [
-        { name: "Model Layer", value: "model" },
-        { name: "Repository Layer", value: "repository" },
-        { name: "Service Layer", value: "service" },
-        { name: "Controller Layer", value: "controller" },
-        { name: "Handler Layer", value: "handler" },
-        { name: "Common Utilities", value: "common" },
+        { name: "Model", value: "model" },
+        { name: "Repository", value: "repository" },
+        { name: "Service", value: "service" },
+        { name: "Controller", value: "controller" },
+        { name: "Handler", value: "handler" },
+        { name: "Common files", value: "common" },
         { name: "Tests", value: "tests" },
       ],
-      default: ["model", "repository", "service", "controller", "handler", "common", "tests"],
-      when: (answers) => !answers.generateAll,
     },
   ],
   actions: generateMainActions,
