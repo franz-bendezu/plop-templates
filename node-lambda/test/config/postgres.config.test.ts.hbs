@@ -37,14 +37,14 @@ describe('PostgresConfig', () => {
     });
 
     it('should fetch database config from secrets manager', async () => {
-        process.env.SCM_BD_PRODSUSC = 'test-secret';
+        process.env.{{nameSecretDb}} = 'test-secret';
         const config = await postgresConfig.fetchDatabaseConfig();
         expect(secretsManagerConfig.getSecretValue).toHaveBeenCalledWith('test-secret');
         expect(config).toEqual(mockDatabaseConfig);
     });
 
     it('should throw an error if secret name is not found', async () => {
-        delete process.env.SCM_BD_PRODSUSC;
+        delete process.env.{{nameSecretDb}};
         await expect(postgresConfig.fetchDatabaseConfig()).rejects.toThrow('Secret name not found');
     });
 
@@ -56,7 +56,7 @@ describe('PostgresConfig', () => {
     });
 
     it('should create a new client with the correct config', async () => {
-        process.env.SCM_BD_PRODSUSC = 'test-secret';
+        process.env.{{nameSecretDb}} = 'test-secret';
         secretsManagerConfig.getSecretValue.mockResolvedValue(mockDatabaseConfig);
 
         const client = await postgresConfig.createClient();
